@@ -34,7 +34,7 @@ namespace BankApiProj.Service
             user.PasswordSalt = hmac.Key;
             user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
 
-            _context.Users.Add(user);
+            _context.Users.Update(user);
             await _context.SaveChangesAsync();
 
             return user;
@@ -62,6 +62,7 @@ namespace BankApiProj.Service
         };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Secret"]));
+
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
             var token = new JwtSecurityToken(
@@ -72,7 +73,8 @@ namespace BankApiProj.Service
                 signingCredentials: creds
             );
 
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            var aa= new JwtSecurityTokenHandler().WriteToken(token);
+            return aa;
         }
     }
 }
