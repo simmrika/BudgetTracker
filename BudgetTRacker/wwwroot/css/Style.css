@@ -1,141 +1,184 @@
-﻿* {
+﻿/* General styling */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    font-family: 'Poppins', sans-serif;
+    background-color: #FBFBFB;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    box-sizing: border-box; /* Include padding in width/height calculations */
+}
+
+/* Container and layout */
+.container {
+    display: flex;
+    width: 100%; /* Use 100% to prevent extra width issues */
+    height: 100vh;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    overflow: hidden; /* Ensure no overflow */
 }
 
-body {
-    font-family: 'Poppins', sans-serif;
-    background-color: #f2f2f2;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+/* Sidebar */
+.sidebar {
+    width: 20%; /* Ensures the sidebar takes 20% of the viewport width */
     height: 100vh;
-}
-
-.login-container {
-    width: 350px;
-    display: flex;
     background-color: #ffffff;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    padding: 40px;
+    box-sizing: border-box;
+    overflow-y: auto; /* If sidebar needs vertical scrolling */
 }
 
-.login-box {
+.user-info {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+    .user-info img {
+        border-radius: 50%;
+        width: 60px;
+    }
+
+    .user-info h3 {
+        margin: 10px 0 0;
+        font-size: 18px;
+    }
+
+.nav {
     display: flex;
     flex-direction: column;
-    width: 100%;
+    padding: 0 10px;
 }
 
-.login-header {
-    text-align: center;
-    margin-bottom: 20px;
+.nav-item {
+    padding: 10px 0;
+    text-decoration: none;
+    color: #333;
+    font-weight: normal;
 }
 
-.avatar {
-    width: 50px;
-    height: 50px;
-    background-color: #2d98da;
-    border-radius: 50%;
-    margin: 0 auto;
+    .nav-item.active {
+        font-weight: bold;
+    }
+
+.logout {
+    color: #FF0000;
+    text-decoration: none;
+    display: block;
+    margin-top: 40px;
 }
 
-h2 {
-    font-weight: 300;
-    margin-top: 10px;
-    color: #2c3e50;
+/* Main Content */
+.main-content {
+    width: 80%; /* Remaining 80% for main content */
+    padding: 20px;
+    overflow-y: auto;
+    box-sizing: border-box; /* Include padding in width */
 }
 
-.input-box {
-    margin: 15px 0;
-    position: relative;
-}
-
-input[type="text"], input[type="password"] {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    outline: none;
-    font-size: 16px;
-}
-
-.show-password {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    color: #2c3e50;
-}
-
-.remember-forgot {
+.top-bar {
     display: flex;
     justify-content: space-between;
-    margin: 10px 0;
+    align-items: center;
+    margin-bottom: 30px;
 }
 
-    .remember-forgot a {
-        text-decoration: none;
-        color: #3498db;
-        font-size: 14px;
-    }
-
-.btn-container {
-    text-align: center;
-}
-
-.btn-primary {
-    width: 100%;
+.search-bar {
+    width: 60%;
     padding: 10px;
-    background-color: #2d98da;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    margin-bottom: 10px;
-    text-transform: uppercase;
-}
-
-    .btn-primary:hover {
-        background-color: #2874a6;
-    }
-
-.btn-google {
-    width: 100%;
-    padding: 10px;
-    background-color: white;
     border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
+    border-radius: 4px;
+}
+
+.top-icons {
     display: flex;
     align-items: center;
-    justify-content: center;
-    color: #333;
 }
 
-    .btn-google img {
-        width: 20px;
-        margin-right: 10px;
+    .top-icons img {
+        margin-left: 20px;
     }
 
-    .btn-google:hover {
-        background-color: #f1f1f1;
-    }
-
-.lowercase {
-    text-transform: lowercase;
+.balance-section {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+    gap: 20px; /* Optional spacing between sections */
 }
 
-.signup {
+.total-balance {
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    padding: 20px;
+    width: 40%;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.bank-cards {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px; /* Add gap to avoid card overflow */
+    width: 55%;
+}
+
+.card {
+    background-color: #02457A;
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
     text-align: center;
-    margin-top: 15px;
+    width: 30%; /* Ensure the cards fit within their container */
+    box-sizing: border-box;
 }
 
-    .signup a {
-        text-decoration: none;
-        color: #3498db;
+.balance-change {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    font-size: 12px;
+}
+
+.content-sections {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px; /* Space between sections */
+    margin-top: 30px;
+}
+
+.activities, .transactions, .categories {
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    padding: 20px;
+    width: 30%;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+}
+
+.activities-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dropdown {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.activity-chart {
+    margin-top: 20px;
+}
+
+.transaction-item, .category-item {
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+    font-size: 14px;
+}
+
+    .transaction-item:last-child, .category-item:last-child {
+        border-bottom: none;
     }

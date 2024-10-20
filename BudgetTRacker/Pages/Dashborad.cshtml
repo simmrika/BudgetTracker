@@ -1,0 +1,288 @@
+﻿@page
+@model BudgetTRacker.Pages.DashboradModel
+@{
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #F8F9FA;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* Sidebar styling */
+        .sidebar {
+            width: 250px;
+            background-color: white;
+            padding: 20px;
+            border-right: 1px solid #E0E0E0;
+        }
+
+            .sidebar img {
+                border-radius: 50%;
+                width: 50px;
+                margin-bottom: 10px;
+            }
+
+            .sidebar h4 {
+                font-size: 18px;
+                margin-bottom: 40px;
+            }
+
+            .sidebar ul {
+                list-style: none;
+                padding: 0;
+            }
+
+                .sidebar ul li {
+                    margin-bottom: 20px;
+                    display: flex;
+                    align-items: center;
+                }
+
+                    .sidebar ul li i, .sidebar ul li img {
+                        margin-right: 10px;
+                    }
+
+                    .sidebar ul li a {
+                        text-decoration: none;
+                        color: black;
+                        font-size: 16px;
+                    }
+
+        /* Main content styling */
+        .main-content {
+            flex-grow: 1;
+            padding: 20px;
+        }
+
+            .main-content .header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+                .main-content .header input[type="text"] {
+                    padding: 10px;
+                    width: 300px;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                }
+
+                .main-content .header .date-picker, .notification-bell {
+                    padding: 10px;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                }
+
+        .notification-bell {
+            margin-left: 10px;
+        }
+
+        /* Financial Summary */
+        .balance-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+            .balance-section .balance {
+                font-size: 20px;
+                color: #28A745;
+            }
+
+            .balance-section .balance-details {
+                margin-right: 20px;
+            }
+
+        /* Account Cards */
+        .account-cards {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .account-card {
+            background-color: #0069D9;
+            padding: 20px;
+            border-radius: 10px;
+            color: white;
+            width: 200px;
+            text-align: left;
+            position: relative;
+        }
+
+            .account-card span {
+                display: block;
+            }
+
+            .account-card .bell {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+            }
+
+        /* Activities Chart */
+        .activities-section {
+            margin-top: 40px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .activities-chart {
+            width: 60%;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .transaction-summary {
+            width: 35%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .transaction-box, .category-box {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+            .transaction-box h4, .category-box h4 {
+                margin-bottom: 20px;
+                font-size: 18px;
+            }
+
+            .transaction-box ul, .category-box ul {
+                list-style: none;
+                padding: 0;
+            }
+
+                .transaction-box ul li, .category-box ul li {
+                    display: flex;
+                    justify-content: space-between;
+                    margin-bottom: 10px;
+                }
+
+                    .transaction-box ul li .icon, .category-box ul li .icon {
+                        margin-right: 10px;
+                    }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <img src="https://i.pravatar.cc/100" alt="Profile Picture">
+            <h4>Simrika Lama</h4>
+            <ul>
+                <li><i class="fas fa-home"></i><a href="#">Home</a></li>
+                <li><i class="fas fa-list"></i><a href="#">Transaction</a></li>
+                <li><i class="fas fa-user"></i><a href="#">My Profile</a></li>
+                <li><i class="fas fa-plus-circle"></i><a href="#">Add Account</a></li>
+                <li><i class="fas fa-money-check-alt"></i><a href="#">Income/Expense</a></li>
+                <li><i class="fas fa-cog"></i><a href="#">Settings</a></li>
+                <li><i class="fas fa-phone"></i><a href="#">Support</a></li>
+                <li><i class="fas fa-sign-out-alt"></i><a href="#">Logout</a></li>
+            </ul>
+        </div>
+
+        <!-- Main content -->
+        <div class="main-content">
+            <div class="header">
+                <input type="text" placeholder="Search for the transaction name">
+                <input type="text" class="date-picker" placeholder="2/12/2024">
+                <div class="notification-bell">
+                    <i class="fas fa-bell"></i>
+                </div>
+            </div>
+
+            <!-- Balance and Accounts -->
+            <div class="balance-section">
+                <div class="balance">
+                    <h2>Your total balance</h2>
+                    <p>Rs. 8000.00</p>
+                    <p>+ Rs. 500.00 Today's Income | - Rs. 500.00 Today's Expense</p>
+                </div>
+
+                <!-- Account Cards -->
+                <div class="account-cards">
+                    <div class="account-card">
+                        <span>Full Name</span>
+                        <span>2024-06-26</span>
+                        <span>NPR 2000.00</span>
+                        <div class="bell"><i class="fas fa-bell"></i></div>
+                    </div>
+                    <div class="account-card">
+                        <span>NIC Asia Bank</span>
+                        <span>Account Number 1234566</span>
+                        <span>NPR 2000.00</span>
+                        <div class="bell"><i class="fas fa-bell"></i></div>
+                    </div>
+                    <div class="account-card">
+                        <span>NMB Bank</span>
+                        <span>Account Number</span>
+                        <span>NPR 2000.00</span>
+                        <div class="bell"><i class="fas fa-bell"></i></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Activities and Transactions -->
+            <div class="activities-section">
+                <div class="activities-chart">
+                    <h2>Activities</h2>
+                    <canvas id="activitiesChart"></canvas>
+                </div>
+
+                <!-- Transaction Summary -->
+                <div class="transaction-summary">
+                    <div class="transaction-box">
+                        <h4>My Transaction</h4>
+                        <ul>
+                            <li><span class="icon">🍔</span>Food - Rs.2000</li>
+                            <li><span class="icon">💡</span>NEA - Rs.2000</li>
+                            <li><span class="icon">🌐</span>Internet - Rs.2000</li>
+                            <li><span class="icon">🎓</span>College - Rs.2000</li>
+                        </ul>
+                    </div>
+
+                    <div class="category-box">
+                        <h4>Categories</h4>
+                        <ul>
+                            <li><span class="icon">🍔</span>Food</li>
+                            <li><span class="icon">💡</span>NEA</li>
+                            <li><span class="icon">🌐</span>Internet</li>
+                            <li><span class="icon">🎓</span>College</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+
+    <script>
+        // Chart.js Activities chart initialization
+        const ctx = document.getElementById('activitiesChart').getContext('
+

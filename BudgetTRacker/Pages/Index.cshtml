@@ -1,10 +1,97 @@
 ﻿@page
 @model IndexModel
 @{
+    Layout = "";
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="~/css/style.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="user-info">
+                <img src="avatar.jpg" alt="User Avatar">
+                <h3>Simrika Lama</h3>
+            </div>
+            <nav class="nav">
+                <a href="#" class="nav-item active">Home</a>
+                <a href="#" class="nav-item">Transaction</a>
+                <a href="#" class="nav-item">My Profile</a>
+                <a href="#" class="nav-item">Add Account</a>
+                <a href="#" class="nav-item">Income/Expense</a>
+                <a href="#" class="nav-item">Settings</a>
+                <a href="#" class="nav-item">Support</a>
+            </nav>
+            <a href="#" class="logout">Logout</a>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="top-bar">
+                <input type="text" placeholder="Search for the transaction name" class="search-bar">
+                <div class="top-icons">
+                    <span>2/12/2024</span>
+                    <img src="notification-icon.png" alt="Notification">
+                </div>
+            </div>
+
+            <div class="balance-section">
+                <div class="total-balance">
+                    <h3>Your total balance</h3>
+                    <p>Rs. 8000.00</p>
+                    <div class="balance-change">
+                        <span>+ Rs. 50,000 Today’s Income</span>
+                        <span>- Rs. 50,000 Today’s Expense</span>
+                    </div>
+                </div>
+                <div class="bank-cards">
+                    <div class="card">Cash <br> NPR 2000.00</div>
+                    <div class="card">NIC Asia Bank <br> NPR 2000.00</div>
+                    <div class="card">NMB Bank <br> NPR 2000.00</div>
+                </div>
+            </div>
+
+            <div class="content-sections">
+                <div class="activities">
+                    <div class="activities-header">
+                        <h4>Activities</h4>
+                        <select class="dropdown">
+                            <option value="this_week">This week</option>
+                            <option value="today">Today</option>
+                            <option value="this_month">This month</option>
+                        </select>
+                    </div>
+                    <p>Total spending: Rs. 20,000</p>
+                </div>
+
+                <div class="transactions">
+                    <h4>My Transaction</h4>
+                    <div class="transaction-item">Food Rs. 2000</div>
+                    <div class="transaction-item">NEA Rs. 2000</div>
+                    <div class="transaction-item">Internet Rs. 2000</div>
+                    <div class="transaction-item">College Rs. 2000</div>
+                </div>
+
+                <div class="categories">
+                    <h4>Categories</h4>
+                    <div class="category-item">Food</div>
+                    <div class="category-item">NEA</div>
+                    <div class="category-item">Internet</div>
+                    <div class="category-item">College</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
