@@ -5,8 +5,6 @@
     ViewData["Title"] = "Home page";
 }
 
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,25 +12,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link href="~/css/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
     <div class="container">
         <!-- Sidebar -->
         <div class="sidebar">
             <div class="user-info">
-                <img src="avatar.jpg" alt="User Avatar">
+                <img asp-append-version="true" src="~/Pic/LamaSimrika.jpg" alt="Profile">
                 <h3>Simrika Lama</h3>
             </div>
             <nav class="nav">
-                <a href="#" class="nav-item active">Home</a>
-                <a href="#" class="nav-item">Transaction</a>
-                <a href="#" class="nav-item">My Profile</a>
-                <a href="#" class="nav-item">Add Account</a>
-                <a href="#" class="nav-item">Income/Expense</a>
-                <a href="#" class="nav-item">Settings</a>
-                <a href="#" class="nav-item">Support</a>
+                <a href="#" class="nav-item active"><i class="fa-solid fa-house"></i> Home</a>
+                <a href="#" class="nav-item"><i class="fa-solid fa-right-left"></i> Transaction</a>
+                <a href="#" class="nav-item"><i class="fa-solid fa-user"></i> My Profile</a>
+                <a href="#" class="nav-item"><i class="fa-solid fa-plus"></i> Add Account</a>
+                <a href="#" class="nav-item"><i class="fa-regular fa-credit-card"></i> Income/Expense</a>
+                <a href="#" class="nav-item"><i class="fa-solid fa-gear"></i> Settings</a>
+                <a href="#" class="nav-item"><i class="fa-solid fa-phone"></i> Support</a>
             </nav>
-            <a href="#" class="logout">Logout</a>
+            <nav class="nav">
+
+            <a href="#" class="logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
+            </nav>
         </div>
 
         <!-- Main Content -->
@@ -41,7 +43,7 @@
                 <input type="text" placeholder="Search for the transaction name" class="search-bar">
                 <div class="top-icons">
                     <span>2/12/2024</span>
-                    <img src="notification-icon.png" alt="Notification">
+                    <a class="nav-item"><i class="fa-solid fa-bell"></i> Support</a>
                 </div>
             </div>
 
@@ -94,4 +96,3 @@
     </div>
 </body>
 </html>
-
