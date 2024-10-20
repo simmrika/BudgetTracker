@@ -34,45 +34,89 @@
 
             <nav class="nav">
                 <a href="#" class="logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
-
             </nav>
         </div>
 
         <!-- Main Content -->
         <div class="main-content">
+            <!-- Top Bar -->
             <div class="top-bar">
                 <input type="text" placeholder="Search for the transaction name" class="search-bar">
-
                 <div class="top-icons">
                     <div class="icon-wrapper">
                         <span>2/12/2024</span>
                         <i class="fa-regular fa-calendar"></i>
                     </div>
-
                     <div class="icon-wrapper notification-container">
                         <i class="fa-solid fa-bell notification-icon"></i>
                         <span class="notification-dot hidden"></span>
                     </div>
                 </div>
-
             </div>
 
+            <!-- Balance Section -->
             <div class="balance-section">
                 <div class="total-balance">
-                    <h3>Your total balance</h3>
-                    <p>Rs. 8000.00</p>
+                    <h3 style="color: #C8C8C8;">Your total balance</h3>
+                    <p style="font-size: 24px;">Rs. 8000.00</p>
                     <div class="balance-change">
-                        <span>+ Rs. 50,000 Today’s Income</span>
-                        <span>- Rs. 50,000 Today’s Expense</span>
+                        <div class="income">
+                            <i class="fa-solid fa-arrow-up" style="color: green;"></i>
+                            <span>Rs. 500.00</span>
+                            <p style="color: #C8C8C8;">Today's Income</p>
+                        </div>
+                        <div class="expense">
+                            <i class="fa-solid fa-arrow-down" style="color: red;"></i>
+                            <span>Rs. 500.00</span>
+                            <p style="color: #C8C8C8;">Today's Expense</p>
+                        </div>
                     </div>
                 </div>
-                <div class="bank-cards">
-                    <div class="card">Cash <br> NPR 2000.00</div>
-                    <div class="card">NIC Asia Bank <br> NPR 2000.00</div>
-                    <div class="card">NMB Bank <br> NPR 2000.00</div>
+
+                <!-- Bank Cards Carousel -->
+                <div class="bank-cards-carousel">
+                    <div class="bank-cards">
+                        <div class="card">
+                            <h4>Cash</h4>
+                            <div class="card-content">
+                                <p>Full Name</p>
+                                <p>2024-06-26</p>
+                                <p>NPR. 2000.00 <i class="fa fa-eye"></i></p>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <h4>NIC Asia Bank</h4>
+                            <div class="card-content">
+                                <p>Full Name</p>
+                                <p>2024-06-26</p>
+                                <p>Account Number 1234566</p>
+                                <p>NPR. 2000.00 <i class="fa fa-eye"></i></p>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <h4>NMB Bank</h4>
+                            <div class="card-content">
+                                <p>Full Name</p>
+                                <p>2024-06-26</p>
+                                <p>Account Number 7891011</p>
+                                <p>NPR. 2000.00 <i class="fa fa-eye"></i></p>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="next-arrow">&#10095;</button> <!-- Right arrow -->
+                </div>
+
+                <!-- Pagination Dots -->
+                <div class="pagination-dots">
+                    <span class="dot"></span>
+                    <span class="dot active"></span>
+                    <span class="dot"></span>
                 </div>
             </div>
 
+            <!-- Content Sections (Activities, Transactions, Categories) -->
             <div class="content-sections">
                 <div class="activities">
                     <div class="activities-header">
