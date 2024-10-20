@@ -23,17 +23,18 @@
                 <h3>Simrika Lama</h3>
             </div>
             <nav class="nav">
-                <a href="#" class="nav-item active"><i class="fa-solid fa-house"></i> Home</a>
-                <a href="#" class="nav-item"><i class="fa-solid fa-right-left"></i> Transaction</a>
+                <a href="#" class="nav-item"><i class="fa-solid fa-house"></i> Home</a>
+                <a asp-page="Transaction" class="nav-item"><i class="fa-solid fa-right-left"></i> Transaction</a>
                 <a href="#" class="nav-item"><i class="fa-solid fa-user"></i> My Profile</a>
                 <a href="#" class="nav-item"><i class="fa-solid fa-plus"></i> Add Account</a>
                 <a href="#" class="nav-item"><i class="fa-regular fa-credit-card"></i> Income/Expense</a>
                 <a href="#" class="nav-item"><i class="fa-solid fa-gear"></i> Settings</a>
                 <a href="#" class="nav-item"><i class="fa-solid fa-phone"></i> Support</a>
             </nav>
-            <nav class="nav">
 
-            <a href="#" class="logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
+            <nav class="nav">
+                <a href="#" class="logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
+
             </nav>
         </div>
 
@@ -41,10 +42,19 @@
         <div class="main-content">
             <div class="top-bar">
                 <input type="text" placeholder="Search for the transaction name" class="search-bar">
+
                 <div class="top-icons">
-                    <span>2/12/2024</span>
-                    <a class="nav-item"><i class="fa-solid fa-bell"></i> Support</a>
+                    <div class="icon-wrapper">
+                        <span>2/12/2024</span>
+                        <i class="fa-regular fa-calendar"></i>
+                    </div>
+
+                    <div class="icon-wrapper notification-container">
+                        <i class="fa-solid fa-bell notification-icon"></i>
+                        <span class="notification-dot hidden"></span>
+                    </div>
                 </div>
+
             </div>
 
             <div class="balance-section">
@@ -96,3 +106,5 @@
     </div>
 </body>
 </html>
+
+<script defer src="~/js/site.js"></script>
