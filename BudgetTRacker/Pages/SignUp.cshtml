@@ -8,46 +8,233 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up for Rupiya</title>
-    <link href="~/css/style.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+    <title>Sign Up - Rupiya</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            background-color: #FBFBFB;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .signup-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            text-align: center;
+            width: 400px;
+        }
+
+            .signup-container i {
+                font-size: 50px;
+                color: #02457A;
+                margin-bottom: 20px;
+            }
+
+        h2 {
+            font-weight: 300;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            background-color: #f8f8f8;
+        }
+
+            .input-field:focus {
+                border-color: #02457A;
+                outline: none;
+            }
+
+        .password-container {
+            position: relative;
+        }
+
+            .password-container i {
+                position: absolute;
+                right: 10px;
+                top: 50%;
+                transform: translateY(-50%);
+                cursor: pointer;
+                font-size: 18px; /* Adjust this value for the desired size */
+                color: #02457A; /* Default color */
+            }
+
+        .signup-btn {
+            width: 100%;
+            background-color: #02457A;
+            color: white;
+            padding: 12px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+
+            .signup-btn:hover {
+                background-color: #02457A;
+            }
+
+        .divider {
+            position: relative;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+            .divider::before,
+            .divider::after {
+                content: '';
+                height: 1px;
+                width: 40%;
+                background-color: #ccc;
+                display: inline-block;
+                position: absolute;
+                top: 50%;
+            }
+
+            .divider::before {
+                left: 0;
+            }
+
+            .divider::after {
+                right: 0;
+            }
+
+            .divider span {
+                background-color: #FBFBFB;
+                padding: 0 10px;
+                color: #777;
+            }
+
+        .google-btn {
+            width: 100%;
+            border: 1px solid #02457A;
+            color: #02457A;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+            .google-btn img {
+                width: 20px;
+                margin-right: 10px;
+            }
+
+            .google-btn:hover {
+                background-color: #f1f1f1;
+            }
+
+        .terms {
+            font-size: 12px;
+            color: #777;
+            margin-top: 20px;
+        }
+
+            .terms a {
+                color: #02457A;
+                text-decoration: none;
+            }
+
+                .terms a:hover {
+                    text-decoration: underline;
+                }
+
+        .signin-link {
+            font-size: 14px;
+            margin-top: 20px;
+        }
+
+            .signin-link a {
+                text-decoration: none;
+                color: #02457A;
+                font-weight: 500;
+            }
+
+                .signin-link a:hover {
+                    text-decoration: underline;
+                }
+
+        i {
+            color: #02457A; /* Default icon color */
+        }
+    </style>
 </head>
 <body>
-    <div class="login-container">
-        <div class="login-box">
-            <div class="login-left">
-                <div class="login-header">
-                    <div class="avatar"></div>
-                    <h2>Sign Up for Rupiya...</h2>
-                </div>
-                <form action="#">
-                    <div class="input-box">
-                        <input type="text" placeholder="Username" required>
-                    </div>
-                    <div class="input-box">
-                        <input type="email" placeholder="Email" required>
-                    </div>
-                    <div class="input-box">
-                        <input type="tel" placeholder="Phone" required>
-                    </div>
-                    <div class="input-box">
-                        <input type="password" placeholder="Create Password" required>
-                        <span class="show-password">👁</span>
-                    </div>
-                    <div class="btn-container">
-                        <button type="submit" class="btn-primary">Continue</button>
-                        <p>OR</p>
-                        <button class="btn-google"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" alt="Google"> Continue with Google</button>
-                    </div>
-                </form>
-                <div class="privacy-policy">
-                    <p>By clicking "Continue" or "Continue with Google", you agree to the Rupiya <a href="#">Privacy Policy</a>.</p>
-                </div>
-                <div class="signup">
-                    <p>Already have an account? <a href="#">Sign In</a></p>
-                </div>
-            </div>
+    <div class="signup-container">
+        <i class="fa-solid fa-user"></i>
+        <h2>Sign Up for Rupiya...</h2>
+
+        <!-- Username input -->
+        <input type="text" class="input-field" placeholder="Username" required>
+
+        <!-- Email input -->
+        <input type="email" class="input-field" placeholder="Email" required>
+
+        <!-- Phone input -->
+        <input type="tel" class="input-field" placeholder="Phone" required>
+
+        <!-- Password input with eye icon -->
+        <div class="password-container">
+            <input type="password" class="input-field" id="password" placeholder="Create Password" required>
+            <i class="fas fa-eye" id="togglePassword"></i>
+        </div>
+
+        <!-- Continue Button -->
+        <button class="signup-btn">Continue</button>
+
+        <!-- OR Divider -->
+        <div class="divider"><span>OR</span></div>
+
+        <!-- Continue with Google -->
+        <button class="google-btn">
+            <i class="fa-brands fa-google"></i>           
+            Continue with Google
+        </button>
+
+        <!-- Privacy Policy -->
+        <div class="terms">
+            By clicking "Continue" or "Continue with Google", you agree to the Rupiya <a href="#">Privacy Policy</a>.
+        </div>
+
+        <!-- Sign In Link -->
+        <div class="signin-link">
+            Already have an account? <a href="#">Sign In</a>
         </div>
     </div>
+
+    <script>
+        const togglePassword = document.querySelector('#togglePassword');
+        const passwordField = document.querySelector('#password');
+
+        togglePassword.addEventListener('click', () => {
+            // Toggle the type attribute between 'password' and 'text'
+            const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordField.setAttribute('type', type);
+
+            // Toggle the eye icon
+            togglePassword.classList.toggle('fa-eye-slash');
+        });
+    </script>
+
+    <!-- FontAwesome for icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </body>
 </html>

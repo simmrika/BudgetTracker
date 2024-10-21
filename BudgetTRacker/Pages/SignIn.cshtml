@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Rupiya</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         body {
             background-color: #FBFBFB;
@@ -165,11 +166,14 @@
                     text-decoration: underline;
                 }
 
+        i {
+            color: #02457A; /* Default icon color */
+        }
     </style>
 </head>
 <body>
     <div class="login-container">
-        <img src="https://i.pravatar.cc/80" alt="User Avatar">
+        <i class="fa-solid fa-user"></i>
         <h2>Welcome to Rupiya...</h2>
 
         <!-- Username input -->
@@ -177,9 +181,10 @@
 
         <!-- Password input with eye icon -->
         <div class="password-container">
-            <input type="password" class="input-field" placeholder="Password" required>
-            <i class="fas fa-eye"></i>
+            <input type="password" class="input-field" id="password" placeholder="Password" required>
+            <i class="fas fa-eye" id="togglePassword"></i>
         </div>
+
 
         <!-- Remember Me and Forgot Password -->
         <div class="checkbox-remember">
@@ -197,7 +202,7 @@
 
         <!-- Continue with Google -->
         <button class="google-btn">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" alt="Google Logo">
+            <i class="fa-brands fa-google-plus-g"></i>
             Continue with Google
         </button>
 
@@ -208,14 +213,16 @@
     </div>
 
     <script>
-        // Script to toggle password visibility
-        const passwordField = document.querySelector('.password-container input');
-        const eyeIcon = document.querySelector('.password-container i');
+        const togglePassword = document.querySelector('#togglePassword');
+        const passwordField = document.querySelector('#password');
 
-        eyeIcon.addEventListener('click', () => {
+        togglePassword.addEventListener('click', () => {
+            // Toggle the type attribute between 'password' and 'text'
             const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
             passwordField.setAttribute('type', type);
-            eyeIcon.classList.toggle('fa-eye-slash');
+
+            // Toggle the eye icon
+            togglePassword.classList.toggle('fa-eye-slash');
         });
     </script>
 

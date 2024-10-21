@@ -5,13 +5,12 @@
 
 
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transaction</title>
+    <title>Transactions</title>
     <link href="~/css/style.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -36,37 +35,37 @@
             border-right: 1px solid #E0E0E0;
         }
 
-            .sidebar img {
-                border-radius: 50%;
-                width: 50px;
-                margin-bottom: 10px;
-            }
+        .sidebar img {
+            border-radius: 50%;
+            width: 50px;
+            margin-bottom: 10px;
+        }
 
-            .sidebar h4 {
-                font-size: 18px;
-                margin-bottom: 40px;
-            }
+        .sidebar h4 {
+            font-size: 18px;
+            margin-bottom: 40px;
+        }
 
-            .sidebar ul {
-                list-style: none;
-                padding: 0;
-            }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
 
-                .sidebar ul li {
-                    margin-bottom: 20px;
-                    display: flex;
-                    align-items: center;
-                }
+        .sidebar ul li {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
 
-                    .sidebar ul li img, .sidebar ul li i {
-                        margin-right: 10px;
-                    }
+        .sidebar ul li img, .sidebar ul li i {
+            margin-right: 10px;
+        }
 
-                    .sidebar ul li a {
-                        text-decoration: none;
-                        color: black;
-                        font-size: 16px;
-                    }
+        .sidebar ul li a {
+            text-decoration: none;
+            color: black;
+            font-size: 16px;
+        }
 
         /* Main content styling */
         .main-content {
@@ -74,24 +73,24 @@
             padding: 20px;
         }
 
-            .main-content .header {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-            }
+        .main-content .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-                .main-content .header input[type="text"] {
-                    padding: 10px;
-                    width: 300px;
-                    border: 1px solid #ccc;
-                    border-radius: 5px;
-                }
+        .main-content .header input[type="text"] {
+            padding: 10px;
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
 
-                .main-content .header .date-picker, .notification-bell {
-                    padding: 10px;
-                    border: 1px solid #ccc;
-                    border-radius: 5px;
-                }
+        .main-content .header .date-picker, .notification-bell {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
 
         .notification-bell {
             margin-left: 10px;
@@ -107,21 +106,21 @@
             box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-            .transactions-table th, .transactions-table td {
-                padding: 15px;
-                text-align: left;
-                border-bottom: 1px solid #ddd;
-            }
+        .transactions-table th, .transactions-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
 
-            .transactions-table th {
-                background-color: #F5F5F5;
-                font-size: 16px;
-                font-weight: bold;
-            }
+        .transactions-table th {
+            background-color: #F5F5F5;
+            font-size: 16px;
+            font-weight: bold;
+        }
 
-            .transactions-table td img {
-                margin-right: 10px;
-            }
+        .transactions-table td img {
+            margin-right: 10px;
+        }
 
         .btn-new-transaction {
             padding: 10px 15px;
@@ -132,9 +131,9 @@
             cursor: pointer;
         }
 
-            .btn-new-transaction:hover {
-                background-color: #004494;
-            }
+        .btn-new-transaction:hover {
+            background-color: #004494;
+        }
 
         /* Success badge styling */
         .status-success {
@@ -145,81 +144,221 @@
             font-size: 14px;
         }
     </style>
-
-
 </head>
 <body>
-    <div class="container">
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <img src="https://i.pravatar.cc/100" alt="Profile Picture">
-            <h4>Simrika Lama</h4>
-            <ul>
-                <li><i class="fas fa-home"></i><a href="#">Home</a></li>
-                <li><i class="fas fa-list"></i><a href="#">Transaction</a></li>
-                <li><i class="fas fa-user"></i><a href="#">My Profile</a></li>
-                <li><i class="fas fa-plus-circle"></i><a href="#">Add Account</a></li>
-                <li><i class="fas fa-money-check-alt"></i><a href="#">Income/Expense</a></li>
-                <li><i class="fas fa-cog"></i><a href="#">Settings</a></li>
-                <li><i class="fas fa-phone"></i><a href="#">Support</a></li>
-                <li><i class="fas fa-sign-out-alt"></i><a href="#">Logout</a></li>
-            </ul>
-        </div>
-
-        <!-- Main content -->
-        <div class="main-content">
-            <div class="header">
-                <input type="text" placeholder="Search for the transaction name">
-                <input type="text" class="date-picker" placeholder="2/12/2024">
-                <div class="notification-bell">
-                    <i class="fas fa-bell"></i>
+        <div class="container">
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <div class="user-info">
+                    <img asp-append-version="true" src="~/Pic/LamaSimrika.jpg" alt="Profile">
+                    <h3>Simrika Lama</h3>
                 </div>
+                <nav class="nav">
+                    <a href="#" class="nav-item"><i class="fa-solid fa-house"></i> Home</a>
+                    <a asp-page="Transaction" class="nav-item"><i class="fa-solid fa-right-left"></i> Transaction</a>
+                    <a href="#" class="nav-item"><i class="fa-solid fa-user"></i> My Profile</a>
+                    <a href="#" class="nav-item"><i class="fa-solid fa-plus"></i> Add Account</a>
+                    <a href="#" class="nav-item"><i class="fa-regular fa-credit-card"></i> Income/Expense</a>
+                    <a href="#" class="nav-item"><i class="fa-solid fa-gear"></i> Settings</a>
+                    <a href="#" class="nav-item"><i class="fa-solid fa-phone"></i> Support</a>
+                </nav>
+
+                <nav class="nav">
+                    <a href="#" class="logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
+                </nav>
             </div>
 
-            <!-- Transactions Table -->
-            <table class="transactions-table">
-                <thead>
-                    <tr>
-                        <th>DETAILS</th>
-                        <th>MERCHANT</th>
-                        <th>AMOUNT</th>
-                        <th>STATUS</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><img src="https://img.icons8.com/emoji/48/food-catering.png" alt="Food Catering">2024-01-23 Food Catering</td>
-                        <td>Bhatbhateni Supermarket</td>
-                        <td>Rs. 200</td>
-                        <td><span class="status-success">Success</span></td>
-                    </tr>
-                    <tr>
-                        <td><img src="https://img.icons8.com/color/48/electricity.png" alt="Electricity">2024-01-23 Electricity</td>
-                        <td>NEA</td>
-                        <td>Rs. 200</td>
-                        <td><span class="status-success">Success</span></td>
-                    </tr>
-                    <tr>
-                        <td><img src="https://img.icons8.com/ios-filled/50/internet.png" alt="Internet">2024-01-23 Internet</td>
-                        <td>Worldlink</td>
-                        <td>Rs. 200</td>
-                        <td><span class="status-success">Success</span></td>
-                    </tr>
-                    <tr>
-                        <td><img src="https://img.icons8.com/emoji/48/groceries.png" alt="Groceries">2024-01-23 Groceries</td>
-                        <td>Bigmart</td>
-                        <td>Rs. 200</td>
-                        <td><span class="status-success">Success</span></td>
-                    </tr>
-                    <tr>
-                        <td><img src="https://img.icons8.com/color/48/electricity.png" alt="Electricity">2024-01-23 Electricity</td>
-                        <td>NEA</td>
-                        <td>Rs. 200</td>
-                        <td><span class="status-success">Success</span></td>
-                    </tr>
-                </tbody>
-            </table>
+            <!-- Main Content -->
+            <div class="main-content">
+                <!-- Top Bar -->
+                <div class="top-bar">
+                    <input type="text" placeholder="Search for the transaction name" class="search-bar">
+                    <div class="top-icons">
+                        <div class="icon-wrapper">
+                            <span>2/12/2024</span>
+                            <i class="fa-regular fa-calendar"></i>
+                        </div>
+                        <div class="icon-wrapper notification-container">
+                            <i class="fa-solid fa-bell notification-icon"></i>
+                            <span class="notification-dot hidden"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Balance Section -->
+                <div class="balance-section">
+                    <div class="total-balance">
+                        <h3 style="color: #C8C8C8;">Your total balance</h3>
+                        <p style="font-size: 24px;">Rs. 8000.00</p>
+                        <div class="balance-change">
+                            <div class="income">
+                                <i class="fa-solid fa-arrow-up" style="color: green;"></i>
+                                <span>Rs. 500.00</span>
+                                <p style="color: #C8C8C8;">Today's Income</p>
+                            </div>
+                            <div class="expense">
+                                <i class="fa-solid fa-arrow-down" style="color: red;"></i>
+                                <span>Rs. 500.00</span>
+                                <p style="color: #C8C8C8;">Today's Expense</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bank Cards Carousel -->
+                    <div class="bank-cards-carousel">
+                        <div class="bank-cards">
+                            <div class="card">
+                                <h4>Cash</h4>
+                                <div class="card-content">
+                                    <p>Full Name</p>
+                                    <p>2024-06-26</p>
+                                    <p>NPR. 2000.00 <i class="fa fa-eye"></i></p>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <h4>NIC Asia Bank</h4>
+                                <div class="card-content">
+                                    <p>Full Name</p>
+                                    <p>2024-06-26</p>
+                                    <p>Account Number 1234566</p>
+                                    <p>NPR. 2000.00 <i class="fa fa-eye"></i></p>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <h4>NMB Bank</h4>
+                                <div class="card-content">
+                                    <p>Full Name</p>
+                                    <p>2024-06-26</p>
+                                    <p>Account Number 7891011</p>
+                                    <p>NPR. 2000.00 <i class="fa fa-eye"></i></p>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="next-arrow">&#10095;</button> <!-- Right arrow -->
+                    </div>
+
+                    <!-- Pagination Dots -->
+                    <div class="pagination-dots">
+                        <span class="dot"></span>
+                        <span class="dot active"></span>
+                        <span class="dot"></span>
+                    </div>
+                </div>
+
+                <div class="content-sections">
+                    <!-- Content Sections (Activities with Chart Integration) -->
+                    <div class="activities">
+                        <div class="activities-header">
+                            <h4>Activities</h4>
+                            <select class="dropdown" id="period-selector">
+                                <option value="today">Today</option>
+                                <option value="this_week">This Week</option>
+                                <option value="this_month">This Month</option>
+                            </select>
+                        </div>
+                        <p>Total spending: Rs. <span id="total-spending">20,000</span></p>
+
+                        <div id="chart_div" style="width: 100%; height: 500px;"></div>
+                    </div>
+
+
+                    <div class="transaction">
+                        <div class="transaction-header">
+                            <h4>My Transaction</h4>
+                            <a href="#">See all</a>
+                        </div>
+                        <div class="transaction-item">
+                            <div class="icon-container food-icon">
+                                <i class="fa-solid fa-bowl-food"></i>
+                            </div>
+                            <div class="transaction-info">
+                                <span>Food</span>
+                                <span class="date">2024-10-23</span>
+                            </div>
+                            <div class="transaction-right">
+                                <span class="amount">Rs.2000</span>
+                            </div>
+                        </div>
+
+                        <div class="transaction-item">
+                            <div class="icon-container nea-icon">
+                                <i class="fa-solid fa-lightbulb"></i>
+                            </div>
+                            <div class="transaction-info">
+                                <span>NEA</span>
+                                <span class="date">2024-10-23</span>
+                            </div>
+                            <div class="transaction-right">
+                                <span class="amount">Rs.2000</span>
+                            </div>
+                        </div>
+
+                        <div class="transaction-item">
+                            <div class="icon-container internet-icon">
+                                <i class="fa-solid fa-wifi"></i>
+                            </div>
+                            <div class="transaction-info">
+                                <span>Internet</span>
+                                <span class="date">2024-10-23</span>
+                            </div>
+                            <div class="transaction-right">
+                                <span class="amount">Rs.2000</span>
+                            </div>
+                        </div>
+
+                        <div class="transaction-item">
+                            <div class="icon-container college-icon">
+                                <i class="fa-solid fa-graduation-cap"></i>
+                            </div>
+                            <div class="transaction-info">
+                                <span>College</span>
+                                <span class="date">2024-10-23</span>
+                            </div>
+                            <div class="transaction-right">
+                                <span class="amount">Rs.2000</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Categories Section -->
+                    <div class="categories">
+                        <div class="categories-header">
+                            <h4>Categories</h4>
+                            <a href="#"><i class="fa fa-plus"></i></a>
+                        </div>
+                        <div class="category-item">
+                            <div class="icon-container food-icon">
+                                <i class="fa-solid fa-bowl-food"></i>
+                            </div>
+                            <span>Food</span>
+                        </div>
+
+                        <div class="category-item">
+                            <div class="icon-container nea-icon">
+                                <i class="fa-solid fa-lightbulb"></i>
+                            </div>
+                            <span>NEA</span>
+                        </div>
+
+                        <div class="category-item">
+                            <div class="icon-container internet-icon">
+                                <i class="fa-solid fa-wifi"></i>
+                            </div>
+                            <span>Internet</span>
+                        </div>
+
+                        <div class="category-item">
+                            <div class="icon-container college-icon">
+                                <i class="fa-solid fa-graduation-cap"></i>
+                            </div>
+                            <span>College</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
-    </div>
 </body>
 </html>

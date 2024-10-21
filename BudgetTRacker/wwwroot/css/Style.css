@@ -499,3 +499,149 @@ h4 {
         color: gray;
         font-size: 14px;
     }
+
+/*SignIN*/
+
+.login-container {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    text-align: center;
+    width: 400px;
+}
+
+    .login-container img {
+        width: 80px;
+        margin-bottom: 20px;
+    }
+
+h2 {
+    font-weight: 300;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.input-field {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #f8f8f8;
+}
+
+    .input-field:focus {
+        border-color: #02457A;
+        outline: none;
+    }
+
+.password-container {
+    position: relative;
+}
+
+    .password-container i {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+    }
+
+.checkbox-remember {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+    .checkbox-remember input[type="checkbox"] {
+        margin-right: 5px;
+    }
+
+.login-btn {
+    width: 100%;
+    background-color: #02457A;
+    color: white;
+    padding: 12px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+    .login-btn:hover {
+        background-color: #013a63;
+    }
+
+.divider {
+    position: relative;
+    text-align: center;
+    margin: 20px 0;
+}
+
+    .divider::before,
+    .divider::after {
+        content: '';
+        height: 1px;
+        width: 40%;
+        background-color: #ccc;
+        display: inline-block;
+        position: absolute;
+        top: 50%;
+    }
+
+    .divider::before {
+        left: 0;
+    }
+
+    .divider::after {
+        right: 0;
+    }
+
+    .divider span {
+        background-color: #FBFBFB;
+        padding: 0 10px;
+        color: #777;
+    }
+
+.google-btn {
+    width: 100%;
+    border: 1px solid #02457A;
+    color: #02457A;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+    .google-btn img {
+        width: 20px;
+        margin-right: 10px;
+    }
+
+    .google-btn:hover {
+        background-color: #f1f1f1;
+    }
+
+.signup-link {
+    font-size: 14px;
+    margin-top: 20px;
+}
+
+    .signup-link a {
+        text-decoration: none;
+        color: #02457A;
+        font-weight: 500;
+    }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
