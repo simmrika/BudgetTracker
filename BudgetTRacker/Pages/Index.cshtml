@@ -13,6 +13,8 @@
     <title>Dashboard</title>
     <link href="~/css/style.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
 </head>
 <body>
     <div class="container">
@@ -116,19 +118,21 @@
                 </div>
             </div>
 
-            <!-- Content Sections (Activities, Transactions, Categories) -->
             <div class="content-sections">
-                <div class="activities">
-                    <div class="activities-header">
-                        <h4>Activities</h4>
-                        <select class="dropdown">
-                            <option value="this_week">This week</option>
-                            <option value="today">Today</option>
-                            <option value="this_month">This month</option>
-                        </select>
+                <!-- Content Sections (Activities with Chart Integration) -->
+                    <div class="activities">
+                        <div class="activities-header">
+                            <h4>Activities</h4>
+                            <select class="dropdown" id="period-selector">
+                                <option value="today">Today</option>
+                                <option value="this_week">This Week</option>
+                                <option value="this_month">This Month</option>
+                            </select>
+                        </div>
+                        <p>Total spending: Rs. <span id="total-spending">20,000</span></p>
+                 
+                        <div id="chart_div" style="width: 100%; height: 500px;"></div>
                     </div>
-                    <p>Total spending: Rs. 20,000</p>
-                </div>
 
                 <div class="transactions">
                     <h4>My Transaction</h4>
@@ -152,3 +156,74 @@
 </html>
 
 <script defer src="~/js/site.js"></script>
+<script>
+    // Load Google Charts
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart);
+
+    // Chart data for different periods
+    const chartData = {
+        today: [
+            ['Category', 'Income', 'Expenses'],
+            ['Food', 500, 300],
+            ['Transport', 200, 100],
+            ['Internet', 150, 50],
+            ['Others', 100, 75]
+        ],
+        this_week: [
+            ['Day', 'Income', 'Expenses'],
+            ['Sun', 500, 300],
+            ['Mon', 700, 400],
+            ['Tue', 600, 350],
+            ['Wed', 800, 500],
+            ['Thu', 400, 200],
+            ['Fri', 900, 450],
+            ['Sat', 1000, 600]
+        ],
+        this_month: [
+            ['Month', 'Income', 'Expenses'],
+            ['Jan', 5000, 4000],
+            ['Feb', 3000, 2500],
+            ['Mar', 4500, 3500],
+            ['Apr', 4000, 3000],
+            ['May', 6000, 4500],
+            ['Jun', 7000, 5000],
+            ['Jul', 8000, 5500],
+            ['Aug', 6500, 4500],
+            ['Sep', 5000, 4000],
+            ['Oct', 7500, 6000],
+            ['Nov', 6000, 4500],
+            ['Dec', 8500, 7000]
+        ]
+    };
+
+    // Function to draw the chart based on selected period
+    function drawChart(period = 'today') {
+        const data = google.visualization.arrayToDataTable(chartData[period]);
+
+        const options = {
+            title: 'Income vs. Expenses',
+            hAxis: { title: 'Category', titleTextStyle: { color: '#333' } },
+            vAxis: { minValue: 0 },
+            series: {
+                0: { color: 'green' },  // Green for Income
+                1: { color: 'red' }     // Red for Expenses
+            }
+        };
+
+        const chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+
+        // Update total spending dynamically
+        const totalSpending = chartData[period].slice(1).reduce((sum, row) => sum + row[2], 0);
+        document.getElementById('total-spending').textContent = totalSpending;
+    }
+
+    // Event listener for period selection
+    document.getElementById('period-selector').addEventListener('change', (event) => {
+        drawChart(event.target.value);
+    });
+
+    // Initial chart rendering
+    drawChart();
+</script>
