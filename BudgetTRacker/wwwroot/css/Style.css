@@ -407,4 +407,95 @@ i {
         border-bottom: none;
     }
 
-/*Activities*/
+/*Transaction*/
+.transaction, .categories {
+    width: 48%;
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.transaction-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+
+
+h4 {
+    font-weight: bold;
+    margin: 0 0 10px 0;
+}
+
+.transaction-header, .categories-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+    .transaction-header a, .categories-header a {
+        text-decoration: none;
+        color: black;
+        font-weight: bold;
+    }
+
+.transaction-item, .category-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    justify-content: space-between;
+}
+
+.icon-container {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    margin-right: 15px;
+}
+
+.food-icon {
+    background-color: #F4A261;
+}
+
+.nea-icon {
+    background-color: #A8DADC;
+}
+
+.internet-icon {
+    background-color: #D3D3D3;
+}
+
+.college-icon {
+    background-color: #E9C46A;
+}
+
+.icon-container i {
+    font-size: 24px;
+    color: black;
+}
+
+.transaction-info, .category-info {
+    display: flex;
+    flex-direction: column;
+}
+
+    .transaction-info span, .category-info span {
+        margin: 2px 0;
+    }
+
+    .transaction-info .amount {
+        font-weight: bold;
+        font-size: 18px;
+    }
+
+    .transaction-info .date {
+        color: gray;
+        font-size: 14px;
+    }
