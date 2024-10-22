@@ -1,238 +1,160 @@
 ﻿@page
 @model IndexModel
 @{
-    Layout = "";
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Dashboard";
 }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <link href="~/css/style.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
-</head>
-<body>
-    <div class="container">
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <div class="user-info">
-                <img asp-append-version="true" src="~/Pic/LamaSimrika.jpg" alt="Profile">
-                <h3>Simrika Lama</h3>
+<section class="balance-section">
+    <div class="total-balance">
+        <h3>Your total balance</h3>
+        <p class="balance-amount">Rs. 8000.00</p>
+        <div class="balance-change">
+            <div class="income">
+                <i class="fa-solid fa-arrow-up"></i>
+                <span>Rs. 500.00</span>
+                <p>Today's Income</p>
             </div>
-            <nav class="nav">
-                <a href="#" class="nav-item"><i class="fa-solid fa-house"></i> Home</a>
-                <a asp-page="Transaction" class="nav-item"><i class="fa-solid fa-right-left"></i> Transaction</a>
-                <a href="#" class="nav-item"><i class="fa-solid fa-user"></i> My Profile</a>
-                <a href="#" class="nav-item"><i class="fa-solid fa-plus"></i> Add Account</a>
-                <a href="#" class="nav-item"><i class="fa-regular fa-credit-card"></i> Income/Expense</a>
-                <a href="#" class="nav-item"><i class="fa-solid fa-gear"></i> Settings</a>
-                <a href="#" class="nav-item"><i class="fa-solid fa-phone"></i> Support</a>
-            </nav>
-
-            <nav class="nav">
-                <a href="#" class="logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
-            </nav>
-        </div>
-
-        <!-- Main Content -->
-        <div class="main-content">
-            <!-- Top Bar -->
-            <div class="top-bar">
-                <input type="text" placeholder="Search for the transaction name" class="search-bar">
-                <div class="top-icons">
-                    <div class="icon-wrapper">
-                        <span>2/12/2024</span>
-                        <i class="fa-regular fa-calendar"></i>
-                    </div>
-                    <div class="icon-wrapper notification-container">
-                        <i class="fa-solid fa-bell notification-icon"></i>
-                        <span class="notification-dot hidden"></span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Balance Section -->
-            <div class="balance-section">
-                <div class="total-balance">
-                    <h3 style="color: #C8C8C8;">Your total balance</h3>
-                    <p style="font-size: 24px;">Rs. 8000.00</p>
-                    <div class="balance-change">
-                        <div class="income">
-                            <i class="fa-solid fa-arrow-up" style="color: green;"></i>
-                            <span>Rs. 500.00</span>
-                            <p style="color: #C8C8C8;">Today's Income</p>
-                        </div>
-                        <div class="expense">
-                            <i class="fa-solid fa-arrow-down" style="color: red;"></i>
-                            <span>Rs. 500.00</span>
-                            <p style="color: #C8C8C8;">Today's Expense</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Bank Cards Carousel -->
-                <div class="bank-cards-carousel">
-                    <div class="bank-cards">
-                        <div class="card">
-                            <h4>Cash</h4>
-                            <div class="card-content">
-                                <p>Full Name</p>
-                                <p>2024-06-26</p>
-                                <p>NPR. 2000.00 <i class="fa fa-eye"></i></p>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <h4>NIC Asia Bank</h4>
-                            <div class="card-content">
-                                <p>Full Name</p>
-                                <p>2024-06-26</p>
-                                <p>Account Number 1234566</p>
-                                <p>NPR. 2000.00 <i class="fa fa-eye"></i></p>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <h4>NMB Bank</h4>
-                            <div class="card-content">
-                                <p>Full Name</p>
-                                <p>2024-06-26</p>
-                                <p>Account Number 7891011</p>
-                                <p>NPR. 2000.00 <i class="fa fa-eye"></i></p>
-                            </div>
-                        </div>
-                    </div>
-                    <button class="next-arrow">&#10095;</button> <!-- Right arrow -->
-                </div>
-
-                <!-- Pagination Dots -->
-                <div class="pagination-dots">
-                    <span class="dot"></span>
-                    <span class="dot active"></span>
-                    <span class="dot"></span>
-                </div>
-            </div>
-
-            <div class="content-sections">
-                <!-- Content Sections (Activities with Chart Integration) -->
-                    <div class="activities">
-                        <div class="activities-header">
-                            <h4>Activities</h4>
-                            <select class="dropdown" id="period-selector">
-                                <option value="today">Today</option>
-                                <option value="this_week">This Week</option>
-                                <option value="this_month">This Month</option>
-                            </select>
-                        </div>
-                        <p>Total spending: Rs. <span id="total-spending">20,000</span></p>
-                 
-                        <div id="chart_div" style="width: 100%; height: 500px;"></div>
-                    </div>
-
-
-                <div class="transaction">
-                    <div class="transaction-header">
-                        <h4>My Transaction</h4>
-                        <a href="#">See all</a>
-                    </div>
-                    <div class="transaction-item">
-                        <div class="icon-container food-icon">
-                            <i class="fa-solid fa-bowl-food"></i>
-                        </div>
-                        <div class="transaction-info">
-                            <span>Food</span>
-                            <span class="date">2024-10-23</span>
-                        </div>
-                        <div class="transaction-right">
-                            <span class="amount">Rs.2000</span>
-                        </div>
-                    </div>
-
-                    <div class="transaction-item">
-                        <div class="icon-container nea-icon">
-                            <i class="fa-solid fa-lightbulb"></i>
-                        </div>
-                        <div class="transaction-info">
-                            <span>NEA</span>
-                            <span class="date">2024-10-23</span>
-                        </div>
-                        <div class="transaction-right">
-                            <span class="amount">Rs.2000</span>
-                        </div>
-                    </div>
-
-                    <div class="transaction-item">
-                        <div class="icon-container internet-icon">
-                            <i class="fa-solid fa-wifi"></i>
-                        </div>
-                        <div class="transaction-info">
-                            <span>Internet</span>
-                            <span class="date">2024-10-23</span>
-                        </div>
-                        <div class="transaction-right">
-                            <span class="amount">Rs.2000</span>
-                        </div>
-                    </div>
-
-                    <div class="transaction-item">
-                        <div class="icon-container college-icon">
-                            <i class="fa-solid fa-graduation-cap"></i>
-                        </div>
-                        <div class="transaction-info">
-                            <span>College</span>
-                            <span class="date">2024-10-23</span>
-                        </div>
-                        <div class="transaction-right">
-                            <span class="amount">Rs.2000</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Categories Section -->
-                <div class="categories">
-                    <div class="categories-header">
-                        <h4>Categories</h4>
-                        <a href="#"><i class="fa fa-plus"></i></a>
-                    </div>
-                    <div class="category-item">
-                        <div class="icon-container food-icon">
-                            <i class="fa-solid fa-bowl-food"></i>
-                        </div>
-                        <span>Food</span>
-                    </div>
-
-                    <div class="category-item">
-                        <div class="icon-container nea-icon">
-                            <i class="fa-solid fa-lightbulb"></i>
-                        </div>
-                        <span>NEA</span>
-                    </div>
-
-                    <div class="category-item">
-                        <div class="icon-container internet-icon">
-                            <i class="fa-solid fa-wifi"></i>
-                        </div>
-                        <span>Internet</span>
-                    </div>
-
-                    <div class="category-item">
-                        <div class="icon-container college-icon">
-                            <i class="fa-solid fa-graduation-cap"></i>
-                        </div>
-                        <span>College</span>
-                    </div>
-                </div>
-
+            <div class="expense">
+                <i class="fa-solid fa-arrow-down"></i>
+                <span>Rs. 500.00</span>
+                <p>Today's Expense</p>
             </div>
         </div>
     </div>
-</body>
-</html>
+
+    <div class="bank-cards-carousel">
+        <div class="bank-cards">
+            <div class="card">
+                <h4>Cash</h4>
+                <p>Full Name</p>
+                <p>2024-06-26</p>
+                <p>NPR. 2000.00 <i class="fa fa-eye"></i></p>
+            </div>
+
+            <div class="card">
+                <h4>NIC Asia Bank</h4>
+                <p>Full Name</p>
+                <p>2024-06-26</p>
+                <p>Account Number 1234566</p>
+                <p>NPR. 2000.00 <i class="fa fa-eye"></i></p>
+            </div>
+
+            <div class="card">
+                <h4>NMB Bank</h4>
+                <p>Full Name</p>
+                <p>2024-06-26</p>
+                <p>Account Number 7891011</p>
+                <p>NPR. 2000.00 <i class="fa fa-eye"></i></p>
+            </div>
+        </div>
+        <button class="next-arrow">&#10095;</button>
+    </div>
+
+</section>
+<div class="content-sections">
+    <!-- Activities Section with Chart -->
+    <div class="activities">
+        <div class="activities-header">
+            <h4>Activities</h4>
+            <select class="dropdown" id="period-selector">
+                <option value="today">Today</option>
+                <option value="this_week">This Week</option>
+                <option value="this_month">This Month</option>
+            </select>
+        </div>
+        <p>Total spending: Rs. <span id="total-spending">20,000</span></p>
+        <div id="chart_div" style="width: 100%; height: 500px;"></div>
+    </div>
+
+    <!-- Transactions Section -->
+    <div class="transaction">
+        <div class="transaction-header">
+            <h4>My Transactions</h4>
+            <a href="#">See all</a>
+        </div>
+        <div class="transaction-item">
+            <div class="icon-container food-icon">
+                <i class="fa-solid fa-bowl-food"></i>
+            </div>
+            <div class="transaction-info">
+                <span>Food</span>
+                <span class="date">2024-10-23</span>
+            </div>
+            <div class="transaction-right">
+                <span class="amount">Rs.2000</span>
+            </div>
+        </div>
+        <div class="transaction-item">
+            <div class="icon-container nea-icon">
+                <i class="fa-solid fa-lightbulb"></i>
+            </div>
+            <div class="transaction-info">
+                <span>NEA</span>
+                <span class="date">2024-10-23</span>
+            </div>
+            <div class="transaction-right">
+                <span class="amount">Rs.2000</span>
+            </div>
+        </div>
+        <div class="transaction-item">
+            <div class="icon-container internet-icon">
+                <i class="fa-solid fa-wifi"></i>
+            </div>
+            <div class="transaction-info">
+                <span>Internet</span>
+                <span class="date">2024-10-23</span>
+            </div>
+            <div class="transaction-right">
+                <span class="amount">Rs.2000</span>
+            </div>
+        </div>
+        <div class="transaction-item">
+            <div class="icon-container college-icon">
+                <i class="fa-solid fa-graduation-cap"></i>
+            </div>
+            <div class="transaction-info">
+                <span>College</span>
+                <span class="date">2024-10-23</span>
+            </div>
+            <div class="transaction-right">
+                <span class="amount">Rs.2000</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Categories Section -->
+    <div class="categories">
+        <div class="categories-header">
+            <h4>Categories</h4>
+            <a href="#"><i class="fa fa-plus"></i></a>
+        </div>
+        <div class="category-item">
+            <div class="icon-container food-icon">
+                <i class="fa-solid fa-bowl-food"></i>
+            </div>
+            <span>Food</span>
+        </div>
+        <div class="category-item">
+            <div class="icon-container nea-icon">
+                <i class="fa-solid fa-lightbulb"></i>
+            </div>
+            <span>NEA</span>
+        </div>
+        <div class="category-item">
+            <div class="icon-container internet-icon">
+                <i class="fa-solid fa-wifi"></i>
+            </div>
+            <span>Internet</span>
+        </div>
+        <div class="category-item">
+            <div class="icon-container college-icon">
+                <i class="fa-solid fa-graduation-cap"></i>
+            </div>
+            <span>College</span>
+        </div>
+    </div>
+</div>
 
 <script defer src="~/js/site.js"></script>
 <script>

@@ -1,38 +1,64 @@
-﻿<!DOCTYPE html>
+﻿@{
+    ViewData["Title"] = ViewData["Title"] ?? "Dashboard";
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - BudgetTracker</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/BudgetTracker.styles.css" asp-append-version="true" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link href="~/css/style.css" rel="stylesheet" />
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+          integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <link href="~/css/global.css" rel="stylesheet" />
+    <link href="~/css/run.css" rel="stylesheet" />
+
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-            
-                
+    <div class="layout-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="user-info">
+                <img asp-append-version="true" src="~/Pic/LamaSimrika.jpg" alt="Profile" />
+                <h3>Simrika Lama</h3>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+            <nav class="nav">
+                <a asp-page="/Index" class="nav-item"><i class="fa-solid fa-house"></i> Home</a>
+                <a asp-page="/Transaction" class="nav-item"><i class="fa-solid fa-right-left"></i> Transaction</a>
+                <a href="#" class="nav-item"><i class="fa-solid fa-user"></i> My Profile</a>
+                <a href="#" class="nav-item"><i class="fa-solid fa-plus"></i> Add Account</a>
+                <a href="#" class="nav-item"><i class="fa-regular fa-credit-card"></i> Income/Expense</a>
+                <a href="#" class="nav-item"><i class="fa-solid fa-gear"></i> Settings</a>
+                <a href="#" class="nav-item"><i class="fa-solid fa-phone"></i> Support</a>
+                <a href="#" class="logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="top-bar">
+                <input type="text" placeholder="Search for the transaction name" class="search-bar" />
+                <div class="top-icons">
+                    <div class="icon-wrapper">
+                        <span>2/12/2024</span>
+                        <i class="fa-regular fa-calendar"></i>
+                    </div>
+                    <div class="icon-wrapper notification-container">
+                        <i class="fa-solid fa-bell notification-icon"></i>
+                        <span class="notification-dot hidden"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dynamic Page Content -->
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - BudgetTracker - <a asp-area="" asp-page="/Privacy">Privacy</a>
-        </div>
-    </footer>
-
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-
-    @await RenderSectionAsync("Scripts", required: false)
+    <script defer src="~/js/site.js"></script>
 </body>
 </html>

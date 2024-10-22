@@ -1,0 +1,89 @@
+﻿/* Top Search Bar */
+.top-bar input[type="text"] {
+    padding: 12px;
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.top-bar input:focus {
+    border-color: #0056b3;
+    box-shadow: 0px 0px 8px rgba(0, 86, 179, 0.2);
+}
+
+/* Balance Section */
+.balance-section {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.total-balance {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+    flex: 1;
+}
+
+/* Bank Cards */
+.bank-cards {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+}
+
+    .bank-cards .card {
+        background-color: #fff;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        min-width: 180px;
+    }
+
+/* Transaction Items */
+.transaction {
+    margin-top: 30px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.transaction-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.transaction-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+    .transaction-item .icon-container {
+        width: 40px;
+        height: 40px;
+        background-color: #f0f2f5;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 10px;
+    }
+
+    .transaction-item span {
+        flex-grow: 1;
+        font-size: 16px;
+    }
+
+    .transaction-item .amount {
+        font-weight: bold;
+        color: #d9534f;
+    }
