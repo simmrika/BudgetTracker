@@ -1,0 +1,130 @@
+﻿@page
+@model MyProfileModel
+@{
+    ViewData["Title"] = "My Profile";
+}
+
+<div class="container">
+    <div class="title">My Profile</div>
+
+    <div class="section-divider-container">
+        <hr class="section-divider" />
+    </div>
+
+    <div class="section">
+        <div class="section-title">Basic Information</div>
+        <table class="info-table">
+            <tr>
+                <td>Name</td>
+                <td>Simrika Lama</td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td>abc@gmail.com</td>
+            </tr>
+            <tr>
+                <td>Gender</td>
+                <td>F</td>
+            </tr>
+            <tr>
+                <td>Mobile Number</td>
+                <td>9824455632</td>
+            </tr>
+            <tr>
+                <td>Date Of Birth</td>
+                <td>4/23/2000</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="section-divider-container">
+        <hr class="section-divider" />
+    </div>
+
+    <div class="section">
+        <div class="section-title">Account</div>
+        <table class="info-table">
+            <tr>
+                <td>Account Open Date</td>
+                <td>10/1/2024</td>
+            </tr>
+            <tr>
+                <td>No. Of Account Linked</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>Last Transaction Date</td>
+                <td>11/1/2024</td>
+            </tr>
+            <tr>
+                <td>Status</td>
+                <td>Active</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        width: 80%;
+        max-width: 1000px;
+        margin: 20px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .title {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .section-divider-container {
+        display: flex;
+        align-items: center;
+        width: 100%;
+    }
+
+    .section-divider {
+        flex-grow: 1;
+        border: none;
+        border-top: 1px solid #C8C8C8;
+        margin: 10px 0;
+    }
+
+    .section {
+        margin-top: 10px;
+    }
+
+    .section-title {
+        font-weight: bold;
+        margin-bottom: 10px;
+        background-color: #f1f1f1;
+        padding: 10px;
+        border-radius: 8px;
+    }
+
+    .info-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+        .info-table td {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+            .info-table td:first-child {
+                font-weight: bold;
+                width: 30%;
+            }
+</style>

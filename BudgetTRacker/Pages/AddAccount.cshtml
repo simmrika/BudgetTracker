@@ -1,0 +1,278 @@
+﻿@page
+@model AddAccountModel
+@{
+    ViewData["Title"] = "Add Account";
+}
+
+<div class="modal">
+    <button class="close-button" aria-label="Close" onclick="window.history.back()">&times;</button>
+    <h2>Add Account</h2>
+    <form method="post">
+        <div class="form-group">
+            <label for="AccountNumber">Account Number*</label>
+            <input type="text" id="AccountNumber" name="AccountNumber" placeholder="Enter Account Number" required>
+        </div>
+
+        <div class="form-group">
+            <label for="PhoneNumber">Phone Number*</label>
+            <input type="text" id="PhoneNumber" name="PhoneNumber" placeholder="Enter Phone Number" required>
+        </div>
+
+        <div class="form-group">
+            <label for="DateOfBirth">Date of Birth*</label>
+            <input type="date" id="DateOfBirth" name="DateOfBirth" required>
+        </div>
+
+        <div class="button-group">
+            <button type="submit" class="btn-continue">Continue</button>
+            <button type="button" class="btn-cancel" onclick="window.history.back()">Cancel</button>
+        </div>
+    </form>
+</div>
+
+<style>
+    /* Overall page layout */
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+        margin: 0;
+        display: flex;
+        min-height: 100vh;
+    }
+
+    /* Sidebar styling */
+    .sidebar {
+        width: 250px;
+        background-color: #ffffff;
+        padding: 20px;
+        border-right: 1px solid #e0e0e0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* Main content area */
+    .content {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 40px;
+    }
+
+    /* Modal container */
+    .modal {
+        width: 100%;
+        max-width: 500px;
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        position: relative;
+    }
+
+    /* Modal header styling */
+    .modal h2 {
+        font-size: 24px;
+        margin-bottom: 15px;
+        font-weight: bold;
+        border-bottom: 1px solid #c8c8c8;
+        padding-bottom: 10px;
+    }
+
+    /* Close button styling */
+    .close-button {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 18px;
+        border: none;
+        background: none;
+        cursor: pointer;
+    }
+
+    /* Form styling */
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 15px;
+    }
+
+    /* Input fields styling */
+    .form-group input {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    /* Button group styling */
+    .button-group {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    /* Continue button styling */
+    .btn-continue {
+        padding: 10px 20px;
+        background-color: #0056b3;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+        flex: 1;
+    }
+
+    /* Cancel button styling */
+    .btn-cancel {
+        padding: 10px 20px;
+        background-color: #fff;
+        color: #0056b3;
+        border: 1px solid #0056b3;
+        border-radius: 5px;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+        flex: 1;
+    }
+
+    /* Hover effects */
+    .btn-continue:hover {
+        background-color: #004494;
+    }
+
+    .btn-cancel:hover {
+        background-color: #e9ecef;
+    }
+</style>
+
+
+@* <style>
+    /* General body styling for center alignment */
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    /* Modal container styling */
+    .modal {
+        background-color: white;
+        width: 90%; /* Allows responsiveness */
+        max-width: 600px; /* Matches reference width */
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        position: relative;
+        font-family: Arial, sans-serif;
+    }
+
+        /* Modal title */
+        .modal h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            font-weight: bold;
+            border-bottom: 1px solid #C8C8C8;
+            padding-bottom: 10px;
+        }
+
+    /* Close button styling */
+    .close-button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 18px;
+        border: none;
+        background: none;
+        cursor: pointer;
+    }
+
+    /* Form group styling */
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 15px;
+    }
+
+        /* Input field styling */
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+    /* Currency input styling (if applicable) */
+    .currency-input {
+        display: flex;
+    }
+
+        .currency-input input[type="text"] {
+            flex-grow: 1;
+            margin-right: 5px;
+        }
+
+    .currency-symbol {
+        padding: 10px;
+        background-color: #e9ecef;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px;
+        color: #6c757d;
+    }
+
+    /* Button group styling */
+    .button-group {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    /* Continue button styling */
+    .btn-continue {
+        padding: 10px 20px;
+        background-color: #0056b3;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+        flex: 1;
+    }
+
+    /* Cancel button styling */
+    .btn-cancel {
+        padding: 10px 20px;
+        background-color: #fff;
+        color: #0056b3;
+        border: 1px solid #0056b3;
+        border-radius: 5px;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+        flex: 1;
+    }
+
+    /* Hover effects */
+    .btn-continue:hover {
+        background-color: #004494;
+    }
+
+    .btn-cancel:hover {
+        background-color: #e9ecef;
+    }
+</style> *@
