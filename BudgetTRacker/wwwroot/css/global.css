@@ -120,3 +120,87 @@
     .notification-dot.hidden {
         display: none;
     }
+
+
+
+/* Main Content Styling */
+.main-content {
+    padding: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+    .header input[type="text"] {
+        padding: 10px;
+        width: 300px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+.date-picker,
+.notification-bell {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+    .notification-bell i {
+        font-size: 18px;
+    }
+
+.btn-new-transaction {
+    padding: 10px 15px;
+    background-color: #0056b3;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+    .btn-new-transaction:hover {
+        background-color: #004494;
+    }
+
+/* Transactions Table */
+.transactions-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+    .transactions-table th,
+    .transactions-table td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .transactions-table th {
+        background-color: #F5F5F5;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .transactions-table td img {
+        margin-right: 10px;
+    }
+
+/* Status Badge */
+.status-success {
+    color: white;
+    background-color: #28a745;
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    text-align: center;
+    display: inline-block;
+}

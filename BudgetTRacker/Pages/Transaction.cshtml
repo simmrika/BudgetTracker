@@ -7,53 +7,384 @@
 
 
 
-
-<div class="balance-section">
-    <div class="total-balance">
-        <h3>Your Total Balance</h3>
-        <p>Rs. 8000.00</p>
-    </div>
-
-    <div class="bank-cards-carousel">
-        <div class="bank-cards">
-            <div class="card">
-                <h4>Savings Account</h4>
-                <p>Rs. 5000.00</p>
-            </div>
-            <div class="card">
-                <h4>Checking Account</h4>
-                <p>Rs. 3000.00</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="transaction">
+<div class="wrapper">
+<div class="transaction-container">
     <div class="transaction-header">
-        <h3>Recent Transactions</h3>
-        <button class="btn-new-transaction">+ Add Transaction</button>
+        <h3>Transactions</h3>
+        <div class="button-group">
+            <button class="btn-new-transaction">+ New transaction</button>
+                <div class="filter-dropdown">
+                    <button class="btn-filter"><i class="fa-solid fa-filter"></i></button>
+                    <div class="dropdown-content">
+                        <a href="#" onclick="sortTransactions('newest')">Newest</a>
+                        <a href="#" onclick="sortTransactions('oldest')">Oldest</a>
+                    </div>
+                </div>
+                <div class="options-dropdown">
+                    <button class="btn-options"><i class="fa-solid fa-ellipsis-h"></i></button>
+                    <div class="dropdown-content">
+                        <a href="#" onclick="downloadTransactions()">Download</a>
+                    </div>
+                </div>
+            </div>
     </div>
 
-    <div class="transaction-item">
-        <div class="icon-container">
-            <i class="fa-solid fa-shopping-cart"></i>
-        </div>
-        <span>Groceries</span>
-        <span class="amount">- Rs. 1000.00</span>
-    </div>
 
-    <div class="transaction-item">
-        <div class="icon-container">
-            <i class="fa-solid fa-bus"></i>
-        </div>
-        <span>Transport</span>
-        <span class="amount">- Rs. 500.00</span>
-    </div>
+    <table class="transaction-table">
+        <thead>
+            <tr>
+                <th>DETAILS</th>
+                <th>MERCHANT</th>
+                <th>AMOUNT</th>
+                <th>STATUS</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="details">
+                    <div class="icon-and-info">
+                        <i class="fa-solid fa-utensils icon"></i>
+                        <div class="info">
+                            <span class="date">2024-01-23</span>
+                            <span class="category">Food Catering</span>
+                        </div>
+                    </div>
+                </td>
+                <td>Bhatbhateni Supermarket</td>
+                <td>Rs.200.00</td>
+                <td><span class="status success">Success</span></td>
+            </tr>
+            <tr>
+                <td class="details">
+                    <div class="icon-and-info">
+                        <i class="fa-solid fa-lightbulb icon"></i>
+                        <div class="info">
+                            <span class="date">2024-01-23</span>
+                            <span class="category">Electricity</span>
+                        </div>
+                    </div>
+                </td>
+                <td>NEA</td>
+                <td>Rs.200.00</td>
+                <td><span class="status success">Success</span></td>
+            </tr>
+            <tr>
+                <td class="details">
+                    <div class="icon-and-info">
+                        <i class="fa-solid fa-wifi icon"></i>
+                        <div class="info">
+                            <span class="date">2024-01-23</span>
+                            <span class="category">Internet</span>
+                        </div>
+                    </div>
+                </td>
+                <td>Worldlink</td>
+                <td>Rs.200.00</td>
+                <td><span class="status success">Success</span></td>
+            </tr>
+            <tr>
+                <td class="details">
+                    <div class="icon-and-info">
+                        <i class="fa-solid fa-shopping-cart icon"></i>
+                        <div class="info">
+                            <span class="date">2024-01-23</span>
+                            <span class="category">Groceries</span>
+                        </div>
+                    </div>
+                </td>
+                <td>Bigmart</td>
+                <td>Rs.200.00</td>
+                <td><span class="status success">Success</span></td>
+            </tr>
+            <tr>
+                <td class="details">
+                    <div class="icon-and-info">
+                        <i class="fa-solid fa-lightbulb icon"></i>
+                        <div class="info">
+                            <span class="date">2024-01-23</span>
+                            <span class="category">Electricity</span>
+                        </div>
+                    </div>
+                </td>
+                <td>NEA</td>
+                <td>Rs.200.00</td>
+                <td><span class="status success">Success</span></td>
+            </tr>
+        </tbody>
+
+    </table>
+</div>
 </div>
 
-<div class="pagination-dots">
-    <div class="dot active"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-</div>
+<style>
+    .wrapper {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        padding: 20px;
+        background-color: #f5f5f5; /* Optional background color */
+    }
+    .transaction-container {
+        width: 100%; /* Make container full width */
+        max-width: 800px;
+        margin: 0 auto; /* Center align the container */
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+        overflow-y: auto;
+    }
+
+    .transaction-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+        .transaction-header h3 {
+            margin: 0;
+            font-size: 1.5em;
+        }
+
+    .button-group {
+        display: flex;
+        gap: 10px;
+    }
+
+    .btn-new-transaction {
+        background-color: #02457A;
+        color: #fff;
+        border: 1px solid #02457A;
+        border-radius: 4px;
+        cursor: pointer;
+        padding: 8px 12px;
+    }
+
+    .btn-filter, .btn-options {
+        background-color: #fff;
+        color: #02457A;
+        border: 1px solid #02457A;
+        border-radius: 4px;
+        cursor: pointer;
+        padding: 8px 12px;
+    }
+
+        .btn-new-transaction:hover {
+            background-color: #013a63;
+            color: #fff;
+            border-color: #013a63;
+        }
+
+    .transaction-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+        .transaction-table th, .transaction-table td {
+            padding: 12px 15px;
+            text-align: left;
+        }
+
+        .transaction-table th {
+            background-color: #f3f3f3;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .transaction-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+    .details {
+        display: flex;
+        align-items: center;
+    }
+
+    .icon-and-info {
+        display: flex;
+        align-items: center;
+    }
+
+    .icon {
+        font-size: 1.5em;
+        margin-right: 10px;
+        color: #02457A;
+    }
+
+    .info {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .date {
+        font-size: 0.9em;
+        color: #888;
+    }
+
+    .category {
+        font-weight: bold;
+        color: #333;
+    }
+
+    .status {
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .success {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    /* Styles for the filter dropdown */
+    .filter-dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        top: 100%; /* Position the dropdown below the filter button */
+        left: 0;
+        background-color: #fff;
+        min-width: 120px;
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
+        z-index: 1;
+    }
+
+        .dropdown-content a {
+            color: #666; /* Lighter shade for the text */
+            padding: 8px 12px;
+            text-decoration: none;
+            display: block;
+            font-size: 0.9em; /* Slightly smaller font */
+            font-weight: 400; /* Optional, for lighter weight */
+        }
+
+            .dropdown-content a:hover {
+                background-color: #f3f3f3;
+                color: #333; /* Darker color on hover */
+            }
+
+    /* Show the dropdown on hover */
+    .filter-dropdown:hover .dropdown-content {
+        display: block;
+
+    }
+
+    /* Styling the options dropdown container */
+.options-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Styling the options button */
+.btn-options {
+    background-color: #fff;
+    color: #02457A;
+    border: 1px solid #02457A;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 8px 12px;
+    font-size: 1.2em; /* Adjust the icon size */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.btn-options i {
+    font-size: 1.2em; /* Icon size */
+}
+
+/* Button hover effect */
+.btn-options:hover {
+    background-color: #02457A;
+    color: #fff;
+    border-color: #02457A;
+}
+
+/* Styling the dropdown content */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%; /* Position the dropdown below the button */
+    left: 0;
+    background-color: #fff;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    z-index: 1;
+    padding: 5px 0;
+}
+
+/* Styling the links inside the dropdown */
+.dropdown-content a {
+    color: #02457A;
+    padding: 8px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 14px;
+    font-weight: 400; /* Optional, for lighter weight */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Hover effect for dropdown links */
+.dropdown-content a:hover {
+    background-color: #f3f3f3;
+    color: #02457A;
+}
+
+/* Show the dropdown when the parent is hovered */
+.options-dropdown:hover .dropdown-content {
+    display: block;
+}
+
+</style>
+
+<script>
+    function downloadTransactions() {
+        // Sample data format, replace with your actual data source
+        const transactions = [
+            { date: "2024-01-23", category: "Food Catering", merchant: "Bhatbhateni Supermarket", amount: "Rs.200.00", status: "Success" },
+            { date: "2024-01-23", category: "Electricity", merchant: "NEA", amount: "Rs.200.00", status: "Success" },
+            // Add more transactions here
+        ];
+
+        // Convert transactions to CSV format
+        let csvContent = "data:text/csv;charset=utf-8,Date,Category,Merchant,Amount,Status\n";
+        transactions.forEach(transaction => {
+            const row = `${transaction.date},${transaction.category},${transaction.merchant},${transaction.amount},${transaction.status}`;
+            csvContent += row + "\n";
+        });
+
+        // Create a downloadable link
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", "transaction_history.csv");
+        document.body.appendChild(link);
+
+        // Trigger the download
+        link.click();
+        document.body.removeChild(link);
+    }
+
+    function sortTransactions(order) {
+        // Placeholder for sorting function (as previously implemented)
+        if (order === 'newest') {
+            console.log('Sorting by newest');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else if (order === 'oldest') {
+            console.log('Sorting by oldest');
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }
+    }
+</script>
+
 
