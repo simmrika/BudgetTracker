@@ -21,6 +21,8 @@ namespace BankApiProj.Entites
         [Required] 
         public required string Email { get; set; }
 
+        [Required]
+        public required DateTime DateOfBirth { get; set; }
 
         [MinLength(10)]
         [Required]
