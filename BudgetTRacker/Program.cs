@@ -1,7 +1,11 @@
+using BudgetTRacker.Service;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
+builder.Services.AddHttpClient();
+builder.Services.AddHttpClient<BankTransactionDataService>();
 
 var app = builder.Build();
 
@@ -17,6 +21,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

@@ -73,55 +73,37 @@
             <h4>My Transactions</h4>
             <a asp-page="Transaction">See all</a>
         </div>
-        <div class="transaction-item">
-            <div class="icon-container food-icon">
-                <i class="fa-solid fa-bowl-food"></i>
+
+        @foreach (var item in Model.Transactions)
+        {
+            <div class="transaction-item">
+                <div class="icon-container
+                @(item.Notes == "Food" ? "food-icon" :
+                  item.Notes == "NEA" ? "nea-icon" :
+                  item.Notes == "Internet" ? "internet-icon" :
+                  item.Notes == "College" ? "college-icon" :
+                  "default-icon")">
+                    <i class="fa-solid
+                    @(item.Notes == "Food" ? "fa-bowl-food" :
+                      item.Notes == "NEA" ? "fa-lightbulb" :
+                      item.Notes == "Internet" ? "fa-wifi" :
+                      item.Notes == "College" ? "fa-graduation-cap" :
+                      "fa-receipt")"></i>
+                    <span class="transaction-type">@item.TransactionType</span>
+                </div>
+                <div class="transaction-info">
+                    <span class="notes">@item.Notes</span>
+                    <span class="date">@item.TransactionDate.ToString("yyyy-MM-dd")</span>
+                </div>
+                <div class="transaction-right">
+                    <span class="amount">Rs.@item.Amount</span>
+                </div>
             </div>
-            <div class="transaction-info">
-                <span>Food</span>
-                <span class="date">2024-10-23</span>
-            </div>
-            <div class="transaction-right">
-                <span class="amount">Rs.2000</span>
-            </div>
-        </div>
-        <div class="transaction-item">
-            <div class="icon-container nea-icon">
-                <i class="fa-solid fa-lightbulb"></i>
-            </div>
-            <div class="transaction-info">
-                <span>NEA</span>
-                <span class="date">2024-10-23</span>
-            </div>
-            <div class="transaction-right">
-                <span class="amount">Rs.2000</span>
-            </div>
-        </div>
-        <div class="transaction-item">
-            <div class="icon-container internet-icon">
-                <i class="fa-solid fa-wifi"></i>
-            </div>
-            <div class="transaction-info">
-                <span>Internet</span>
-                <span class="date">2024-10-23</span>
-            </div>
-            <div class="transaction-right">
-                <span class="amount">Rs.2000</span>
-            </div>
-        </div>
-        <div class="transaction-item">
-            <div class="icon-container college-icon">
-                <i class="fa-solid fa-graduation-cap"></i>
-            </div>
-            <div class="transaction-info">
-                <span>College</span>
-                <span class="date">2024-10-23</span>
-            </div>
-            <div class="transaction-right">
-                <span class="amount">Rs.2000</span>
-            </div>
-        </div>
+        }
     </div>
+
+
+
 
     <!-- Categories Section -->
     <div class="categories">
@@ -162,6 +144,7 @@
         </div>
     </div>
 </div>
+
 
 <script defer src="~/js/site.js"></script>
 <script>

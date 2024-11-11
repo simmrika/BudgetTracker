@@ -21,6 +21,7 @@ namespace BankApiProj.Controllers
 
         // GET: api/transactions/user/{userId}
         [HttpGet("user/{userId}")]
+        
         public async Task<ActionResult<IEnumerable<TransactionDto>>> GetTransactionsByUserId(int userId)
         {
             var transactions = await _context.Transactions

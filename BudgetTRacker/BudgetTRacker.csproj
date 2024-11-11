@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="NewFolder\" />
     <Folder Include="Repository\" />
     <Folder Include="wwwroot\Pic\" />
   </ItemGroup>
