@@ -31,90 +31,49 @@
     </div>
 
 
-    <table class="transaction-table">
-        <thead>
-            <tr>
-                <th>DETAILS</th>
-                <th>MERCHANT</th>
-                <th>AMOUNT</th>
-                <th>STATUS</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td class="details">
-                    <div class="icon-and-info">
-                        <i class="fa-solid fa-utensils icon"></i>
-                        <div class="info">
-                            <span class="date">2024-01-23</span>
-                            <span class="category">Food Catering</span>
-                        </div>
-                    </div>
-                </td>
-                <td>Bhatbhateni Supermarket</td>
-                <td>Rs.200.00</td>
-                <td><span class="status success">Success</span></td>
-            </tr>
-            <tr>
-                <td class="details">
-                    <div class="icon-and-info">
-                        <i class="fa-solid fa-lightbulb icon"></i>
-                        <div class="info">
-                            <span class="date">2024-01-23</span>
-                            <span class="category">Electricity</span>
-                        </div>
-                    </div>
-                </td>
-                <td>NEA</td>
-                <td>Rs.200.00</td>
-                <td><span class="status success">Success</span></td>
-            </tr>
-            <tr>
-                <td class="details">
-                    <div class="icon-and-info">
-                        <i class="fa-solid fa-wifi icon"></i>
-                        <div class="info">
-                            <span class="date">2024-01-23</span>
-                            <span class="category">Internet</span>
-                        </div>
-                    </div>
-                </td>
-                <td>Worldlink</td>
-                <td>Rs.200.00</td>
-                <td><span class="status success">Success</span></td>
-            </tr>
-            <tr>
-                <td class="details">
-                    <div class="icon-and-info">
-                        <i class="fa-solid fa-shopping-cart icon"></i>
-                        <div class="info">
-                            <span class="date">2024-01-23</span>
-                            <span class="category">Groceries</span>
-                        </div>
-                    </div>
-                </td>
-                <td>Bigmart</td>
-                <td>Rs.200.00</td>
-                <td><span class="status success">Success</span></td>
-            </tr>
-            <tr>
-                <td class="details">
-                    <div class="icon-and-info">
-                        <i class="fa-solid fa-lightbulb icon"></i>
-                        <div class="info">
-                            <span class="date">2024-01-23</span>
-                            <span class="category">Electricity</span>
-                        </div>
-                    </div>
-                </td>
-                <td>NEA</td>
-                <td>Rs.200.00</td>
-                <td><span class="status success">Success</span></td>
-            </tr>
-        </tbody>
+        <table class="transaction-table">
+            <thead>
+                <tr>
+                    <th>DETAILS</th>
+                    <th>TRANSACTION TYPE</th>
+                    <th>AMOUNT</th>
+                    <th>STATUS</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Transactions)
+                {
+                    <tr>
+                        <td class="details">
+                            <div class="icon-and-info">
+                                <div class="icon-container
+            @(item.Notes == "Food" ? "food-icon" :
+              item.Notes == "NEA" ? "nea-icon" :
+              item.Notes == "Internet" ? "internet-icon" :
+              item.Notes == "College" ? "college-icon" :
+              "default-icon")">
+                                    <i class="fa-solid
+              @(item.Notes == "Food" ? "fa-bowl-food" :
+                item.Notes == "NEA" ? "fa-lightbulb" :
+                item.Notes == "Internet" ? "fa-wifi" :
+                item.Notes == "College" ? "fa-graduation-cap" :
+                "fa-receipt") icon"></i>
+                                </div>
+                                <div class="info">
+                                    <span class="date">@item.TransactionDate.ToString("yyyy-MM-dd")</span>
+                                    <span class="category">@item.Notes</span>
+                                </div>
+                            </div>
+                        </td>
 
-    </table>
-</div>
+                        <td>@item.TransactionType</td>
+                        <td>Rs.@item.Amount.ToString("F2")</td>
+                 @*        <td><span class="status @(item.Status.ToLower())">@item.Status</span></td> *@
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <style>

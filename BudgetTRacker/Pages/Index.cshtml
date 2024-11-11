@@ -89,11 +89,14 @@
                       item.Notes == "Internet" ? "fa-wifi" :
                       item.Notes == "College" ? "fa-graduation-cap" :
                       "fa-receipt")"></i>
-                    <span class="transaction-type">@item.TransactionType</span>
                 </div>
+
                 <div class="transaction-info">
                     <span class="notes">@item.Notes</span>
                     <span class="date">@item.TransactionDate.ToString("yyyy-MM-dd")</span>
+                </div>
+                <div class="transaction-info">
+                    <span class="transaction-type">@item.TransactionType</span>
                 </div>
                 <div class="transaction-right">
                     <span class="amount">Rs.@item.Amount</span>
