@@ -33,7 +33,8 @@ namespace BankApiProj.Controllers
                     TransactionDate = t.TransactionDate,
                     Amount = t.Amount,
                     TransactionType = t.TransactionType,
-                    Notes = t.Notes
+                    Notes = t.Notes,
+                    Status = t.Status,
                 })
                 .ToListAsync();
 

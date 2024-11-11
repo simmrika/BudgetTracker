@@ -30,5 +30,8 @@ namespace BankApiProj.Entites
 
         [MaxLength(255)] // Optional: To store additional details or notes
         public string Notes { get; set; }
+
+        [MaxLength(255)]
+        public string Status { get; set; }
     }
 }

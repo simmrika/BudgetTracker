@@ -39,5 +39,7 @@
         public decimal Amount { get; set; }
         public string TransactionType { get; set; }
         public string Notes { get; set; }
+
+        public string Status { get; set; }
     }
 }
