@@ -4,22 +4,28 @@ namespace BudgetTRacker.Entities
 {
     public class CashTransaction
     {
+        [Required]
         public int Id { get; set; }
 
+        [Required]
+        public int UserId { get; set; }
 
         [Required]
-
-        public DateTime TransactionDate { get; set; }
-
-        [Required]
-
-        public double Amount { get; set; }
+        public string TransactionName { get; set; }
 
         [Required]
-        [MaxLength(100)] // To store the type or description of the transaction
+        public DateTime Date { get; set; }
+
+        [Required]
         public string TransactionType { get; set; }
 
-        [MaxLength(255)] // Optional: To store additional details or notes
-        public string Notes { get; set; }
+        [Required]
+        public decimal Total { get; set; }
+
+        [Required]
+        public string Category { get; set; }
+
+        [MaxLength(255)]
+        public string Description { get; set; }
     }
 }

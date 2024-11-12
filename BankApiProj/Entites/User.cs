@@ -9,6 +9,9 @@ namespace BankApiProj.Entites
         [Key]
         public int UserId { get; set; }
 
+        [Required] 
+        public string BankName { get; set;}
+
 
         [Required]
         public required string  FirstName { get; set; }

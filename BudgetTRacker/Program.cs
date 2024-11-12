@@ -1,11 +1,29 @@
+using BudgetTracker.Service;
+using BudgetTRacker.Data;
 using BudgetTRacker.Service;
+using Microsoft.EntityFrameworkCore;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
+//Add Security 
+builder.Services.AddAuthentication(
+    Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationDefaults
+    .AuthenticationScheme
+    ).AddCookie(s =>
+    {
+        s.LoginPath = "/SignIn";
+        s.LogoutPath = "/SignOut";
+    });
+
+// Configure Entity Framework Core with SQL Server
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 builder.Services.AddHttpClient();
 builder.Services.AddHttpClient<BankTransactionDataService>();
+builder.Services.AddHttpClient<CashTransactionDataService>();
 
 var app = builder.Build();
 

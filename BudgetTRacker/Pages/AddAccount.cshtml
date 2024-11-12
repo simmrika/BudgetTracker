@@ -9,6 +9,16 @@
     <h2>Add Account</h2>
     <form method="post">
         <div class="form-group">
+            <div class="form-group">
+                <label for="FirstName">FirstName*</label>
+                <input type="text" id="FirstName" name="FirstName" placeholder="Enter FirstName" required>
+            </div>
+
+            <div class="form-group">
+                <label for="LastName">LastName*</label>
+                <input type="text" id="LastName" name="LastName" placeholder="Enter LastName" required>
+            </div>
+
             <label for="BankName">Bank Name*</label>
             <input list="bankList" id="BankName" name="BankName" placeholder="Enter Bank Name" required>
             <datalist id="bankList">

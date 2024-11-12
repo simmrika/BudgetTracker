@@ -1,5 +1,5 @@
 ﻿@page
-@model NewTransactionModel
+@model CashTransactionModel
 @{
     ViewData["Title"] = "New Transaction";
 }
@@ -18,8 +18,14 @@
         </div>
 
         <div class="form-group">
-            <label for="Merchant">Merchant*</label>
-            <input type="text" id="Merchant" name="Merchant" class="form-control" required>
+            <label for="TransactionType">Transaction Type*</label>
+            <select id="TransactionType" name="TransactionType" class="form-control" required>
+                <option value="">Type</option>
+                <option value="Cash">Cash</option>
+                <option value="Deposit">Deposit</option>
+                <option value="Transfer">Transfer</option>
+                <option value="Withdrwal">Withdrwal</option>
+            </select>
         </div>
 
         <div class="form-group">
