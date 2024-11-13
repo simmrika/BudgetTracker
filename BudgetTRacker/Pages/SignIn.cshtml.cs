@@ -7,6 +7,7 @@ namespace BudgetTRacker.Pages
     [Authorize]
     public class SignInModel : PageModel
     {
+
         public void OnGet()
         {
         }

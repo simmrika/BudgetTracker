@@ -26,7 +26,7 @@ namespace BudgetTRacker.Pages
             {
                 return Page(); // Re-display the form if the model state is invalid
             }
-
+            
             var result = await _transactionDataService.AddTransactionAsync(NewTransaction);
             if (result)
             {

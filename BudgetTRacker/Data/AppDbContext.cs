@@ -13,7 +13,7 @@ namespace BudgetTRacker.Data
 
         // DbSet properties to represent tables in the database
         public DbSet<User> Users { get; set; }
-        public DbSet<CashTransaction> CashTransactions { get; set; }
+        public DbSet<CashTransaction> CashTransaction { get; set; }
 
         // Override the OnModelCreating method to configure relationships, indexes, etc.
         protected override void OnModelCreating(ModelBuilder modelBuilder)

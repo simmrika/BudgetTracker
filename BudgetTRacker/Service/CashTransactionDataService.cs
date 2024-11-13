@@ -29,7 +29,7 @@ namespace BudgetTracker.Service
             };
 
             // Add to the context and save changes
-            _context.CashTransactions.Add(cashTransaction);
+            _context.CashTransaction.Add(cashTransaction);
             var saveResult = await _context.SaveChangesAsync();
 
             return saveResult > 0; // Returns true if at least one record was saved

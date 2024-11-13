@@ -20,11 +20,14 @@ builder.Services.AddAuthentication(
 // Configure Entity Framework Core with SQL Server
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddAuthorization();
+builder.Services.AddRazorPages().AddRazorRuntimeCompilation(); 
 
 builder.Services.AddHttpClient();
 builder.Services.AddHttpClient<BankTransactionDataService>();
-builder.Services.AddHttpClient<CashTransactionDataService>();
 
+
+builder.Services.AddScoped<CashTransactionDataService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
