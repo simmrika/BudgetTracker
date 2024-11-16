@@ -12,7 +12,7 @@ namespace BudgetTRacker.Entities
         [Required]
         public required string firstname { get; set; }
 
-        public string middlename { get; set; }
+        public string? middlename { get; set; }
 
 
         [Required]

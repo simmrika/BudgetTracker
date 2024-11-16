@@ -7,13 +7,12 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
-
 namespace BudgetTRacker.Service
 {
     public interface IAuthService
     {
-        Task<User> Register(User user, string password);
-        Task<string> Login(string email, string password);
+        Task<User> SignUp(User user, string password);
+        Task<string> SignIn(string phonenumber, string password);
     }
 
     public class AuthService : IAuthService
@@ -27,22 +26,26 @@ namespace BudgetTRacker.Service
             _configuration = configuration;
         }
 
-        public async Task<User> Register(User user, string password)
+        public async Task<User> SignUp(User user, string password)
         {
             using var hmac = new HMACSHA512();
 
             user.PasswordSalt = hmac.Key;
             user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
 
-            _context.Users.Update(user);
+            _context.Users.Add(user);  // Use Add for new users
             await _context.SaveChangesAsync();
 
             return user;
         }
 
-        public async Task<string> Login(string email, string password)
+        public async Task<string> SignIn(string phonenumber, string password)
         {
-            var user = await _context.Users.SingleOrDefaultAsync(u => u.email == email);
+
+
+
+
+            var user = await _context.Users.SingleOrDefaultAsync(u => u.phonenumber == phonenumber);
             if (user == null) return null;
 
             using var hmac = new HMACSHA512(user.PasswordSalt);
@@ -57,24 +60,22 @@ namespace BudgetTRacker.Service
         {
             var claims = new[]
             {
-            new Claim(JwtRegisteredClaimNames.NameId, user.UserId.ToString()),
-            new Claim(JwtRegisteredClaimNames.Email, user.email)
-        };
+                new Claim(JwtRegisteredClaimNames.NameId, user.UserId.ToString()),
+                new Claim(JwtRegisteredClaimNames.PhoneNumber, user.phonenumber)
+            };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Secret"]));
-
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
             var token = new JwtSecurityToken(
-                issuer: null,
-                audience: null,
+                issuer: null,  // Specify the issuer
+                audience: null,  // Specify the audience
                 claims: claims,
                 expires: DateTime.Now.AddDays(7),
                 signingCredentials: creds
             );
 
-            var aa = new JwtSecurityTokenHandler().WriteToken(token);
-            return aa;
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }
 }

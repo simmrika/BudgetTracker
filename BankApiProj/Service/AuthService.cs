@@ -69,7 +69,7 @@ namespace BankApiProj.Service
                 issuer: null,
                 audience: null,
                 claims: claims,
-                expires: DateTime.Now.AddDays(7),
+                expires: DateTime.Now.AddMinutes(Convert.ToDouble(_configuration["Jwt:ExpiresInMinutes"])),
                 signingCredentials: creds
             );
 

@@ -1,4 +1,5 @@
 using BudgetTRacker.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
@@ -6,9 +7,11 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace BudgetTRacker.Pages
-{
+{ 
+
     public class IndexModel : PageModel
     {
+
         private readonly ILogger<IndexModel> _logger;
         private readonly BankTransactionDataService _bankTransactionDataService;
 

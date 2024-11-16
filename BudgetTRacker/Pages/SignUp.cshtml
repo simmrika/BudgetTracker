@@ -193,40 +193,39 @@
         <i class="fa-solid fa-user"></i>
         <h2>Sign Up for Rupiya...</h2>
 
-        <!-- Firstname input -->
-        <input type="text" class="input-field" placeholder="Firstname" required>
 
 
-        <!-- Lastname input -->
-        <input type="text" class="input-field" placeholder="Lastname" required>
+        <form method="post">
+            <!-- Firstname input -->
+            <input asp-for="SignupData.Firstname" type="text" class="input-field" placeholder="Firstname" required />
 
-        <!-- Email input -->
-        <input type="email" class="input-field" placeholder="Email" required>
+            <!-- Lastname input -->
+            <input asp-for="SignupData.Lastname" type="text" class="input-field" placeholder="Lastname" required />
 
-        <!-- Phone input -->
-        <input type="tel" class="input-field" placeholder="Phone" required>
+            <!-- Email input -->
+            <input asp-for="SignupData.Email" type="email" class="input-field" placeholder="Email" required />
 
-        <!-- Password input with eye icon -->
-        <div class="password-container">
-            <input type="password" class="input-field" id="password" placeholder="Create Password" required>
-            <i class="fas fa-eye" id="togglePassword"></i>
-        </div>
+            <!-- Phone input -->
+            <input asp-for="SignupData.Phone" type="tel" class="input-field" placeholder="Phone" required />
 
-        <!-- Continue Button -->
-        <button class="signup-btn">Continue</button>
+            <!-- Password input with eye icon -->
+            <div class="password-container">
+                <input asp-for="SignupData.Password" type="password" class="input-field" id="password" placeholder="Create Password" required />
+                <i class="fas fa-eye" id="togglePassword"></i>
+            </div>
 
-        <!-- OR Divider -->
-        <div class="divider"><span>OR</span></div>
+            <!-- Confirm Password input -->
+            <div class="password-container">
+                <input asp-for="SignupData.ConfirmPassword" type="password" class="input-field" id="confirmPassword" placeholder="Confirm Password" required />
+            </div>
 
-        <!-- Continue with Google -->
-        <button class="google-btn">
-            <i class="fa-brands fa-google"></i>           
-            Continue with Google
-        </button>
+            <!-- Continue Button -->
+            <button type="submit" class="signup-btn">Continue</button>
+        </form>
 
         <!-- Privacy Policy -->
         <div class="terms">
-            By clicking "Continue" or "Continue with Google", you agree to the Rupiya <a href="#">Privacy Policy</a>.
+            By clicking "Continue", you agree to the Rupiya <a asp-page="/Privacy">Privacy Policy</a>.
         </div>
 
         <!-- Sign In Link -->

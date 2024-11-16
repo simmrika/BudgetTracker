@@ -28,6 +28,7 @@ builder.Services.AddHttpClient<BankTransactionDataService>();
 
 
 builder.Services.AddScoped<CashTransactionDataService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

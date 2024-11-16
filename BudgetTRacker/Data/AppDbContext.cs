@@ -1,5 +1,4 @@
 ﻿using BudgetTRacker.Entities;
-using BudgetTRacker.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace BudgetTRacker.Data
@@ -20,16 +19,19 @@ namespace BudgetTRacker.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            // Explicitly map the User entity to the "User" table
+            modelBuilder.Entity<User>().ToTable("User");
+
             // Configuring the primary key for CashTransaction
             modelBuilder.Entity<CashTransaction>()
                 .HasKey(ct => ct.Id);
 
             // Configuring the foreign key relationship between CashTransaction and User
             modelBuilder.Entity<CashTransaction>()
-                .HasOne<User>() // Specify the related User entity
-                .WithMany()     // Assuming no navigation property on the User side
-                .HasForeignKey(ct => ct.UserId) // Set UserId as foreign key
-                .OnDelete(DeleteBehavior.Cascade); // Set delete behavior
+                .HasOne<User>()
+                .WithMany()
+                .HasForeignKey(ct => ct.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
