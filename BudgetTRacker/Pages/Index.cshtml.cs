@@ -7,7 +7,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace BudgetTRacker.Pages
-{ 
+{
+
+
+    [Authorize]
 
     public class IndexModel : PageModel
     {

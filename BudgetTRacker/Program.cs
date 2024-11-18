@@ -25,6 +25,7 @@ builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 
 builder.Services.AddHttpClient();
 builder.Services.AddHttpClient<BankTransactionDataService>();
+builder.Services.AddHttpContextAccessor();
 
 
 builder.Services.AddScoped<CashTransactionDataService>();
