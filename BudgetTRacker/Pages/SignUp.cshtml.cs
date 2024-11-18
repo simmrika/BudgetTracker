@@ -41,7 +41,9 @@ namespace BudgetTRacker.Pages
                 firstname = SignupData.Firstname,
                 lastname = SignupData.Lastname,
                 email = SignupData.Email,
-                phonenumber = SignupData.Phone
+                phonenumber = SignupData.Phone,
+                dateofbirth = SignupData.DateOfBirth
+
             };
 
             var registeredUser = await _authService.SignUp(newUser, SignupData.Password);
@@ -64,6 +66,8 @@ namespace BudgetTRacker.Pages
         public string Phone { get; set; }
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
+
+        public DateTime DateOfBirth { get; set; }
     }
 }
 

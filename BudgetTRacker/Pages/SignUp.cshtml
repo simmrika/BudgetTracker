@@ -186,6 +186,15 @@
         i {
             color: #02457A; /* Default icon color */
         }
+
+        .gender-container {
+            text-align: left;
+            margin: 10px 0;
+        }
+
+            .gender-container label {
+                margin-left: 10px;
+            }
     </style>
 </head>
 <body>
@@ -208,6 +217,10 @@
             <!-- Phone input -->
             <input asp-for="SignupData.Phone" type="tel" class="input-field" placeholder="Phone" required />
 
+            <input asp-for="SignupData.DateOfBirth" type="date" class="input-field" placeholder="Date of Birth" required />
+
+ 
+
             <!-- Password input with eye icon -->
             <div class="password-container">
                 <input asp-for="SignupData.Password" type="password" class="input-field" id="password" placeholder="Create Password" required />
@@ -217,7 +230,11 @@
             <!-- Confirm Password input -->
             <div class="password-container">
                 <input asp-for="SignupData.ConfirmPassword" type="password" class="input-field" id="confirmPassword" placeholder="Confirm Password" required />
+                <i class="fas fa-eye" id="togglePassword"></i>
+
             </div>
+
+ 
 
             <!-- Continue Button -->
             <button type="submit" class="signup-btn">Continue</button>
@@ -230,7 +247,7 @@
 
         <!-- Sign In Link -->
         <div class="signin-link">
-            Already have an account? <a href="#">Sign In</a>
+            Already have an account? <a asp-page="/SignIn">Sign In</a>
         </div>
     </div>
 

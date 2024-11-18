@@ -26,6 +26,10 @@ namespace BudgetTRacker.Entities
         [Required]
         public required string phonenumber { get; set; }
 
+        [Required]
+        public required DateTime dateofbirth { get; set; }
+
+
         public byte[] PasswordHash { get; set; }
 
 

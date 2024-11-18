@@ -39,7 +39,7 @@ namespace BudgetTRacker.Pages
             if (result)
             {
                 _logger.LogInformation("New transaction added successfully.");
-                return RedirectToPage("TransactionList"); // Redirect to a transaction list or another page after successful submission
+                return RedirectToPage("/Transaction");
             }
             else
             {
