@@ -2,6 +2,10 @@
 {
     public class AddAccountDataService
     {
+        public interface IAddAccountService
+        {
+             
+        }
 
     }
 }

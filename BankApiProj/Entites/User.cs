@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.Contracts;
 
 namespace BankApiProj.Entites
@@ -43,6 +44,10 @@ namespace BankApiProj.Entites
         public decimal Balance { get; set; }
 
         public List<Transaction>? Transactions { get; set; }
+
+
+        [DefaultValue(false)]
+        public bool IsApprovedToBudgetTraker {  get; set; }
 
 
     }

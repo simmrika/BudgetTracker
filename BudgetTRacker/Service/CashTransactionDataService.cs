@@ -34,6 +34,26 @@ namespace BudgetTracker.Service
 
             return saveResult > 0; // Returns true if at least one record was saved
         }
+
+        // Method to get transactions for a specific user
+        public async Task<IEnumerable<CashTransactionDto>> GetTransactionsByUserIdAsync(int userId)
+        {
+            return await _context.CashTransaction
+                .Where(t => t.UserId == userId) // Filter by userId
+                .Select(t => new CashTransactionDto
+                {
+                    Id = t.Id,
+                    UserId = t.UserId,
+                    Name = t.TransactionName,
+                    Date = t.Date,
+                    TransactionType = t.TransactionType,
+                    Total = t.Total,
+                    Category = t.Category,
+                    Description = t.Description
+                })
+                .OrderByDescending(t => t.Date) // Order by date (latest first)
+                .ToListAsync(); // Convert to a list
+        }
     }
 
     // DTO class for cash transaction data
