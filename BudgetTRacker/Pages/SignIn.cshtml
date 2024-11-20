@@ -170,6 +170,15 @@
         i {
             color: #02457A; /* Default icon color */
         }
+
+        .text-danger {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+            display: block;
+            text-align: left;
+        }
+
     </style>
 </head>
 
@@ -190,10 +199,12 @@
         <form method="post">
             <!-- Phone Number input -->
             <input type="text" class="input-field" id="phoneNumber" name="LoginData.PhoneNumber" placeholder="Phone Number" required>
+            <span asp-validation-for="LoginData.PhoneNumber" class="text-danger"></span>
 
             <!-- Password input with eye icon -->
             <div class="password-container">
                 <input type="password" class="input-field" id="password" name="LoginData.Password" placeholder="Password" required>
+                <span asp-validation-for="LoginData.Password" class="text-danger"></span>
                 <i class="fas fa-eye" id="togglePassword"></i>
             </div>
 

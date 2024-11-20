@@ -5,7 +5,7 @@ namespace BudgetTRacker.Entities
 {
     public class AddAccount
     {
-        [Required]
+        [Key]
         public int AccountID { get; set; }
 
         [Required]
@@ -15,18 +15,25 @@ namespace BudgetTRacker.Entities
         public DateTime LinkedDate { get; set; }
 
         [Required]
-        public bool IsApproved { get; set; }
-
-        [Required]
-        [StringLength(100)]
+        [MaxLength(10)]
         public string AccountNumber { get; set; }
 
         [Required]
-        [StringLength(100)]
-        public string AccountName { get; set; }
+        public string BankName { get; set; }
 
         [Required]
-        [StringLength(100)]
-        public string BankName { get; set; }
+        public string FirstName { get; set; }
+
+        [Required]
+        public string LastName { get;set; }
+
+        [Required]
+        [MaxLength(10)]
+        public string PhoneNumber { get; set; }
+
+        [Required]
+        public DateTime DateOfBirth { get; set; }
+
+    
     }
 }

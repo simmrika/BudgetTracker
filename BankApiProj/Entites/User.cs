@@ -32,7 +32,9 @@ namespace BankApiProj.Entites
         [Required]
         public required string AccountNumber { get; set; }
 
-
+        [MinLength(10)]
+        [Required]
+        public required string PhoneNumber { get; set; }
 
         public byte[] PasswordHash { get; set; }
 

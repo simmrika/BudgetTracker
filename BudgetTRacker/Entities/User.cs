@@ -24,6 +24,8 @@ namespace BudgetTRacker.Entities
 
 
         [Required]
+        [MaxLength(10)]
+        [Phone]
         public required string phonenumber { get; set; }
 
         [Required]

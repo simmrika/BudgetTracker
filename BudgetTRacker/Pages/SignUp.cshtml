@@ -195,6 +195,15 @@
             .gender-container label {
                 margin-left: 10px;
             }
+
+        .text-danger {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+            display: block;
+            text-align: left;
+        }
+
     </style>
 </head>
 <body>
@@ -202,34 +211,53 @@
         <i class="fa-solid fa-user"></i>
         <h2>Sign Up for Rupiya...</h2>
 
-
+        <div style="color: red; font-size: 14px; margin-top: 5px;">
+            @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+            {
+                <div class="error-message">@Model.ErrorMessage</div>
+            }
+        </div>
 
         <form method="post">
+
             <!-- Firstname input -->
             <input asp-for="SignupData.Firstname" type="text" class="input-field" placeholder="Firstname" required />
+            <span asp-validation-for="SignupData.Firstname" class="text-danger"></span>
 
             <!-- Lastname input -->
             <input asp-for="SignupData.Lastname" type="text" class="input-field" placeholder="Lastname" required />
+            <span asp-validation-for="SignupData.Lastname" class="text-danger"></span>
 
             <!-- Email input -->
             <input asp-for="SignupData.Email" type="email" class="input-field" placeholder="Email" required />
+            <span asp-validation-for="SignupData.Email" class="text-danger"></span>
 
             <!-- Phone input -->
             <input asp-for="SignupData.Phone" type="tel" class="input-field" placeholder="Phone" required />
+            <span asp-validation-for="SignupData.Phone" class="text-danger"></span>
 
             <input asp-for="SignupData.DateOfBirth" type="date" class="input-field" placeholder="Date of Birth" required />
+            <span asp-validation-for="SignupData.DateOfBirth" class="text-danger"></span>
 
+            <div style="color: red; font-size: 14px; margin-top: 5px;">
+                @if (!string.IsNullOrEmpty(Model.DOBError))
+                {
+                    <div class="error-message">@Model.DOBError</div>
+                }
+            </div>
  
 
             <!-- Password input with eye icon -->
             <div class="password-container">
                 <input asp-for="SignupData.Password" type="password" class="input-field" id="password" placeholder="Create Password" required />
+                <span asp-validation-for="SignupData.Password" class="text-danger"></span>
                 <i class="fas fa-eye" id="togglePassword"></i>
             </div>
 
             <!-- Confirm Password input -->
             <div class="password-container">
                 <input asp-for="SignupData.ConfirmPassword" type="password" class="input-field" id="confirmPassword" placeholder="Confirm Password" required />
+                <span asp-validation-for="SignupData.ConfirmPassword" class="text-danger"></span>
                 <i class="fas fa-eye" id="togglePassword"></i>
 
             </div>

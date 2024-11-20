@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Security.Claims;
+using System.ComponentModel.DataAnnotations;
 
 namespace BudgetTRacker.Pages
 {
@@ -70,7 +71,12 @@ namespace BudgetTRacker.Pages
 
     public class LoginDto
     {
-        public string PhoneNumber { get; set; } // Accepts phone number
+        [Required(ErrorMessage = "Phone number is required.")]
+        [Phone(ErrorMessage = "Invalid phone number format.")]
+        public string PhoneNumber { get; set; }
+
+        [Required(ErrorMessage = "Password is required.")]
+        [MinLength(6, ErrorMessage = "Password must be at least 6 characters long.")]
         public string Password { get; set; }
     }
 }
