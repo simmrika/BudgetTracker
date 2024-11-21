@@ -1,62 +1,35 @@
 ﻿@page
-@model CashTransactionModel
+@model BudgetTRacker.Pages.CashEntryModel
 @{
-    ViewData["Title"] = "New Transaction";
+    ViewData["Title"] = "Cash Entry";
 }
+
+
 <div class="modal">
     <button class="close-button" onclick="window.history.back()">&times;</button>
-    <h2>New Transaction</h2>
+    <h2>Add Cash Amount</h2>
+
     <div style="color: red; font-size: 14px; margin-top: 5px;">
         @if (!string.IsNullOrEmpty(Model.ErrorMessage))
         {
             <div class="error-message">@Model.ErrorMessage</div>
         }
     </div>
+
     <form method="post">
         <div class="form-group">
-            <label for="Name">Transaction Name*</label>
-            <input type="text" id="Name" name="Name" class="form-control" required>
+            <label for="Amount">Amount*</label>
+            <input type="text" id="Amount" name="Amount" class="form-control" required>
+            <span asp-validation-for="NewCashEntry.Amount" class="text-danger"></span>
+
         </div>
 
         <div class="form-group">
-            <label for="Date">Date*</label>
-            <input type="date" id="Date" name="Date" class="form-control" required>
+            <label for="AddDate">Date*</label>
+            <input asp-for="NewCashEntry.AddDate" id="AddDate" type="date" class="form-control" value="@DateTime.UtcNow.ToString("yyyy-MM-dd")" readonly />
+            <span asp-validation-for="NewCashEntry.AddDate" class="text-danger"></span>
         </div>
 
-        <div class="form-group">
-            <label for="TransactionType">Transaction Type*</label>
-            <select id="TransactionType" name="TransactionType" class="form-control" required>
-                <option value="">Type</option>
-                <option value="Cash">Cash</option>
-                <option value="Deposit">Deposit</option>
-                <option value="Transfer">Transfer</option>
-                <option value="Withdrwal">Withdrwal</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label for="Total">Total*</label>
-            <div class="currency-input">
-                <input type="text" id="Total" name="Total" class="form-control" required>
-                <span class="currency-symbol">NPR</span>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="Category">Category*</label>
-            <select id="Category" name="Category" class="form-control" required>
-                <option value="">Type</option>
-                <option value="food">Food</option>
-                <option value="transport">Transport</option>
-                <option value="utilities">Utilities</option>
-                <option value="shopping">Shopping</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label for="Description">Description</label>
-            <textarea id="Description" name="Description" rows="3" class="form-control"></textarea>
-        </div>
 
         <button type="submit" class="save-button">SAVE</button>
     </form>
@@ -129,4 +102,13 @@
         .save-button:hover {
             background-color: #004494;
         }
+
+
+    .text-danger {
+        color: red;
+        font-size: 12px;
+        margin-top: 5px;
+        display: block;
+        text-align: left;
+    }
 </style>

@@ -18,6 +18,8 @@ namespace BudgetTRacker.Pages
 
         [BindProperty]
         public CashTransactionDto NewTransaction { get; set; } = new CashTransactionDto();
+        public string ErrorMessage { get; set; }
+
 
         public CashTransactionModel(ILogger<CashTransactionModel> logger, CashTransactionDataService transactionDataService, IHttpContextAccessor contextAccessor)
         {
@@ -30,6 +32,8 @@ namespace BudgetTRacker.Pages
         {
             if (!ModelState.IsValid)
             {
+                ErrorMessage = "Please fill in all required fields.";
+
                 return Page(); // Re-display the form if the model state is invalid
             }
 
