@@ -15,6 +15,11 @@ namespace BudgetTRacker.Data
         public DbSet<CashTransaction> CashTransaction { get; set; }
 
         public DbSet<CashEntry> CashEntries { get; set; }
+
+        public DbSet<Category> Category { get; set; }
+
+        public DbSet<LinkedAccounts> LinkedAccount { get; set; }
+
         // Override the OnModelCreating method to configure relationships, indexes, etc.
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -33,6 +38,9 @@ namespace BudgetTRacker.Data
                 .WithMany()
                 .HasForeignKey(ct => ct.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+
+            modelBuilder.Entity<LinkedAccounts>().HasKey(ct => ct.AccountID);
         }
     }
 }

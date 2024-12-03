@@ -30,6 +30,22 @@
 
             return new List<TransactionDto>(); // Return empty list if no transactions found or error occurs
         }
+
+
+        // Get transactions by account number
+        public async Task<IEnumerable<TransactionDto>> GetTransactionsByAccountNumberAsync(string accountNumber)
+        {
+            var response = await _httpClient.GetAsync($"api/transactions/account/{accountNumber}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var transactions = await response.Content.ReadFromJsonAsync<IEnumerable<TransactionDto>>();
+                return transactions ?? new List<TransactionDto>();
+            }
+
+            return new List<TransactionDto>(); // Return empty list if no transactions found or error occurs
+        }
+
     }
     public class TransactionDto
     {

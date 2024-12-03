@@ -4,6 +4,7 @@
     ViewData["Title"] = "Add Account";
 }
 
+
 <div class="modal">
     <button class="close-button" aria-label="Close" onclick="window.history.back()">&times;</button>
     <h2>Add Account</h2>
@@ -107,14 +108,14 @@
         position: relative;
     }
 
-    /* Modal header styling */
-    .modal h2 {
-        font-size: 24px;
-        margin-bottom: 15px;
-        font-weight: bold;
-        border-bottom: 1px solid #c8c8c8;
-        padding-bottom: 10px;
-    }
+        /* Modal header styling */
+        .modal h2 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            font-weight: bold;
+            border-bottom: 1px solid #c8c8c8;
+            padding-bottom: 10px;
+        }
 
     /* Close button styling */
     .close-button {
@@ -134,15 +135,15 @@
         margin-bottom: 15px;
     }
 
-    /* Input fields styling */
-    .form-group input {
-        width: 100%;
-        padding: 12px;
-        font-size: 16px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        box-sizing: border-box;
-    }
+        /* Input fields styling */
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
 
     /* Button group styling */
     .button-group {
@@ -188,4 +189,48 @@
     }
 </style>
 
+@* <div class="modal">
+    <button class="close-button" aria-label="Close" onclick="window.history.back()">&times;</button>
+    <h2>Add Account</h2>
+    <form method="post">
+        <div class="form-group">
+            <label for="FirstName">FirstName*</label>
+            <input type="text" asp-for="LinkedAccountRequest.FirstName" placeholder="Enter FirstName" required>
+        </div>
 
+        <div class="form-group">
+            <label for="LastName">LastName*</label>
+            <input type="text" asp-for="LinkedAccountRequest.LastName" placeholder="Enter LastName" required>
+        </div>
+
+        <div class="form-group">
+            <label for="BankName">Bank Name*</label>
+            <input list="bankList" asp-for="LinkedAccountRequest.BankName" placeholder="Enter Bank Name" required>
+            <datalist id="bankList">
+                <option value="Nepal Rastra Bank" />
+                <option value="Nabil Bank Limited" />
+                <!-- Add more options here -->
+            </datalist>
+        </div>
+
+        <div class="form-group">
+            <label for="AccountNumber">Account Number*</label>
+            <input type="text" asp-for="LinkedAccountRequest.AccountNumber" placeholder="Enter Account Number" required>
+        </div>
+
+        <div class="form-group">
+            <label for="PhoneNumber">Phone Number*</label>
+            <input type="text" asp-for="LinkedAccountRequest.PhoneNumber" placeholder="Enter Phone Number" required>
+        </div>
+
+        <div class="form-group">
+            <label for="DateOfBirth">Date of Birth*</label>
+            <input type="date" asp-for="LinkedAccountRequest.DateOfBirth" required>
+        </div>
+
+        <div class="button-group">
+            <button type="submit" class="btn-continue">Continue</button>
+            <button type="button" class="btn-cancel" onclick="window.history.back()">Cancel</button>
+        </div>
+    </form>
+</div> *@

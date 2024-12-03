@@ -2,6 +2,7 @@
 @model IndexModel
 @{
     ViewData["Title"] = "Dashboard";
+    var currentDate = DateTime.Now.ToString("yyyy-MM-dd");
 }
 
 
@@ -38,7 +39,7 @@
                 </div>
                 <h4>Cash</h4>
                 <p>Full Name</p>
-                <p>2024-06-26</p>
+                <p>@currentDate</p>
                 <p>NPR. 2000.00 <i class="fa fa-eye"></i></p>
             </div>
 
@@ -48,7 +49,7 @@
                 </div>
                 <h4>NIC Asia Bank</h4>
                 <p>Full Name</p>
-                <p>2024-06-26</p>
+                <p>@currentDate</p>
                 <p>Account Number 1234566</p>
                 <p>NPR. 2000.00 <i class="fa fa-eye"></i></p>
             </div>
@@ -56,7 +57,7 @@
             <div class="card">
                 <h4>NMB Bank</h4>
                 <p>Full Name</p>
-                <p>2024-06-26</p>
+                <p>@currentDate</p>
                 <p>Account Number 7891011</p>
                 <p>NPR. 2000.00 <i class="fa fa-eye"></i></p>
             </div>
@@ -125,7 +126,9 @@
     <div class="categories">
         <div class="categories-header">
             <h4>Categories</h4>
-            <a asp-page="/Category"><i class="fa fa-plus"></i></a>
+            <a asp-page="Category">See all</a>
+
+            <a asp-page="/AddCategory"><i class="fa fa-plus"></i></a>
         </div>
         <div class="category-item">
             <div class="icon-container food-icon">

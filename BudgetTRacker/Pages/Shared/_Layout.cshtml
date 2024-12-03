@@ -1,5 +1,6 @@
 ﻿@{
     ViewData["Title"] = ViewData["Title"] ?? "Dashboard";
+    var currentDate = DateTime.Now.ToString("yyyy-MM-dd");
 }
 
 <!DOCTYPE html>
@@ -34,7 +35,16 @@
                 <a asp-page="/IncomeExpenses" class="nav-item"><i class="fa-regular fa-credit-card"></i> Income/Expense</a>
                 <a asp-page="/Setting" class="nav-item"><i class="fa-solid fa-gear"></i> Settings</a>
                 <a href="#" class="nav-item"><i class="fa-solid fa-phone"></i> Support</a>
-                <a href="#" class="logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
+                <!-- This link triggers the POST request to log the user out -->
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <form method="post" asp-page="/LogOut" class="d-inline" id="logoutForm">
+                        <button type="submit" class="btn btn-danger" style="display: none;">Logout</button> <!-- Hidden button -->
+                    </form>
+                    <a href="#" class="logout" onclick="document.getElementById('logoutForm').submit();">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+                    </a>
+                }
             </nav>
         </aside>
 
@@ -44,7 +54,7 @@
                 <input type="text" placeholder="Search for the transaction name" class="search-bar" />
                 <div class="top-icons">
                     <div class="icon-wrapper">
-                        <span>2/12/2024</span>
+                        <span>@currentDate</span>
                         <i class="fa-regular fa-calendar"></i>
                     </div>
                     <div class="icon-wrapper notification-container">
