@@ -7,111 +7,124 @@ namespace BudgetTracker.Service
     public class CategoryDataService
     {
         private readonly AppDbContext _context;
-
+    
         public CategoryDataService(AppDbContext context)
         {
             _context = context;
         }
 
-        // Method to add a new category
+        // Add a new category and category limit
         public async Task<bool> AddCategoryAsync(CategoryDto categoryDto)
         {
+            if (categoryDto == null)
+                throw new ArgumentNullException(nameof(categoryDto));
+
+            // Create a new category
             var category = new Category
             {
-                UserId = categoryDto.UserId,
-                CategoryName = categoryDto.CategoryName,
-                CategoryLimit = categoryDto.CategoryLimit,
-                Description = categoryDto.Description,
-                CurrentTotal = categoryDto.CurrentTotal,
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow
+                CategoryName = categoryDto.CategoryName
             };
 
-            _context.Category.Add(category);
-            var saveResult = await _context.SaveChangesAsync();
+            await _context.Category.AddAsync(category);
+            await _context.SaveChangesAsync();
 
-            return saveResult > 0;
+            // Create a new category limit linked to the category
+            var categoryLimit = new CategoryLimit
+            {
+                CategoryId = category.CategoryId,
+                UserId = categoryDto.UserId,
+                LimitAmount = categoryDto.CategoryLimit,
+                Duration = categoryDto.Duration
+            };
+
+            await _context.CategoryLimit.AddAsync(categoryLimit);
+            return await _context.SaveChangesAsync() > 0;
         }
 
-        // Method to update an existing category
+        // Update an existing category and category limit
         public async Task<bool> UpdateCategoryAsync(CategoryDto categoryDto)
         {
-            var category = await _context.Category.FindAsync(categoryDto.CategoryId);
+            if (categoryDto == null)
+                throw new ArgumentNullException(nameof(categoryDto));
 
+            // Find the category
+            var category = await _context.Category.FindAsync(categoryDto.CategoryId);
             if (category == null)
                 return false;
 
+            // Update category fields
             category.CategoryName = categoryDto.CategoryName;
-            category.CategoryLimit = categoryDto.CategoryLimit;
-            category.Description = categoryDto.Description;
-            category.CurrentTotal = categoryDto.CurrentTotal;
-            category.UpdatedAt = DateTime.UtcNow;
-
             _context.Category.Update(category);
-            var saveResult = await _context.SaveChangesAsync();
 
-            return saveResult > 0;
+            // Find and update the category limit
+            var categoryLimit = await _context.CategoryLimit
+                .FirstOrDefaultAsync(cl => cl.CategoryId == category.CategoryId && cl.UserId == categoryDto.UserId);
+
+            if (categoryLimit == null)
+                return false;
+
+            categoryLimit.LimitAmount = categoryDto.CategoryLimit;
+            categoryLimit.Duration = categoryDto.Duration;
+            _context.CategoryLimit.Update(categoryLimit);
+
+            return await _context.SaveChangesAsync() > 0;
         }
 
-        // Method to retrieve categories by user ID
+        // Retrieve categories by user ID
         public async Task<IEnumerable<CategoryDto>> GetCategoriesByUserIdAsync(int userId)
         {
             return await _context.Category
-                .Where(c => c.UserId == userId)
-                .Select(c => new CategoryDto
+                .Join(_context.CategoryLimit,
+                    category => category.CategoryId,
+                    categoryLimit => categoryLimit.CategoryId,
+                    (category, categoryLimit) => new { category, categoryLimit })
+                .Where(joined => joined.categoryLimit.UserId == userId)
+                .Select(joined => new CategoryDto
                 {
-                    CategoryId = c.CategoryId,
-                    UserId = c.UserId,
-                    CategoryName = c.CategoryName,
-                    CategoryLimit = c.CategoryLimit,
-                    Description = c.Description,
-                    CurrentTotal = c.CurrentTotal,
-                    CreatedAt = c.CreatedAt,
-                    UpdatedAt = c.UpdatedAt
+                    CategoryId = joined.category.CategoryId,
+                    UserId = joined.categoryLimit.UserId,
+                    CategoryName = joined.category.CategoryName,
+                    CategoryLimit = joined.categoryLimit.LimitAmount,
+                    Duration = joined.categoryLimit.Duration
                 })
-                .OrderBy(c => c.CategoryName) // Optional: Order by category name
+                .OrderBy(c => c.CategoryName)
                 .ToListAsync();
         }
 
-        // Method to delete multiple categories
-        public async Task<bool> DeleteCategoryAsync(List<int> categoryIds)
+        // Delete multiple categories
+        public async Task<bool> DeleteCategoriesAsync(List<int> categoryIds)
         {
-            try
-            {
-                // Fetch the categories to delete
-                var categoriesToDelete = await _context.Category
-                    .Where(c => categoryIds.Contains(c.CategoryId))  // Fetch categories matching the IDs in the list
-                    .ToListAsync();
+            if (categoryIds == null || !categoryIds.Any())
+                throw new ArgumentException("Category IDs cannot be null or empty", nameof(categoryIds));
 
-                // Remove the fetched categories
-                _context.Category.RemoveRange(categoriesToDelete);
+            // Fetch categories to delete
+            var categories = await _context.Category
+                .Where(c => categoryIds.Contains(c.CategoryId))
+                .ToListAsync();
 
-                // Save changes to the database
-                var saveResult = await _context.SaveChangesAsync();
-
-                return saveResult > 0;
-            }
-            catch (Exception)
-            {
-                // Handle exceptions (logging, etc.)
+            if (!categories.Any())
                 return false;
-            }
-        }
 
+            // Remove associated category limits
+            var categoryLimits = await _context.CategoryLimit
+                .Where(cl => categoryIds.Contains(cl.CategoryId))
+                .ToListAsync();
+
+            _context.CategoryLimit.RemoveRange(categoryLimits);
+            _context.Category.RemoveRange(categories);
+
+            return await _context.SaveChangesAsync() > 0;
+        }
     }
 
+    // DTO class for category and limit data
+    public class CategoryDto
+    {
 
-        // DTO class for category data
-        public class CategoryDto
-        {
-            public int CategoryId { get; set; }
-            public int UserId { get; set; } // User ID to associate the category
-            public string CategoryName { get; set; }
-            public decimal CategoryLimit { get; set; }
-            public string Description { get; set; }
-            public decimal CurrentTotal { get; set; }
-            public DateTime CreatedAt { get; set; }
-            public DateTime UpdatedAt { get; set; }
-        }
- 
+        public int CategoryId { get; set; }
+        public int UserId { get; set; }
+        public string CategoryName { get; set; }
+        public decimal CategoryLimit { get; set; }
+        public string Duration { get; set; } // Duration for limit (e.g., "Monthly")
+    }
 }

@@ -18,6 +18,8 @@ namespace BudgetTRacker.Data
 
         public DbSet<Category> Category { get; set; }
 
+        public DbSet<CategoryLimit> CategoryLimit { get; set; }
+
         public DbSet<LinkedAccounts> LinkedAccount { get; set; }
 
         // Override the OnModelCreating method to configure relationships, indexes, etc.

@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Text.Json;
+
 using System.Text.RegularExpressions;
 
 namespace BudgetTRacker.Pages
@@ -32,6 +34,11 @@ namespace BudgetTRacker.Pages
         [BindProperty]
         public IEnumerable<LinkedAccountRequest> linkedAccounts { get; private set; } = new List<LinkedAccountRequest>();
 
+        public string SerializedTransactions => JsonSerializer.Serialize(Transactions);
+
+        public string SerializedCashTransactions => JsonSerializer.Serialize(CashTransactions);
+
+
         public TransactionModel(ILogger<IndexModel> logger, BankTransactionDataService bankTransactionDataService, CashTransactionDataService cashTransactionDataService, IHttpContextAccessor contextAccessor,AppDbContext appDbContext)
         {
             _logger = logger;
@@ -40,23 +47,43 @@ namespace BudgetTRacker.Pages
             _contextAccessor = contextAccessor;
             _appDbContext = appDbContext;
         }
-
         public async Task OnGetAsync()
         {
             var userId = GetUserIdFromCookie();
 
-            var linkedaccout=await _appDbContext.LinkedAccount.Where(e=>e.UserID==userId).SingleOrDefaultAsync();
+            var linkedAccount = await _appDbContext.LinkedAccount
+                .Where(e => e.UserID == userId)
+                .SingleOrDefaultAsync();
 
+            var transactionsList = new List<TransactionDto>();
 
-
-            if (linkedaccout != null)
+            if (linkedAccount != null)
             {
-                Transactions = await _bankTransactionDataService.GetTransactionsByAccountNumberAsync(linkedaccout.AccountNumber);
+                var bankTransactions = await _bankTransactionDataService
+                    .GetTransactionsByAccountNumberAsync(linkedAccount.AccountNumber);
+                transactionsList.AddRange(bankTransactions);
             }
 
-
             CashTransactions = await _cashTransactionDataService.GetTransactionsByUserIdAsync(userId);
+
+            foreach (var cashTransaction in CashTransactions)
+            {
+                TransactionDto transactionDto = new TransactionDto
+                {
+                    TransactionDate = cashTransaction.Date,
+                    Status = "Success",
+                    Amount = cashTransaction.Total,
+                    Notes = cashTransaction.Category,
+                    TransactionType = cashTransaction.TransactionType
+                };
+
+                transactionsList.Add(transactionDto);
+            }
+
+            // Assign the combined list back to Transactions
+            Transactions = transactionsList;
         }
+
 
         public int GetUserIdFromCookie()
         {

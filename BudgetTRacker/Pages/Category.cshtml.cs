@@ -36,7 +36,7 @@ namespace BudgetTRacker.Pages
             if (SelectedCategories != null && SelectedCategories.Any())
             {
                 // Call the service to delete categories by their IDs
-                var result = await _categoryService.DeleteCategoryAsync(SelectedCategories);
+                var result = await _categoryService.DeleteCategoriesAsync(SelectedCategories);
 
                 if (!result)
                 {

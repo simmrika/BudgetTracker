@@ -1,16 +1,20 @@
 ﻿@page
 @model TransactionModel
+@using Newtonsoft.Json
+
 @{
+
     ViewData["Title"] = "Transactions";
 }
-
 <div class="wrapper">
     <div class="transaction-container">
         <div class="transaction-header">
             <h3>Transactions</h3>
             <div class="button-group">
                 <button class="btn-new-transaction" onclick="window.location.href='@Url.Page("CashTransaction")'">+ New transaction</button>
-
+                <button type="submit" class="btn-delete">
+                    <i class="fa fa-trash"></i>
+                </button>
                 <div class="filter-dropdown">
                     <button class="btn-filter"><i class="fa-solid fa-filter"></i></button>
                     <div class="dropdown-content">
@@ -21,7 +25,7 @@
                 <div class="options-dropdown">
                     <button class="btn-options"><i class="fa-solid fa-ellipsis-h"></i></button>
                     <div class="dropdown-content">
-                        <a href="#" onclick="downloadTransactions()">Download</a>
+                        <a href="#" onclick="downloadCSV()">Download</a>
                     </div>
                 </div>
             </div>
@@ -62,21 +66,36 @@
 </div>
 
 <script>
+    const allTransactions = JSON.parse('@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Transactions))');
+    console.log(allTransactions);
+
+    function downloadCSV() {
+        // Combine both bank and cash transac
 
 
-    function downloadTransactions() {
         // Convert transactions to CSV format
-        let csvContent = "data:text/csv;charset=utf-8,Date,Category,Merchant,Amount,Status\n";
+        let csvContent = "Date,Category,Merchant,Amount,Status\n";
 
-        transactions.forEach(transaction => {
-            const row = `${transaction.transactionDate},${transaction.notes},${transaction.transactionType},Rs.${transaction.amount.toFixed(2)},${transaction.status}`;
+        allTransactions.forEach(transaction => {
+            const date = transaction.TransactionDate || "";
+            const category = transaction.Notes || "";
+            const merchant = transaction.TransactionType || "";
+            const amount = transaction.Amount && !isNaN(transaction.Amount)
+                ? transaction.Amount.toFixed(2)
+                : "0.00";
+            const status = transaction.status || "";
+
+            const row = `${date},${category},${merchant},Rs.${amount},${status}`;
             csvContent += row + "\n";
         });
 
-        // Create a downloadable link
-        const encodedUri = encodeURI(csvContent);
+        // Encode content as CSV file
+        const blob = new Blob([csvContent], { type: "text/csv" });
+        const url = URL.createObjectURL(blob);
+
+        // Create a download link
         const link = document.createElement("a");
-        link.setAttribute("href", encodedUri);
+        link.setAttribute("href", url);
         link.setAttribute("download", "transaction_history.csv");
         document.body.appendChild(link);
 
@@ -85,15 +104,9 @@
         document.body.removeChild(link);
     }
 
-    function sortTransactions(order) {
-        // Placeholder for sorting function
-        if (order === 'newest') {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        } else if (order === 'oldest') {
-            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-        }
-    }
+
 </script>
+
 
 
 <style>
