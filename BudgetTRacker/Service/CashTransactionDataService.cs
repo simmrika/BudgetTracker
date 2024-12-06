@@ -1,6 +1,7 @@
 ﻿using BudgetTRacker.Entities;
 using BudgetTRacker.Data;
 using Microsoft.EntityFrameworkCore;
+using BudgetTRacker.Models;
 
 namespace BudgetTracker.Service
 {
@@ -22,7 +23,7 @@ namespace BudgetTracker.Service
                 UserId = cashTransactionDto.UserId, // Ensure UserId is set
                 CategoryId = cashTransactionDto.CategoryId,
                 TransactionName = cashTransactionDto.Name,
-                Date = cashTransactionDto.Date,
+                Date = DateTime.Now,
                 TransactionType = cashTransactionDto.TransactionType,
                 Total = cashTransactionDto.Total,
                 Description = cashTransactionDto.Description
@@ -57,6 +58,22 @@ namespace BudgetTracker.Service
                 .OrderByDescending(t => t.Date) // Order by date (latest first)
                 .ToListAsync(); // Convert to a list
         }
+
+
+        public async Task<IEnumerable<CategoryExpenditure>> GetTransactionSumsByCategoryAsync(int userId)
+        {
+            return await _context.CashTransaction
+                .Where(t => t.UserId == userId) // Filter by userId
+                .GroupBy(t => t.CategoryId) // Group by CategoryId
+                .Select(g => new CategoryExpenditure
+                {
+                    CategoryId = g.Key,
+                    TotalAmount = g.Sum(t => t.Total),
+                    CategoryName = g.FirstOrDefault().Category.CategoryName // Assuming Category has a Name property
+                })
+                .ToListAsync();
+        }
+
     }
 
     // DTO class for cash transaction data

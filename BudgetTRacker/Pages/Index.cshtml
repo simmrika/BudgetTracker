@@ -157,37 +157,33 @@
 
             <a asp-page="/AddCategory"><i class="fa fa-plus"></i></a>
         </div>
-        <div class="category-item">
-            <div class="icon-container food-icon">
-                <i class="fa-solid fa-bowl-food"></i>
-            </div>
-            <span>Food</span>
-            <span class="amount">Rs.2000</span>
-        </div>
-        <div class="category-item">
-            <div class="icon-container nea-icon">
-                <i class="fa-solid fa-lightbulb"></i>
-            </div>
-            <span>NEA</span>
-            <span class="amount">Rs.2000</span>
 
-        </div>
-        <div class="category-item">
-            <div class="icon-container internet-icon">
-                <i class="fa-solid fa-wifi"></i>
-            </div>
-            <span>Internet</span>
-            <span class="amount">Rs.2000</span>
+        @foreach (var item in Model.CategoryExpenditureslist)
+        {
+            <div class="category-item">
+                <div class="icon-container
+                @(item.CategoryName == "Food" ? "food-icon" :
+                  item.CategoryName == "NEA" ? "nea-icon" :
+                  item.CategoryName == "Internet" ? "internet-icon" :
+                  item.CategoryName == "College" ? "college-icon" :
+                  "default-icon")">
+                    <i class="fa-solid
+                    @(item.CategoryName == "Food" ? "fa-bowl-food" :
+                      item.CategoryName == "NEA" ? "fa-lightbulb" :
+                      item.CategoryName == "Internet" ? "fa-wifi" :
+                      item.CategoryName == "College" ? "fa-graduation-cap" :
+                      "fa-receipt")"></i>
+                </div>
 
-        </div>
-        <div class="category-item">
-            <div class="icon-container college-icon">
-                <i class="fa-solid fa-graduation-cap"></i>
-            </div>
-            <span>College</span>
-            <span class="amount">Rs.20000</span>
 
-        </div>
+
+                <span>@item.CategoryName</span>
+                <span class="amount">@item.TotalAmount</span>
+            </div>
+        }
+
+
+  
     </div>
 </div>
 

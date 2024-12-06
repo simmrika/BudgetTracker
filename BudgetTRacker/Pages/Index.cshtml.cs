@@ -1,6 +1,7 @@
 using BudgetTracker.Service;
 using BudgetTRacker.Data;
 using BudgetTRacker.Entities;
+using BudgetTRacker.Models;
 using BudgetTRacker.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -23,7 +24,9 @@ namespace BudgetTRacker.Pages
         private readonly BankTransactionDataService _bankTransactionDataService;
         public readonly AccountDetailsDataService _accountDetailsDataService;
         public readonly AddCashDateService _cashDateService;
-        private readonly UserDataService _userDataService; 
+        private readonly UserDataService _userDataService;
+
+        private readonly CashTransactionDataService _cashTransactionDataService;
 
         private readonly AppDbContext _appDbContext;
         private readonly IHttpContextAccessor _contextAccessor;
@@ -36,11 +39,16 @@ namespace BudgetTRacker.Pages
         [BindProperty]
         public CashEntryDto? CashEntry { get; private set; } // Single cash entry
 
+        [BindProperty]
+        public List<CategoryExpenditure>  CategoryExpenditureslist { get;  set; }=new List<CategoryExpenditure>();
+
 
         [BindProperty]
         public UserDto? UserDetails { get; private set; }
 
-        public IndexModel(ILogger<IndexModel> logger, AddCashDateService cashTransactionDataService, BankTransactionDataService bankTransactionDataService, AccountDetailsDataService accountDetailsDataService, UserDataService userDataService, AddCashDateService addCashDateService, IHttpContextAccessor contextAccessor, AppDbContext appDbContext)
+        public IndexModel(ILogger<IndexModel> logger,CashTransactionDataService cashTransactionDataService1,
+            
+            AddCashDateService addcash, BankTransactionDataService bankTransactionDataService, AccountDetailsDataService accountDetailsDataService, UserDataService userDataService, AddCashDateService addCashDateService, IHttpContextAccessor contextAccessor, AppDbContext appDbContext)
         {
             _logger = logger;
             _bankTransactionDataService = bankTransactionDataService;
@@ -49,7 +57,8 @@ namespace BudgetTRacker.Pages
             _appDbContext = appDbContext;
             _contextAccessor = contextAccessor;
             _appDbContext = appDbContext;
-            _cashDateService = cashTransactionDataService;
+            _cashDateService = addcash;
+            _cashTransactionDataService = cashTransactionDataService1;
         }
 
         public async Task OnGetAsync()
@@ -60,12 +69,56 @@ namespace BudgetTRacker.Pages
 
 
 
+
+
+
+         
+
+
+
             if (linkedaccout != null)
             {
                 Transactions = await _bankTransactionDataService.GetTransactionsByAccountNumberAsync(linkedaccout.AccountNumber);
                 UserDetails = await _accountDetailsDataService.GetUserByAccountNumberAsync(linkedaccout.AccountNumber);
 
             }
+
+
+
+
+
+
+            var bankByCategory = Transactions.GroupBy(t => t.Notes) // Grouping by Notes (could be Category Name or ID)
+    .Select(g => new CategoryExpenditure
+    {
+        TotalAmount = g.Sum(t => t.Amount),
+        CategoryName = g.Key // Using the grouped Notes (Category Name)
+    })
+    .ToList();
+
+            // Add bank transactions grouped by category to the list
+            CategoryExpenditureslist.AddRange(bankByCategory);
+
+            // Step 2: Group Cash Transactions by Category (Assuming there's a Notes field)
+            var cashByCategory = await _cashTransactionDataService.GetTransactionSumsByCategoryAsync(userId);
+
+            // Add cash transactions grouped by category to the list
+            CategoryExpenditureslist.AddRange(cashByCategory);
+
+            // Step 3: Optionally, if you need to sum up all the categories from both bank and cash transactions
+            var combinedCategoryExpenditures = CategoryExpenditureslist
+                .GroupBy(e => e.CategoryName) // Group by Category Name
+                .Select(g => new CategoryExpenditure
+                {
+                    CategoryName = g.Key,
+                    TotalAmount = g.Sum(e => e.TotalAmount) // Sum the amounts from both bank and cash transactions
+                })
+                .ToList();
+
+
+            CategoryExpenditureslist=combinedCategoryExpenditures;
+
+
 
             var user = await _userDataService.GetUserByIdAsync(userId); // Get user by ID
 
