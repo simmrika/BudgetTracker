@@ -11,6 +11,12 @@ namespace BudgetTRacker.Entities
         public int UserId { get; set; }
 
         [Required]
+        public int CategoryId { get; set; }
+
+
+        public Category Category { get; set; }
+
+        [Required]
         public string TransactionName { get; set; }
 
         [Required]
@@ -22,8 +28,6 @@ namespace BudgetTRacker.Entities
         [Required]
         public decimal Total { get; set; }
 
-        [Required]
-        public string Category { get; set; }
 
         [MaxLength(255)]
         public string Description { get; set; }

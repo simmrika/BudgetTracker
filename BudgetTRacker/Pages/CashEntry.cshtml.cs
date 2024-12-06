@@ -27,8 +27,16 @@ namespace BudgetTRacker.Pages
             _contextAccessor = contextAccessor;
         }
 
+        public async Task<IActionResult> OnGetAsync()
+        {
+            return Page();
+
+        }
+
         public async Task<IActionResult> OnPostAsync()
         {
+
+            NewCashEntry.AddDate = DateTime.Now;
             if (!ModelState.IsValid)
             {
                 ErrorMessage = "Please fill in all required fields.";

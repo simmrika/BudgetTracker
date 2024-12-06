@@ -71,17 +71,48 @@ namespace BudgetTRacker.Pages
                 TransactionDto transactionDto = new TransactionDto
                 {
                     TransactionDate = cashTransaction.Date,
-                    Status = "Success",
                     Amount = cashTransaction.Total,
-                    Notes = cashTransaction.Category,
+                    Notes = cashTransaction.Category.CategoryName,
                     TransactionType = cashTransaction.TransactionType
                 };
+
+                // Check if the transaction date is greater than today's date and set the status accordingly
+                transactionDto.Status = transactionDto.TransactionDate.Date > DateTime.Today ? "Pending" : "Success";
 
                 transactionsList.Add(transactionDto);
             }
 
             // Assign the combined list back to Transactions
             Transactions = transactionsList;
+        }
+
+
+        public async Task<IActionResult> OnPostDeleteAsync(List<int> selectedTransactionIds)
+        {
+            if (selectedTransactionIds == null || selectedTransactionIds.Count == 0)
+            {
+                // Handle no transactions selected
+                TempData["Error"] = "No transactions selected for deletion.";
+                return RedirectToPage();
+            }
+
+            var userId = GetUserIdFromCookie();
+
+            // Delete selected Cash Transactions
+            var cashTransactionsToDelete = await _appDbContext.CashTransaction
+                .Where(t => selectedTransactionIds.Contains(t.Id) && t.UserId == userId)
+                .ToListAsync();
+
+            if (cashTransactionsToDelete.Any())
+            {
+                _appDbContext.CashTransaction.RemoveRange(cashTransactionsToDelete);
+            }
+
+
+            await _appDbContext.SaveChangesAsync();
+
+            TempData["Success"] = "Selected transactions deleted successfully.";
+            return RedirectToPage();
         }
 
 

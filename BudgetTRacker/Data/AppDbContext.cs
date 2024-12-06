@@ -22,6 +22,7 @@ namespace BudgetTRacker.Data
 
         public DbSet<LinkedAccounts> LinkedAccount { get; set; }
 
+
         // Override the OnModelCreating method to configure relationships, indexes, etc.
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -41,6 +42,8 @@ namespace BudgetTRacker.Data
                 .HasForeignKey(ct => ct.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+
+      
 
             modelBuilder.Entity<LinkedAccounts>().HasKey(ct => ct.AccountID);
         }

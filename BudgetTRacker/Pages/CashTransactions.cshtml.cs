@@ -1,56 +1,64 @@
+using BudgetTRacker.Data;
+using BudgetTRacker.Entities;
 using BudgetTracker.Service;
-using BudgetTRacker.Service;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 
 namespace BudgetTRacker.Pages
 {
-
-    [Authorize]
-    public class CashTransactionModel : PageModel
+    public class CashTransactionsModel : PageModel
     {
-        private readonly ILogger<CashTransactionModel> _logger;
         private readonly CashTransactionDataService _transactionDataService;
         private readonly IHttpContextAccessor _contextAccessor;
+        private readonly AppDbContext _appDbContext;
 
         [BindProperty]
         public CashTransactionDto NewTransaction { get; set; } = new CashTransactionDto();
         public string ErrorMessage { get; set; }
 
+        [BindProperty]
+        public List<Category> CategoriesList { get; set; }
 
-        public CashTransactionModel(ILogger<CashTransactionModel> logger, CashTransactionDataService transactionDataService, IHttpContextAccessor contextAccessor)
+
+        public CashTransactionsModel( CashTransactionDataService transactionDataService, IHttpContextAccessor contextAccessor, AppDbContext appDbContext)
         {
-            _logger = logger;
+            
             _transactionDataService = transactionDataService;
             _contextAccessor = contextAccessor;
+            _appDbContext = appDbContext;
+        }
+        public async Task OnGetAsync()
+        {
+
+            CategoriesList = await _appDbContext.Category.ToListAsync();
+
+
+
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                ErrorMessage = "Please fill in all required fields.";
-
-                return Page(); // Re-display the form if the model state is invalid
-            }
+           
 
             NewTransaction.UserId = GetUserIdFromCookie();
 
             var result = await _transactionDataService.AddTransactionAsync(NewTransaction);
-            if (result)
-            {
-                _logger.LogInformation("New transaction added successfully.");
-                return RedirectToPage("/Transaction");
-            }
-            else
-            {
-                _logger.LogError("Error adding new transaction.");
-                ModelState.AddModelError(string.Empty, "An error occurred while adding the transaction.");
-                return Page(); // Re-display the form if there's an error
-            }
+            //if (result)
+            //{
+            //    LogInformation("New transaction added successfully.");
+            //    return RedirectToPage("/Transaction");
+            //}
+            //else
+            //{
+            //    LogError("Error adding new transaction.");
+            //    ModelState.AddModelError(string.Empty, "An error occurred while adding the transaction.");
+            //
+            //    
+            //}
+
+            return Page(); 
         }
 
         public int GetUserIdFromCookie()
@@ -71,6 +79,5 @@ namespace BudgetTRacker.Pages
 
             return int.Parse(userIdClaim.Value);
         }
-
     }
 }

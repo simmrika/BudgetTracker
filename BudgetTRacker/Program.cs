@@ -25,12 +25,14 @@ builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 
 builder.Services.AddHttpClient();
 builder.Services.AddHttpClient<BankTransactionDataService>();
+builder.Services.AddHttpClient<AccountDetailsDataService>();
 builder.Services.AddHttpContextAccessor();
 
 
 builder.Services.AddScoped<CashTransactionDataService>();
 builder.Services.AddScoped<AddCashDateService>();
 builder.Services.AddScoped<CategoryDataService>();
+builder.Services.AddScoped<UserDataService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 var app = builder.Build();
 

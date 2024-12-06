@@ -6,14 +6,16 @@
 
     ViewData["Title"] = "Transactions";
 }
+
+<form method="post" action="@Url.Page("DeleteSelectedTransactions")">
 <div class="wrapper">
     <div class="transaction-container">
         <div class="transaction-header">
             <h3>Transactions</h3>
             <div class="button-group">
-                <button class="btn-new-transaction" onclick="window.location.href='@Url.Page("CashTransaction")'">+ New transaction</button>
-                <button type="submit" class="btn-delete">
-                    <i class="fa fa-trash"></i>
+                <a class="btn-new-transaction" href="/CashTransactions">+ New transaction</a>
+                       <button type="submit" class="btn-delete">
+                    <i class="fa fa-trash"></i> 
                 </button>
                 <div class="filter-dropdown">
                     <button class="btn-filter"><i class="fa-solid fa-filter"></i></button>
@@ -34,6 +36,7 @@
         <table class="transaction-table">
             <thead>
                 <tr>
+                    <th></th>
                     <th>DETAILS</th>
                     <th>TRANSACTION TYPE</th>
                     <th>AMOUNT</th>
@@ -43,7 +46,12 @@
             <tbody>
                 @foreach (var item in Model.Transactions)
                 {
+
+
                     <tr>
+                            <td>
+                                <input type="checkbox" name="selectedTransactions" value="@item.Id" class="transaction-checkbox" />
+                            </td>
                         <td class="details">
                             <div class="icon-and-info">
                                 <div class="icon-container @(item.Notes == "Food" ? "food-icon" : item.Notes == "NEA" ? "nea-icon" : item.Notes == "Internet" ? "internet-icon" : item.Notes == "College" ? "college-icon" : "default-icon")">
@@ -64,6 +72,8 @@
         </table>
     </div>
 </div>
+
+</form>
 
 <script>
     const allTransactions = JSON.parse('@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Transactions))');
@@ -342,5 +352,14 @@
     .options-dropdown:hover .dropdown-content {
         display: block;
     }
+
+    .status.pending {
+        color: #fff;
+        background-color: yellow; /* Yellow background */
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-weight: bold;
+    }
+
 
 </style>

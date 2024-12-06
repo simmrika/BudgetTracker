@@ -28,38 +28,65 @@
         <div class="bank-cards">
             <div class="card">
                 <div class="card-icons">
+                    <!-- Link to add or update cash entry -->
                     <a asp-page="/CashEntry" style="text-decoration: none;">
                         <i style="color: white; font-size: 14px; margin-top: 5px; cursor: pointer;"
                            class="fa fa-plus"
-                           title="Add Cash">
+                           title="Add or Update Cash">
                         </i>
                     </a>
 
-                    <i style="color: white ; font-size: 14px; margin-top: 5px;" class="fa fa-trash delete-icon" title="Delete"></i>
+                    <!-- Delete Cash Entry -->
+                    @if (Model.CashEntry != null)
+                    {
+                        <i style="color: white; font-size: 14px; margin-top: 5px; cursor: pointer;"
+                           class="fa fa-trash delete-icon"
+                           title="Delete"
+                           onclick="deleteCashEntry(@Model.CashEntry.Id)">
+                        </i>
+                    }
                 </div>
                 <h4>Cash</h4>
-                <p>Full Name</p>
-                <p>@currentDate</p>
-                <p>NPR. 2000.00 <i class="fa fa-eye"></i></p>
+                <p>@Model.UserDetails.FirstName @Model.UserDetails.FirstName</p>
+                <p>@Model.CashEntry?.AddDate.ToString("yyyy-MM-dd")</p>
+                <p>
+                    NPR. @Model.CashEntry?.Amount.ToString("F2")
+                    <i class="fa fa-eye"></i>
+                </p>
+            </div>
+
+
+            <div class="card">
+                @if (Model.UserDetails != null)
+                {
+                    <div class="card-icons">
+                        <i style="color: white ; font-size: 14px; margin-top: 5px;" class="fa fa-trash delete-icon" title="Delete"></i>
+                    </div>
+                    <h4>@Model.UserDetails.BankName</h4>
+                    <p>@Model.UserDetails.FirstName @Model.UserDetails.LastName</p>
+                    <p>@currentDate</p>
+                    <p>Account Number @Model.UserDetails.AccountNumber</p>
+                    <p>NPR. @Model.UserDetails.Balance.ToString("F2") <i class="fa fa-eye"></i></p>
+                }
+                else
+                {
+                    <p>No user details available.</p>
+                }
             </div>
 
             <div class="card">
-                <div class="card-icons">
-                    <i style="color: white ; font-size: 14px; margin-top: 5px;" class="fa fa-trash delete-icon" title="Delete"></i>
-                </div>
-                <h4>NIC Asia Bank</h4>
-                <p>Full Name</p>
-                <p>@currentDate</p>
-                <p>Account Number 1234566</p>
-                <p>NPR. 2000.00 <i class="fa fa-eye"></i></p>
-            </div>
-
-            <div class="card">
-                <h4>NMB Bank</h4>
-                <p>Full Name</p>
-                <p>@currentDate</p>
-                <p>Account Number 7891011</p>
-                <p>NPR. 2000.00 <i class="fa fa-eye"></i></p>
+                @if (Model.UserDetails != null)
+                {
+                    <h4>@Model.UserDetails.BankName</h4>
+                    <p>@Model.UserDetails.FirstName @Model.UserDetails.LastName</p>
+                    <p>@currentDate</p>
+                    <p>Account Number @Model.UserDetails.AccountNumber</p>
+                    <p>NPR. @Model.UserDetails.Balance.ToString("F2") <i class="fa fa-eye"></i></p>
+                }
+                else
+                {
+                    <p>No user details available.</p>
+                }
             </div>
         </div>
         <button class="next-arrow">&#10095;</button>

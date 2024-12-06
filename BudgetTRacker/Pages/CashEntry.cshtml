@@ -19,14 +19,14 @@
     <form method="post">
         <div class="form-group">
             <label for="Amount">Amount*</label>
-            <input type="text" id="Amount" name="Amount" class="form-control" required>
+            <input type="text" id="Amount" asp-for="NewCashEntry.Amount" class="form-control" required>
             <span asp-validation-for="NewCashEntry.Amount" class="text-danger"></span>
 
         </div>
 
         <div class="form-group">
             <label for="AddDate">Date*</label>
-            <input asp-for="NewCashEntry.AddDate" id="AddDate" type="date" class="form-control" value="@DateTime.UtcNow.ToString("yyyy-MM-dd")" readonly />
+            <input asp-for="NewCashEntry.AddDate" id="AddDate" type="datetime-local" class="form-control" />
             <span asp-validation-for="NewCashEntry.AddDate" class="text-danger"></span>
         </div>
 

@@ -34,8 +34,10 @@ namespace BudgetTRacker.Service
         }
 
         // Method to retrieve all cash entries for a user
-        public async Task<IEnumerable<CashEntryDto>> GetCashEntriesByUserIdAsync(int userId)
+        public async Task<CashEntryDto?> GetCashEntryByUserIdAsync(int userId)
         {
+
+
             return await _context.CashEntries
                 .Where(e => e.UserId == userId) // Filter by userId
                 .Select(e => new CashEntryDto
@@ -45,9 +47,9 @@ namespace BudgetTRacker.Service
                     Amount = e.Amount,
                     AddDate = e.AddDate
                 })
-                .OrderByDescending(e => e.AddDate) // Order by date (latest first)
-                .ToListAsync(); // Convert to a list
+                .SingleOrDefaultAsync(); // Fetch a single entry or null if none exists
         }
+
     }
 
     // DTO class for cash entry data

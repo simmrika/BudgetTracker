@@ -9,6 +9,8 @@ namespace BudgetTRacker.Entities
         [Required]
 
         public string CategoryName { get; set; }
+
+        public List<CashTransaction> CashTransactions { get; set; } = new List<CashTransaction>();
         
      
     }
