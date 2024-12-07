@@ -1,57 +1,94 @@
-using BudgetTracker.Service;
+using BudgetTRacker.Service;
+using BudgetTRacker.Data;
+using BudgetTRacker.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using BudgetTRacker.Models;
+using BudgetTracker.Service;
 
 namespace BudgetTRacker.Pages
 {
     [Authorize]
     public class CategoryModel : PageModel
     {
-        private readonly CategoryDataService _categoryService;
+        private readonly ILogger<CategoryModel> _logger;
+        private readonly BankTransactionDataService _bankTransactionDataService;
+        private readonly CashTransactionDataService _cashTransactionDataService;
         private readonly IHttpContextAccessor _contextAccessor;
+        private readonly AppDbContext _appDbContext;
 
-        public CategoryModel(CategoryDataService categoryService, IHttpContextAccessor contextAccessor)
+        [BindProperty]
+        public List<CategoryExpenditure> CategoryExpenditureslist { get; private set; } = new List<CategoryExpenditure>();
+
+        [BindProperty]
+        public List<string> SelectedCategories { get; set; } = new List<string>();
+
+        public CategoryModel(
+            ILogger<CategoryModel> logger,
+            BankTransactionDataService bankTransactionDataService,
+            CashTransactionDataService cashTransactionDataService,
+            IHttpContextAccessor contextAccessor,
+            AppDbContext appDbContext)
         {
-            _categoryService = categoryService;
+            _logger = logger;
+            _bankTransactionDataService = bankTransactionDataService;
+            _cashTransactionDataService = cashTransactionDataService;
             _contextAccessor = contextAccessor;
+            _appDbContext = appDbContext;
         }
-
-        [BindProperty]
-        public List<CategoryDto> Category { get; set; } = new List<CategoryDto>();
-
-        [BindProperty]
-        public List<int> SelectedCategories { get; set; } = new List<int>();
-
 
         public async Task OnGetAsync()
         {
             var userId = GetUserIdFromCookie();
-            Category = (await _categoryService.GetCategoriesByUserIdAsync(userId)).ToList();
-        }
 
-        public async Task<IActionResult> OnPostDeleteSelectedAsync()
-        {
-            if (SelectedCategories != null && SelectedCategories.Any())
+            // Fetch linked account
+            var linkedAccount = await _appDbContext.LinkedAccount
+                .Where(e => e.UserID == userId)
+                .SingleOrDefaultAsync();
+
+            if (linkedAccount != null)
             {
-                // Call the service to delete categories by their IDs
-                var result = await _categoryService.DeleteCategoriesAsync(SelectedCategories);
+                // Fetch bank transactions by account number
+                var bankTransactions = await _bankTransactionDataService.GetTransactionsByAccountNumberAsync(linkedAccount.AccountNumber);
 
-                if (!result)
-                {
-                    ModelState.AddModelError("", "Failed to delete selected categories.");
-                }
-                else
-                {
-                    // Optionally, re-fetch the categories after deletion
-                    var userId = GetUserIdFromCookie();
-                    Category = (await _categoryService.GetCategoriesByUserIdAsync(userId)).ToList();
-                }
+                // Group bank transactions by category (Notes) and calculate totals
+                var bankByCategory = bankTransactions.GroupBy(t => t.Notes) // Group by Notes
+                    .Select(g => new CategoryExpenditure
+                    {
+                        CategoryName = g.Key, // Category Name
+                        TotalAmount = g.Sum(t => t.Amount) // Sum of amounts
+                    })
+                    .ToList();
+
+                CategoryExpenditureslist.AddRange(bankByCategory);
             }
 
-            return RedirectToPage(); // Redirect to the same page after the operation
+            // Fetch and group cash transactions by category
+            var cashByCategory = await _cashTransactionDataService.GetTransactionSumsByCategoryAsync(userId);
+
+            CategoryExpenditureslist.AddRange(cashByCategory);
+
+            // Combine and merge categories
+            var combinedCategoryExpenditures = CategoryExpenditureslist
+                .GroupBy(e => e.CategoryName) // Group by Category Name
+                .Select(g => new CategoryExpenditure
+                {
+                    CategoryName = g.Key,
+                    TotalAmount = g.Sum(e => e.TotalAmount) // Sum amounts for combined categories
+                })
+                .ToList();
+
+            CategoryExpenditureslist = combinedCategoryExpenditures;
+
+            _logger.LogInformation("Successfully fetched and processed category expenditures.");
         }
+
 
 
         private int GetUserIdFromCookie()

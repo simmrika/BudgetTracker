@@ -68,25 +68,12 @@ namespace BudgetTRacker.Pages
             var linkedaccout = await _appDbContext.LinkedAccount.Where(e => e.UserID == userId).SingleOrDefaultAsync();
 
 
-
-
-
-
-         
-
-
-
             if (linkedaccout != null)
             {
                 Transactions = await _bankTransactionDataService.GetTransactionsByAccountNumberAsync(linkedaccout.AccountNumber);
                 UserDetails = await _accountDetailsDataService.GetUserByAccountNumberAsync(linkedaccout.AccountNumber);
 
             }
-
-
-
-
-
 
             var bankByCategory = Transactions.GroupBy(t => t.Notes) // Grouping by Notes (could be Category Name or ID)
     .Select(g => new CategoryExpenditure

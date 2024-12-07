@@ -10,36 +10,40 @@
         <div class="header-buttons">
             <form method="post" asp-page-handler="DeleteSelected" class="inline-form">
                 <button type="submit" class="btn-delete">
-                    <i class="fa fa-trash"></i> 
+                    <i class="fa fa-trash"></i>
                 </button>
             </form>
-            <a asp-page="/AddCategory">
-                <i class="fa fa-plus"></i> 
+            <a asp-page="/AddCategory" class="btn-add">
+                <i class="fa fa-plus"></i> Add Category
             </a>
         </div>
     </div>
 
-    @if (Model.Category.Any())
+    @if (Model.CategoryExpenditureslist.Any())
     {
         <form method="post" asp-page-handler="DeleteSelected">
-            @foreach (var category in Model.Category)
+            @foreach (var category in Model.CategoryExpenditureslist)
             {
                 <div class="category-item">
-                    <input type="checkbox" name="selectedCategories" value="@category.CategoryId" class="category-checkbox" />
-                    <div class="icon-container default-icon">
-                        <i class="fa fa-folder"></i>
+                    <input type="checkbox" name="SelectedCategories" value="@category.CategoryName" class="category-checkbox" />
+                    <div class="icon-container
+                @(category.CategoryName == "Food" ? "food-icon" :
+                  category.CategoryName == "NEA" ? "nea-icon" :
+                  category.CategoryName == "Internet" ? "internet-icon" :
+                  category.CategoryName == "College" ? "college-icon" :
+                  "default-icon")">
+                        <i class="fa-solid
+                    @(category.CategoryName == "Food" ? "fa-bowl-food" :
+                      category.CategoryName == "NEA" ? "fa-lightbulb" :
+                      category.CategoryName == "Internet" ? "fa-wifi" :
+                      category.CategoryName == "College" ? "fa-graduation-cap" :
+                      "fa-receipt")"></i>
                     </div>
                     <span>@category.CategoryName</span>
-                    <span class="amount">Rs. @category.CategoryLimit</span>
+                    <span class="amount">Rs. @category.TotalAmount</span>
                 </div>
             }
-            <button type="submit" class="btn-delete">
-                <i class="fa fa-trash"></i> Delete Selected
-            </button>
+
         </form>
-    }
-    else
-    {
-        <p>No categories available. Add a new category to get started.</p>
     }
 </div>
