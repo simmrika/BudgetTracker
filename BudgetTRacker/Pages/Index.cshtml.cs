@@ -41,6 +41,8 @@ namespace BudgetTRacker.Pages
 
         [BindProperty]
         public List<CategoryExpenditure>  CategoryExpenditureslist { get;  set; }=new List<CategoryExpenditure>();
+        [BindProperty]
+        public IEnumerable<CashTransactionDto> CashTransactions { get; private set; } = new List<CashTransactionDto>();
 
 
         [BindProperty]
@@ -67,13 +69,37 @@ namespace BudgetTRacker.Pages
 
             var linkedaccout = await _appDbContext.LinkedAccount.Where(e => e.UserID == userId).SingleOrDefaultAsync();
 
-
+            var transactionList = new List<TransactionDto>();
             if (linkedaccout != null)
             {
-                Transactions = await _bankTransactionDataService.GetTransactionsByAccountNumberAsync(linkedaccout.AccountNumber);
+                var bankTransactions = await _bankTransactionDataService
+                        .GetTransactionsByAccountNumberAsync(linkedaccout.AccountNumber);
+                transactionList.AddRange(bankTransactions);
                 UserDetails = await _accountDetailsDataService.GetUserByAccountNumberAsync(linkedaccout.AccountNumber);
 
             }
+
+            // Fetch Cash Transactions
+            CashTransactions = await _cashTransactionDataService.GetTransactionsByUserIdAsync(userId);
+
+            foreach (var cashTransaction in CashTransactions)
+            {
+                // Convert CashTransaction to TransactionDto
+                TransactionDto transactionDto = new TransactionDto
+                {
+                    TransactionDate = cashTransaction.Date,
+                    Amount = cashTransaction.Total,
+                    Notes = cashTransaction.Category.CategoryName,
+                    TransactionType = cashTransaction.TransactionType
+                };
+
+
+                transactionList.Add(transactionDto);
+            }
+
+            // Assign the combined list back to Transactions
+            Transactions = transactionList;
+
 
             var bankByCategory = Transactions.GroupBy(t => t.Notes) // Grouping by Notes (could be Category Name or ID)
     .Select(g => new CategoryExpenditure

@@ -115,33 +115,48 @@
             <a asp-page="Transaction">See all</a>
         </div>
 
-        @foreach (var item in Model.Transactions)
+        @if (Model.Transactions.Any())
         {
-            <div class="transaction-item">
-                <div class="icon-container
-                @(item.Notes == "Food" ? "food-icon" :
-                  item.Notes == "NEA" ? "nea-icon" :
-                  item.Notes == "Internet" ? "internet-icon" :
-                  item.Notes == "College" ? "college-icon" :
-                  "default-icon")">
-                    <i class="fa-solid
-                    @(item.Notes == "Food" ? "fa-bowl-food" :
-                      item.Notes == "NEA" ? "fa-lightbulb" :
-                      item.Notes == "Internet" ? "fa-wifi" :
-                      item.Notes == "College" ? "fa-graduation-cap" :
-                      "fa-receipt")"></i>
-                </div>
+            @foreach (var item in Model.Transactions.Take(5))
+            {
+                <div class="transaction-item">
+                    <div class="icon-container
+                @(item.Notes switch
+                {
+                    "Food" => "food-icon",
+                    "NEA" => "nea-icon",
+                    "Internet" => "internet-icon",
+                    "College" => "college-icon",
+                    _ => "default-icon"
+                })">
+                        <i class="fa-solid
+                    @(item.Notes switch
+                    {
+                        "Food" => "fa-bowl-food",
+                        "NEA" => "fa-lightbulb",
+                        "Internet" => "fa-wifi",
+                        "College" => "fa-graduation-cap",
+                        _ => "fa-receipt"
+                    })"></i>
+                    </div>
 
-                <div class="transaction-info">
-                    <span class="notes">@item.Notes</span>
-                    <span class="date">@item.TransactionDate.ToString("yyyy-MM-dd")</span>
+                    <div class="transaction-info">
+                        <span class="notes">@item.Notes</span>
+                        <span class="date">@item.TransactionDate.ToString("yyyy-MM-dd")</span>
+                    </div>
+                    <div class="transaction-info">
+                        <span class="transaction-type">@item.TransactionType</span>
+                    </div>
+                    <div class="transaction-right">
+                        <span class="amount">Rs. @item.Amount</span>
+                    </div>
                 </div>
-                <div class="transaction-info">
-                    <span class="transaction-type">@item.TransactionType</span>
-                </div>
-                <div class="transaction-right">
-                    <span class="amount">Rs.@item.Amount</span>
-                </div>
+            }
+        }
+        else
+        {
+            <div class="no-transactions">
+                <p>No transactions to display.</p>
             </div>
         }
     </div>
@@ -260,3 +275,36 @@
     // Initial chart rendering
     drawChart();
 </script>
+
+<style>
+    .icon-container {
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        margin-right: 15px;
+    }
+
+    .food-icon {
+        background-color: #F4A261;
+    }
+
+    .nea-icon {
+        background-color: #A8DADC;
+    }
+
+    .internet-icon {
+        background-color: #D3D3D3;
+    }
+
+    .college-icon {
+        background-color: #E9C46A;
+    }
+
+    .icon-container i {
+        font-size: 24px;
+        color: black;
+    }
+</style>

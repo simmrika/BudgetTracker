@@ -19,7 +19,6 @@ namespace BudgetTRacker.Pages
         public CashEntryDto NewCashEntry { get; set; } = new CashEntryDto();
         public string ErrorMessage { get; set; }
 
-
         public CashEntryModel(ILogger<CashEntryModel> logger, AddCashDateService addCashDateService, IHttpContextAccessor contextAccessor)
         {
             _logger = logger;
@@ -30,17 +29,15 @@ namespace BudgetTRacker.Pages
         public async Task<IActionResult> OnGetAsync()
         {
             return Page();
-
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-
             NewCashEntry.AddDate = DateTime.Now;
+
             if (!ModelState.IsValid)
             {
                 ErrorMessage = "Please fill in all required fields.";
-
                 return Page(); // Re-display the form if the model state is invalid
             }
 
@@ -49,19 +46,33 @@ namespace BudgetTRacker.Pages
                 // Assign user ID from the logged-in user
                 NewCashEntry.UserId = GetUserIdFromCookie();
 
+                // Check if the user already has a cash entry
+                var existingCashEntry = await _addCashDateService.GetCashEntryByUserIdAsync(NewCashEntry.UserId);
 
+                bool result;
 
-                // Add the cash entry
-                var result = await _addCashDateService.AddCashEntryAsync(NewCashEntry);
-                if (result)
+                if (existingCashEntry == null)
                 {
-                    _logger.LogInformation("New cash entry added successfully.");
-                    return RedirectToPage("/Index"); // Redirect after successful addition
+                    // If no existing entry, add a new cash entry
+                    result = await _addCashDateService.AddCashEntryAsync(NewCashEntry);
                 }
                 else
                 {
-                    _logger.LogError("Error adding new cash entry.");
-                    ModelState.AddModelError(string.Empty, "An error occurred while adding the cash entry.");
+                    // If an entry exists, update it
+                    existingCashEntry.Amount += NewCashEntry.Amount; // You can modify this logic to overwrite the amount instead
+                    existingCashEntry.AddDate = NewCashEntry.AddDate;
+                    result = await _addCashDateService.UpdateCashEntryAsync(existingCashEntry);
+                }
+
+                if (result)
+                {
+                    _logger.LogInformation(existingCashEntry == null ? "New cash entry added successfully." : "Cash entry updated successfully.");
+                    return RedirectToPage("/Index"); // Redirect after successful addition or update
+                }
+                else
+                {
+                    _logger.LogError("Error processing cash entry.");
+                    ModelState.AddModelError(string.Empty, "An error occurred while processing the cash entry.");
                     return Page(); // Re-display the form if there's an error
                 }
             }
