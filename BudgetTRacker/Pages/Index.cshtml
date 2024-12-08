@@ -9,16 +9,16 @@
 <section class="balance-section">
     <div class="total-balance">
         <h3>Your total balance</h3>
-        <p class="balance-amount">Rs. 8000.00</p>
+        <p class="balance-amount">Rs. @ViewData["TotalBalance"]</p>
         <div class="balance-change">
             <div class="income">
                 <i class="fa-solid fa-arrow-up"></i>
-                <span>Rs. 500.00</span>
+                <span>Rs. @ViewData["TodayIncome"]</span>
                 <p>Today's Income</p>
             </div>
             <div class="expense">
                 <i class="fa-solid fa-arrow-down"></i>
-                <span>Rs. 500.00</span>
+                <span>Rs. @ViewData["TodayExpense"]</span>
                 <p>Today's Expense</p>
             </div>
         </div>
