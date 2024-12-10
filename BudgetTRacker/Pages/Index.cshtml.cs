@@ -70,7 +70,8 @@ namespace BudgetTRacker.Pages
             var linkedaccout = await _appDbContext.LinkedAccount.Where(e => e.UserID == userId).SingleOrDefaultAsync();
 
             var transactionList = new List<TransactionDto>();
-            decimal totalIncome = 0, totalExpense = 0; 
+            decimal totalIncome = 0, totalExpense = 0;
+            decimal bankTotal = 0;
 
             if (linkedaccout != null)
             {
@@ -85,10 +86,12 @@ namespace BudgetTRacker.Pages
                     if (bankTransaction.TransactionType == "Deposit")
                     {
                         totalIncome += bankTransaction.Amount;
+                        bankTotal += bankTransaction.Amount;
                     }
                     else if (bankTransaction.TransactionType == "Withdraw")
                     {
                         totalExpense += bankTransaction.Amount;
+                        bankTotal += bankTransaction.Amount;
                     }
                 }
 
@@ -168,7 +171,16 @@ namespace BudgetTRacker.Pages
                 : $"No cash entry found for user ID: {userId}");
 
             // Calculate Total Balance
-            decimal totalBalance = totalIncome - totalExpense;
+            decimal totalBalance = 0;
+
+            // Add CashEntry amount if available
+            if (CashEntry != null)
+            {
+                totalBalance += CashEntry.Amount; // Add cash amount
+            }
+
+            // Add bank total to total balance
+            totalBalance += bankTotal;
 
             // Set the total balance and today's income/expense to the view
             ViewData["TotalBalance"] = totalBalance;

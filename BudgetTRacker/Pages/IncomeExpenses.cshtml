@@ -1,4 +1,5 @@
 ﻿@page
+@using Newtonsoft.Json
 @model IncomeExpensesModel
 @{
     ViewData["Tittle"] = "Income Expenses";
@@ -8,7 +9,6 @@
     <div class="activities-header">
         <h4>Financial Statistics</h4>
         <select class="dropdown" id="period-selector">
-            <option value="today">Today</option>
             <option value="this_week">This Week</option>
             <option value="this_month">This Month</option>
         </select>
@@ -28,20 +28,13 @@
         box-sizing: border-box;
     }
 </style>
-<script>
+<script type="text/javascript">
     // Load Google Charts
     google.charts.load('current', { 'packages': ['corechart'] });
     google.charts.setOnLoadCallback(drawChart);
 
     // Chart data for different periods
     const chartData = {
-        today: [
-            ['Category', 'Income', 'Expenses'],
-            ['Food', 500, 300],
-            ['Transport', 200, 100],
-            ['Internet', 150, 50],
-            ['Others', 100, 75]
-        ],
         this_week: [
             ['Day', 'Income', 'Expenses'],
             ['Sun', 500, 300],
@@ -52,22 +45,13 @@
             ['Fri', 900, 450],
             ['Sat', 1000, 600]
         ],
-        this_month: [
-            ['Month', 'Income', 'Expenses'],
-            ['Jan', 5000, 4000],
-            ['Feb', 3000, 2500],
-            ['Mar', 4500, 3500],
-            ['Apr', 4000, 3000],
-            ['May', 6000, 4500],
-            ['Jun', 7000, 5000],
-            ['Jul', 8000, 5500],
-            ['Aug', 6500, 4500],
-            ['Sep', 5000, 4000],
-            ['Oct', 7500, 6000],
-            ['Nov', 6000, 4500],
-            ['Dec', 8500, 7000]
-        ]
-    };
+        this_month: @Html.Raw(JsonConvert.SerializeObject(
+            new[] { new[] { "Month", "Income", "Expenses" } }
+            .Concat(Model.MonthlyIncomeExpenseData.Select(items =>
+            new object[] { items.TimePeriod, items.Income, items.Expenses })
+            )
+            ))
+        };
 
     // Function to draw the chart based on selected period
     function drawChart(period = 'today') {
@@ -99,3 +83,98 @@
     // Initial chart rendering
     drawChart();
 </script>
+
+
+@* 
+
+@page
+@model BudgetTRacker.Pages.IncomeExpensesModel
+@{
+    ViewData["Title"] = "Income Expenses";
+
+    // Data passed from the backend
+    var totalSpending = Model.TotalBalance;
+    var incomeData = Model.TotalIncome;
+    var expenseData = Model.TotalExpense;
+}
+
+
+<script src="https://www.gstatic.com/charts/loader.js"></script>
+
+<div class="activities">
+    <div class="activities-header">
+        <h4>Financial Statistics</h4>
+        <select class="dropdown" id="period-selector">
+            <option value="this_week">This Week</option>
+            <option value="this_month">This Month</option>
+        </select>
+    </div>
+    <p>Total spending: Rs. <span id="total-spending">@totalSpending</span></p>
+    <div id="chart_div" style="width: 100%; height: 500px;"></div>
+</div>
+
+<style>
+    .activities {
+        background-color: #FFFFFF;
+        border-radius: 8px;
+        padding: 20px;
+        width: 100%;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        box-sizing: border-box;
+    }
+</style>
+
+<button onclick="myFunction()">Try it</button>
+
+
+<script type="text/javascript">
+
+    function myFunction() {
+        alert(incomeData);
+        alert(expenseData);
+    }
+    // Load Google Charts
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart);
+
+    // Data passed from backend
+    const incomeData = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(incomeData));
+    const expenseData = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(expenseData));
+
+    const chartData = {
+        this_week: [['Day', 'Income', 'Expenses']].concat(incomeData),
+        this_month: [['Month', 'Income', 'Expenses']].concat(expenseData),
+    };
+
+    function drawChart(period = 'this_week') {
+        const data = google.visualization.arrayToDataTable(chartData[period]);
+
+        const options = {
+            title: 'Income vs. Expenses',
+            hAxis: { title: 'Time', titleTextStyle: { color: '#333' } },
+            vAxis: { minValue: 0 },
+            series: {
+                0: { color: 'green' },
+                1: { color: 'red' }
+            }
+        };
+
+        const chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+
+        // Update total spending dynamically
+        const totalSpending = chartData[period].slice(1).reduce((sum, row) => sum + row[2], 0);
+        document.getElementById('total-spending').textContent = totalSpending;
+    }
+
+    // Event listener for period selection
+    document.getElementById('period-selector').addEventListener('change', (event) => {
+        drawChart(event.target.value);
+    });
+
+    // Initial chart rendering
+    drawChart();
+</script>
+
+
+ *@
