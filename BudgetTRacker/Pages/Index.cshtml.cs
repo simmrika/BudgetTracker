@@ -23,11 +23,11 @@ namespace BudgetTRacker.Pages
         private readonly ILogger<IndexModel> _logger;
         private readonly BankTransactionDataService _bankTransactionDataService;
         public readonly AccountDetailsDataService _accountDetailsDataService;
-        public readonly AddCashDateService _cashDateService;
+        public readonly AddCashDateService _addcashDateService;
         private readonly UserDataService _userDataService;
 
         private readonly CashTransactionDataService _cashTransactionDataService;
-
+        private readonly ViewSumCashDataService _viewSumCashDataService;
         private readonly AppDbContext _appDbContext;
         private readonly IHttpContextAccessor _contextAccessor;
 
@@ -37,7 +37,10 @@ namespace BudgetTRacker.Pages
         public IEnumerable<TransactionDto> Transactions { get; private set; } = new List<TransactionDto>();
 
         [BindProperty]
-        public CashEntryDto? CashEntry { get; private set; } // Single cash entry
+        public List<CashEntryDto>? CashEntry { get; private set; } // Single cash entry
+
+        [BindProperty]
+        public decimal? SummedCashAmount { get; private set; }
 
         [BindProperty]
         public List<CategoryExpenditure>  CategoryExpenditureslist { get;  set; }=new List<CategoryExpenditure>();
@@ -50,7 +53,7 @@ namespace BudgetTRacker.Pages
 
         public IndexModel(ILogger<IndexModel> logger,CashTransactionDataService cashTransactionDataService1,
             
-            AddCashDateService addcash, BankTransactionDataService bankTransactionDataService, AccountDetailsDataService accountDetailsDataService, UserDataService userDataService, AddCashDateService addCashDateService, IHttpContextAccessor contextAccessor, AppDbContext appDbContext)
+            AddCashDateService addCashDateService, BankTransactionDataService bankTransactionDataService, AccountDetailsDataService accountDetailsDataService, UserDataService userDataService, ViewSumCashDataService viewSumCashDataService, IHttpContextAccessor contextAccessor, AppDbContext appDbContext)
         {
             _logger = logger;
             _bankTransactionDataService = bankTransactionDataService;
@@ -59,8 +62,10 @@ namespace BudgetTRacker.Pages
             _appDbContext = appDbContext;
             _contextAccessor = contextAccessor;
             _appDbContext = appDbContext;
-            _cashDateService = addcash;
+            _addcashDateService = addCashDateService;
             _cashTransactionDataService = cashTransactionDataService1;
+            _viewSumCashDataService = viewSumCashDataService;
+
         }
 
         public async Task OnGetAsync()
@@ -155,19 +160,20 @@ namespace BudgetTRacker.Pages
 
 
             // Fetch user's cash entry and treat it as income
-            CashEntry = await _cashDateService.GetCashEntryByUserIdAsync(userId);
+            CashEntry = await _addcashDateService.GetCashEntryByUserIdAsync(userId);
             if (CashEntry != null)
             {
-                totalIncome += CashEntry.Amount; // Add cash entry amount to income
+                totalIncome += CashEntry.Select(e=>e.Amount).Sum(); // Add cash entry amount to income
             }
 
-            var user = await _userDataService.GetUserByIdAsync(userId); // Get user by ID
+            // Fetch summed cash entry for the user, now just retrieving the TotalAmount
+            SummedCashAmount = await _viewSumCashDataService.GetSummedCashAmountByUserIdAsync(userId);
 
-                                                                        // Fetch cash entry for the user
-            CashEntry = await _cashDateService.GetCashEntryByUserIdAsync(userId);
+
+            // Fetch cash entry for the user
 
             _logger.LogInformation(CashEntry != null
-                ? $"Fetched cash entry for user ID: {userId} - Amount: {CashEntry.Amount}, Date: {CashEntry.AddDate}"
+                ? $"Fetched cash entry for user ID: {userId} - Amount: {CashEntry.Select(e => e.Amount).Sum()}, Date: {CashEntry.Select(e => e.Amount).Sum()}"
                 : $"No cash entry found for user ID: {userId}");
 
             // Calculate Total Balance
@@ -176,7 +182,7 @@ namespace BudgetTRacker.Pages
             // Add CashEntry amount if available
             if (CashEntry != null)
             {
-                totalBalance += CashEntry.Amount; // Add cash amount
+                totalBalance += CashEntry.Select(e => e.Amount).Sum(); // Add cash amount
             }
 
             // Add bank total to total balance

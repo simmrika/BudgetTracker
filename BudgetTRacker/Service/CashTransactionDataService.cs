@@ -23,7 +23,7 @@ namespace BudgetTracker.Service
                 UserId = cashTransactionDto.UserId, // Ensure UserId is set
                 CategoryId = cashTransactionDto.CategoryId,
                 TransactionName = cashTransactionDto.Name,
-                Date = DateTime.Now,
+                Date =cashTransactionDto.Date,
                 TransactionType = cashTransactionDto.TransactionType,
                 Total = cashTransactionDto.Total,
                 Description = cashTransactionDto.Description

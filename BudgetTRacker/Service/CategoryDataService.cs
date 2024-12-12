@@ -34,7 +34,6 @@ namespace BudgetTracker.Service
                 CategoryId = category.CategoryId,
                 UserId = categoryDto.UserId,
                 LimitAmount = categoryDto.CategoryLimit,
-                Duration = categoryDto.Duration
             };
 
             await _context.CategoryLimit.AddAsync(categoryLimit);
@@ -64,7 +63,6 @@ namespace BudgetTracker.Service
                 return false;
 
             categoryLimit.LimitAmount = categoryDto.CategoryLimit;
-            categoryLimit.Duration = categoryDto.Duration;
             _context.CategoryLimit.Update(categoryLimit);
 
             return await _context.SaveChangesAsync() > 0;
@@ -85,7 +83,6 @@ namespace BudgetTracker.Service
                     UserId = joined.categoryLimit.UserId,
                     CategoryName = joined.category.CategoryName,
                     CategoryLimit = joined.categoryLimit.LimitAmount,
-                    Duration = joined.categoryLimit.Duration
                 })
                 .OrderBy(c => c.CategoryName)
                 .ToListAsync();

@@ -46,28 +46,15 @@ namespace BudgetTRacker.Pages
                 // Assign user ID from the logged-in user
                 NewCashEntry.UserId = GetUserIdFromCookie();
 
-                // Check if the user already has a cash entry
-                var existingCashEntry = await _addCashDateService.GetCashEntryByUserIdAsync(NewCashEntry.UserId);
+                
 
-                bool result;
-
-                if (existingCashEntry == null)
-                {
-                    // If no existing entry, add a new cash entry
-                    result = await _addCashDateService.AddCashEntryAsync(NewCashEntry);
-                }
-                else
-                {
-                    // If an entry exists, update it
-                    existingCashEntry.Amount += NewCashEntry.Amount; // You can modify this logic to overwrite the amount instead
-                    existingCashEntry.AddDate = NewCashEntry.AddDate;
-                    result = await _addCashDateService.UpdateCashEntryAsync(existingCashEntry);
-                }
+                // Add a new cash entry
+                bool result = await _addCashDateService.AddCashEntryAsync(NewCashEntry);
 
                 if (result)
                 {
-                    _logger.LogInformation(existingCashEntry == null ? "New cash entry added successfully." : "Cash entry updated successfully.");
-                    return RedirectToPage("/Index"); // Redirect after successful addition or update
+                    _logger.LogInformation("New cash entry added successfully.");
+                    return RedirectToPage("/Index"); // Redirect after successful addition
                 }
                 else
                 {
@@ -81,19 +68,6 @@ namespace BudgetTRacker.Pages
                 _logger.LogError(ex, "An exception occurred while adding the cash entry.");
                 ModelState.AddModelError(string.Empty, ex.Message);
                 return Page(); // Re-display the form in case of an exception
-            }
-        }
-
-        private void ValidateCashEntry(CashEntryDto cashEntry)
-        {
-            if (cashEntry == null)
-            {
-                throw new ArgumentNullException(nameof(cashEntry), "Cash entry cannot be null.");
-            }
-
-            if (cashEntry.Amount <= 0)
-            {
-                throw new ArgumentException("Amount must be greater than zero.");
             }
         }
 

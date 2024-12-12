@@ -81,6 +81,7 @@ namespace BudgetTRacker.Pages
                 {
                     CategoryName = g.Key,
                     TotalAmount = g.Sum(e => e.TotalAmount) // Sum amounts for combined categories
+                    
                 })
                 .ToList();
 

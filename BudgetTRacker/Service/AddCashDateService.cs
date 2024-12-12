@@ -18,22 +18,38 @@ namespace BudgetTRacker.Service
         public async Task<bool> AddCashEntryAsync(CashEntryDto cashEntryDto)
         {
             // Convert DTO to entity
-            var cashEntry = new CashEntry
+
+
+            CashTransaction cashEntry = new CashTransaction
             {
-                UserId = cashEntryDto.UserId,
-                Amount = cashEntryDto.Amount,
-                AddDate = cashEntryDto.AddDate
+                TransactionName = "Cash In",
+                TransactionType = "Cash In",
+                Date = cashEntryDto.AddDate,
+                Description = "Cash In",
+                CategoryId = 5,
+                Total=cashEntryDto.Amount,
+                UserId=cashEntryDto.UserId,
+
             };
 
-            // Add to the context and save changes
-            _context.CashEntries.Add(cashEntry);
-            var saveResult = await _context.SaveChangesAsync();
+            try
+            {
+                // Add to the context and save changes
+                _context.CashTransaction.Add(cashEntry);
+                var saveResult = await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
 
-            return saveResult > 0; // Return true if at least one record was saved
+     // Return true if at least one record was saved
         }
 
+
         // Method to retrieve a cash entry for a user
-        public async Task<CashEntryDto?> GetCashEntryByUserIdAsync(int userId)
+        public async Task<List<CashEntryDto?>> GetCashEntryByUserIdAsync(int userId)
         {
             return await _context.CashEntries
                 .Where(e => e.UserId == userId) // Filter by userId
@@ -44,7 +60,7 @@ namespace BudgetTRacker.Service
                     Amount = e.Amount,
                     AddDate = e.AddDate
                 })
-                .SingleOrDefaultAsync(); // Fetch a single entry or null if none exists
+                .ToListAsync(); // Fetch a single entry or null if none exists
         }
 
         // Method to update an existing cash entry

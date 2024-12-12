@@ -12,12 +12,12 @@
         <p class="balance-amount">Rs. @ViewData["TotalBalance"]</p>
         <div class="balance-change">
             <div class="income">
-                <i class="fa-solid fa-arrow-up"></i>
+                <i class="fa-solid fa-arrow-up" style="color: green;"></i>         
                 <span>Rs. @ViewData["TodayIncome"]</span>
                 <p>Today's Income</p>
             </div>
             <div class="expense">
-                <i class="fa-solid fa-arrow-down"></i>
+                <i class="fa-solid fa-arrow-down" style="color: red;"></i>
                 <span>Rs. @ViewData["TodayExpense"]</span>
                 <p>Today's Expense</p>
             </div>
@@ -42,16 +42,16 @@
                         <i style="color: white; font-size: 14px; margin-top: 5px; cursor: pointer;"
                            class="fa fa-trash delete-icon"
                            title="Delete"
-                           onclick="deleteCashEntry(@Model.CashEntry.Id)">
+                           onclick="">
                         </i>
                     }
                 </div>
                 <h4>Cash</h4>
-                <p>@Model.UserDetails.FirstName @Model.UserDetails.FirstName</p>
-                <p>@Model.CashEntry?.AddDate.ToString("yyyy-MM-dd")</p>
+                <p> @Model.UserDetails.FirstName @Model.UserDetails.LastName</p>
+
+                <p>@currentDate</p>
                 <p>
-                    NPR. @Model.CashEntry?.Amount.ToString("F2")
-                    <i class="fa fa-eye"></i>
+                    NPR. @Model.SummedCashAmount?.ToString("F2")                    <i class="fa fa-eye"></i>
                 </p>
             </div>
 

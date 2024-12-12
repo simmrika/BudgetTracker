@@ -22,6 +22,9 @@ namespace BudgetTRacker.Data
 
         public DbSet<LinkedAccounts> LinkedAccount { get; set; }
 
+        public DbSet<SummedCashEntry> SummedCashEntries { get; set; }
+
+
 
         // Override the OnModelCreating method to configure relationships, indexes, etc.
         protected override void OnModelCreating(ModelBuilder modelBuilder)

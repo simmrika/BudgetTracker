@@ -67,8 +67,8 @@ namespace BudgetTRacker.Pages
 
             if (cashEntry != null)
             {
-                TotalIncome += cashEntry.Amount; // Cash entry as income
-                TotalBalance += cashEntry.Amount;
+                TotalIncome += cashEntry.Select(e => e.Amount).Sum() ; // Cash entry as income
+                TotalBalance += cashEntry.Select(e => e.Amount).Sum();
             }
 
             
@@ -76,7 +76,7 @@ namespace BudgetTRacker.Pages
             // Process cash transactions
             foreach (var cashTransaction in cashTransactions)
             {
-                if (cashTransaction.TransactionType == "Cash")
+                if (cashTransaction.TransactionType == "Cash Out")
                 {
                     TotalExpense += cashTransaction.Total;
                 }
@@ -128,9 +128,9 @@ namespace BudgetTRacker.Pages
                 .Select(g => new ChartDto
                 {
                     TimePeriod = g.Key.ToString(), // "Sunday", "Monday", etc.
-                    Income = g.Where(t => t.TransactionType == "Deposit" || t.TransactionType == "Income")
+                    Income = g.Where(t => t.TransactionType == "Deposit" || t.TransactionType == "Income"  || t.TransactionType == "Cash In")
                               .Sum(t => (decimal)t.Total), // Total Income for the day
-                    Expenses = g.Where(t => t.TransactionType == "Withdraw" || t.TransactionType == "Expense" || t.TransactionType=="Cash")
+                    Expenses = g.Where(t => t.TransactionType == "Withdraw" || t.TransactionType == "Expense" || t.TransactionType=="Cash Out")
                                 .Sum(t => (decimal)t.Total) // Total Expenses for the day
                 })
                 .OrderBy(c => Enum.Parse<DayOfWeek>(c.TimePeriod)) // Ensure days are in correct order
@@ -145,9 +145,9 @@ namespace BudgetTRacker.Pages
             
             TimePeriod= new DateTime(1, g.Key.Month, 1).ToString("MMMM"),
       
-          Income= g.Where(t => t.TransactionType == "Deposit" || t.TransactionType == "Income")
+          Income= g.Where(t => t.TransactionType == "Deposit" || t.TransactionType == "Income" || t.TransactionType=="Cash In")
          .Sum(t => (decimal)t.Total), // Explicitly cast to decimal
-          Expenses= g.Where(t => t.TransactionType == "Withdraw" || t.TransactionType == "Expense" || t.TransactionType == "Cash")
+          Expenses= g.Where(t => t.TransactionType == "Withdraw" || t.TransactionType == "Expense" || t.TransactionType == "Cash Out")
          .Sum(t => (decimal)t.Total)  // Explicitly cast to decimal
         })
         .ToList();
