@@ -2,6 +2,7 @@
 using BudgetTRacker.Data;
 using Microsoft.EntityFrameworkCore;
 using BudgetTRacker.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace BudgetTracker.Service
 {
@@ -80,16 +81,28 @@ namespace BudgetTracker.Service
     public class CashTransactionDto
     {
         public int Id { get; set; }
+
+        [Required]
         public int UserId { get; set; } // User ID to associate with the transaction
 
+        [Required]
         public int CategoryId { get; set; }
 
-
         public Category Category { get; set; }
+
+        [Required(ErrorMessage = "Name is required.")]
         public string Name { get; set; }
+
+        [Required(ErrorMessage = "Date is required.")]
         public DateTime Date { get; set; }
+
+        [Required(ErrorMessage = "Transaction type is required.")]
         public string TransactionType { get; set; }
+
+        [Required(ErrorMessage = "Total amount is required.")]
+        [Range(0.01, double.MaxValue, ErrorMessage = "The transaction amount must be greater than 0.")]
         public decimal Total { get; set; }
+
         public string Description { get; set; }
     }
 

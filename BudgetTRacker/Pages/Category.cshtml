@@ -7,41 +7,45 @@
 <div class="categories">
     <div class="categories-header">
         <h4>Categories</h4>
+        <h4>Categories | Current Transaction | Transaction Limit</h4>
+
         <div class="header-buttons">
-     
             <a asp-page="/AddCategory" class="btn-add">
-                <i class="fa fa-plus"></i> Add Category
+                <i class="fa fa-plus"></i>
             </a>
         </div>
     </div>
 
-
     @if (Model.CategoryExpenditureslist.Any())
     {
-        <form method="post" asp-page-handler="DeleteSelected">
-            <table class="category-table">
-                <thead>
-                    <tr>
-                        <th>Select</th>
-                        <th>Category Name</th>
-                        <th>Current Transaction</th>
-                        <th>Transaction Limit</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var category in Model.CategoryExpenditureslist)
-                    {
-                        <tr>
-                            <td>
-                                <input type="checkbox" name="SelectedCategories" value="@category.CategoryName" class="category-checkbox" />
-                            </td>
-                            <td>@category.CategoryName</td>
-                            <td>Rs. @category.TotalAmount</td>
-                           @*  <td>Rs. @category.limit</td> *@
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </form>
+        @foreach (var category in Model.CategoryExpenditureslist)
+        {
+            <div class="category-item">
+                <div class="icon-container
+                    @(category.CategoryName == "Food" ? "food-icon" :
+                      category.CategoryName == "NEA" ? "nea-icon" :
+                      category.CategoryName == "Internet" ? "internet-icon" :
+                      category.CategoryName == "College" ? "college-icon" :
+                      "default-icon")">
+                    <i class="fa-solid
+                        @(category.CategoryName == "Food" ? "fa-bowl-food" :
+                          category.CategoryName == "NEA" ? "fa-lightbulb" :
+                          category.CategoryName == "Internet" ? "fa-wifi" :
+                          category.CategoryName == "College" ? "fa-graduation-cap" :
+                          "fa-receipt")"></i>
+                </div>
+                <span>@category.CategoryName</span>
+                <span class="amount">Rs. @category.TotalAmount</span>
+                <span class="catgoeryLimit">Rs. @category.TotalAmount</span> 
+                <a asp-page="/CatgoryLimit" asp-route-categoryId="@category.CategoryId" class="btn-add-transaction">
+                    <i class="fa fa-plus"></i> 
+                </a>
+
+            </div>
+        }
+    }
+    else
+    {
+        <p>No categories available. Add a new category to get started.</p>
     }
 </div>

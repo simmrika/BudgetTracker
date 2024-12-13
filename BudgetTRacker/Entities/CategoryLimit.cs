@@ -11,8 +11,9 @@ namespace BudgetTRacker.Entities
         public int CategoryId { get; set; }
         [Required]
         public int  UserId { get; set; }
+
         [Required]
         public decimal LimitAmount { get; set; }
-    
+
     }
 }

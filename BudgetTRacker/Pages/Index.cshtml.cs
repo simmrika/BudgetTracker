@@ -47,6 +47,14 @@ namespace BudgetTRacker.Pages
         [BindProperty]
         public IEnumerable<CashTransactionDto> CashTransactions { get; private set; } = new List<CashTransactionDto>();
 
+        [BindProperty]
+        public decimal TotalBalance { get; private set; }
+
+        [BindProperty]
+        public decimal TodayIncome { get; private set; }
+
+        [BindProperty]
+        public decimal TodayExpense { get; private set; }
 
         [BindProperty]
         public UserDto? UserDetails { get; private set; }
@@ -75,8 +83,10 @@ namespace BudgetTRacker.Pages
             var linkedaccout = await _appDbContext.LinkedAccount.Where(e => e.UserID == userId).SingleOrDefaultAsync();
 
             var transactionList = new List<TransactionDto>();
-            decimal totalIncome = 0, totalExpense = 0;
-            decimal bankTotal = 0;
+            decimal bankBalance = 0;
+            decimal cashBalance = 0;
+            TodayIncome = 0;
+            TodayExpense = 0;
 
             if (linkedaccout != null)
             {
@@ -85,18 +95,21 @@ namespace BudgetTRacker.Pages
                 transactionList.AddRange(bankTransactions);
                 UserDetails = await _accountDetailsDataService.GetUserByAccountNumberAsync(linkedaccout.AccountNumber);
 
-                // Calculate today's income and expense for bank transactions
-                foreach (var bankTransaction in bankTransactions)
+                // Filter today's transactions
+                var todayBankTransactions = bankTransactions
+                    .Where(t => t.TransactionDate.Date == System.DateTime.Now.Date);
+
+                foreach (var transaction in todayBankTransactions)
                 {
-                    if (bankTransaction.TransactionType == "Deposit")
+                    if (transaction.TransactionType == "Deposit")
                     {
-                        totalIncome += bankTransaction.Amount;
-                        bankTotal += bankTransaction.Amount;
+                        TodayIncome += transaction.Amount;
+                        bankBalance += transaction.Amount;
                     }
-                    else if (bankTransaction.TransactionType == "Withdraw")
+                    else if (transaction.TransactionType == "Withdraw")
                     {
-                        totalExpense += bankTransaction.Amount;
-                        bankTotal += bankTransaction.Amount;
+                        TodayExpense += transaction.Amount;
+                        bankBalance -= transaction.Amount;
                     }
                 }
 
@@ -120,8 +133,7 @@ namespace BudgetTRacker.Pages
 
                 transactionList.Add(transactionDto);
 
-                // Since cash transactions are expenses, we add them to totalExpense
-                totalExpense += cashTransaction.Total;
+  
             }
 
             // Assign the combined list back to Transactions
@@ -158,13 +170,24 @@ namespace BudgetTRacker.Pages
 
             CategoryExpenditureslist=combinedCategoryExpenditures;
 
+            // Filter today's cash transactions
+            var todayCashTransactions = CashTransactions
+                .Where(t => t.Date.Date == DateTime.Now.Date);
 
-            // Fetch user's cash entry and treat it as income
-            CashEntry = await _addcashDateService.GetCashEntryByUserIdAsync(userId);
-            if (CashEntry != null)
+            foreach (var transaction in todayCashTransactions)
             {
-                totalIncome += CashEntry.Select(e=>e.Amount).Sum(); // Add cash entry amount to income
+                if (transaction.TransactionType == "Cash In")
+                {
+                    TodayIncome += transaction.Total;
+                }
+                else if (transaction.TransactionType == "Cash Out")
+                {
+                    TodayExpense += transaction.Total;
+                }
             }
+
+            // Calculate total balance
+            TotalBalance = bankBalance + cashBalance;
 
             // Fetch summed cash entry for the user, now just retrieving the TotalAmount
             SummedCashAmount = await _viewSumCashDataService.GetSummedCashAmountByUserIdAsync(userId);
@@ -176,22 +199,13 @@ namespace BudgetTRacker.Pages
                 ? $"Fetched cash entry for user ID: {userId} - Amount: {CashEntry.Select(e => e.Amount).Sum()}, Date: {CashEntry.Select(e => e.Amount).Sum()}"
                 : $"No cash entry found for user ID: {userId}");
 
-            // Calculate Total Balance
-            decimal totalBalance = 0;
+        
 
-            // Add CashEntry amount if available
-            if (CashEntry != null)
-            {
-                totalBalance += CashEntry.Select(e => e.Amount).Sum(); // Add cash amount
-            }
-
-            // Add bank total to total balance
-            totalBalance += bankTotal;
 
             // Set the total balance and today's income/expense to the view
-            ViewData["TotalBalance"] = totalBalance;
-            ViewData["TodayIncome"] = totalIncome;
-            ViewData["TodayExpense"] = totalExpense;
+            ViewData["TotalBalance"] = TotalBalance;
+            ViewData["TodayIncome"] = TodayIncome;
+            ViewData["TodayExpense"] = TodayExpense;
         }
 
         public int GetUserIdFromCookie()

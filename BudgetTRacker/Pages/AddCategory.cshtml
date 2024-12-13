@@ -1,34 +1,32 @@
 ﻿@page
-@model AddCategoryModel
+@model BudgetTRacker.Pages.AddCategoryModel
 @{
-    ViewData["Tittle"] = "AddCategory";
+    ViewData["Title"] = "Add Category";
+
+}
+@if (!string.IsNullOrEmpty(Model.SuccessMessage))
+{
+    <div style="color: green;" class="alert alert-success">
+        @Model.SuccessMessage
+    </div>
 }
 
 <div class="modal">
     <button class="close-button" onclick="window.history.back()">&times;</button>
     <h2>Add Category</h2>
+
+    <div style="color: red; font-size: 14px; margin-top: 5px;">
+        @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+        {
+            <div class="error-message">@Model.ErrorMessage</div>
+        }
+    </div>
+
     <form method="post">
         <div class="form-group">
-            <label for="Category">Category*</label>
-            <select id="Category" asp-for="categoryLimit.CategoryId" class="form-control" required>
-                <option value="">Type</option>
-                @foreach (var cats in Model.CategoriesList)
-                {
-                    <option value="@cats.CategoryId">@cats.CategoryName</option>
-                }
-            </select>
+            <label for="CategoryName">Category Name*</label>
+            <input type="text" id="CategoryName" asp-for="AddCategory.CategoryName" class="form-control" required>
         </div>
-
-        <div class="form-group">
-            <label for="Total">Category Limit*</label>
-            <div class="currency-input">
-                <input type="text" id="Total" asp-for="categoryLimit.LimitAmount" class="form-control" required>
-                <span class="currency-symbol">NPR</span>
-            </div>
-        </div>
-
-         
-
 
         <button type="submit" class="save-button">SAVE</button>
     </form>
@@ -101,5 +99,13 @@
         .save-button:hover {
             background-color: #004494;
         }
-</style>
 
+
+    .text-danger {
+        color: red;
+        font-size: 12px;
+        margin-top: 5px;
+        display: block;
+        text-align: left;
+    }
+</style>

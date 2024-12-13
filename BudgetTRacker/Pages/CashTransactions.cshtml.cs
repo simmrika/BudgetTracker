@@ -21,7 +21,7 @@ namespace BudgetTRacker.Pages
         public CashTransactionDto NewTransaction { get; set; } = new CashTransactionDto();
         public string ErrorMessage { get; set; }
 
-        [BindProperty]
+      
         public List<Category> CategoriesList { get; set; }
 
         public CashTransactionsModel(CashTransactionDataService transactionDataService, 
@@ -44,8 +44,7 @@ namespace BudgetTRacker.Pages
         public async Task<IActionResult> OnPostAsync()
         {
             // Set the UserId from the cookie (ensure user is authenticated)
-
-
+          
 
 
 
@@ -81,6 +80,7 @@ namespace BudgetTRacker.Pages
             if (result)
             {
                 // Log success and redirect to the transaction page
+                TempData["Success"] = "New Transaction added successfully!";
                 _logger.LogInformation("New transaction added successfully.");
                 return RedirectToPage("/Transaction");
             }

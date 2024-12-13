@@ -1,84 +1,60 @@
-using BudgetTracker.Service; // Ensure you have the necessary namespace for CategoryDto and CategoryDataService
-using BudgetTRacker.Data;
-using BudgetTRacker.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
+using BudgetTracker.Service;
 using System.Threading.Tasks;
+using BudgetTRacker.Service;
 
 namespace BudgetTRacker.Pages
 {
     public class AddCategoryModel : PageModel
     {
-       
-        private readonly AppDbContext _appDbContext;
-        private readonly IHttpContextAccessor _contextAccessor;
+        private readonly AddCategoryDataService _addcategoryDataService;
+
         [BindProperty]
-        public CategoryLimit categoryLimit { get; set; }
-        // Bind the category data to the form
-  
-        public List<Category> CategoriesList { get; set; }
+        public AddCategoryDto AddCategory { get; set; } = new AddCategoryDto();
+
+        public string SuccessMessage { get; set; }
+        public string ErrorMessage { get; set; }
 
 
-        // Inject the CategoryDataService into the constructor
-        public AddCategoryModel(AppDbContext appDbContext, IHttpContextAccessor contextAccessor)
+        public AddCategoryModel(AddCategoryDataService addcategoryDataService)
         {
-            _appDbContext = appDbContext;
-            _contextAccessor = contextAccessor;
+            _addcategoryDataService = addcategoryDataService;
         }
 
-
-
-
-        public async Task OnGetAsync()
+        public void OnGet()
         {
-
-            CategoriesList = await _appDbContext.Category.ToListAsync();
-
         }
 
-
-        // POST handler to save the new category
         public async Task<IActionResult> OnPostAsync()
         {
-
-            categoryLimit.UserId = GetUserIdFromCookie();
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-
-
-
-
-                await _appDbContext.CategoryLimit.AddAsync(categoryLimit);
-
-                await _appDbContext.SaveChangesAsync();
-
-             
-                    return RedirectToPage("/Index");
-            
-            }
-            return Page(); // Stay on the same page if there was an error or invalid data
-        }
-
-        public int GetUserIdFromCookie()
-        {
-            // Get the UserId from the authenticated user's claims
-            var user = _contextAccessor.HttpContext?.User;
-
-            if (user == null || !user.Identity.IsAuthenticated)
-            {
-                throw new UnauthorizedAccessException("User is not authenticated.");
+                ErrorMessage = "Please fill in all required fields.";
+                return Page();
             }
 
-            var userIdClaim = user.FindFirst(ClaimTypes.NameIdentifier);
-
-            if (userIdClaim == null)
+            try
             {
-                throw new Exception("User ID claim not found in the cookie.");
-            }
+                bool result = await _addcategoryDataService.AddCategoryAsync(AddCategory.CategoryName);
 
-            return int.Parse(userIdClaim.Value);
+                if (result)
+                {
+                    TempData["Success"] = "New Category added successfully!";
+                    SuccessMessage = "Category added successfully.";
+                    return RedirectToPage("/Category"); // Redirect to the Categories page
+                }
+                else
+                {
+                    ErrorMessage = "An error occurred while adding the category.";
+                    return Page();
+                }
+            }
+            catch (System.Exception ex)
+            {
+                ErrorMessage = ex.Message;
+                return Page();
+            }
         }
     }
 }

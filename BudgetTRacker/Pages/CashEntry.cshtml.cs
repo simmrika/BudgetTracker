@@ -46,8 +46,6 @@ namespace BudgetTRacker.Pages
                 // Assign user ID from the logged-in user
                 NewCashEntry.UserId = GetUserIdFromCookie();
 
-                
-
                 // Add a new cash entry
                 bool result = await _addCashDateService.AddCashEntryAsync(NewCashEntry);
 

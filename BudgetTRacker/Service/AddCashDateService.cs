@@ -19,7 +19,6 @@ namespace BudgetTRacker.Service
         {
             // Convert DTO to entity
 
-
             CashTransaction cashEntry = new CashTransaction
             {
                 TransactionName = "Cash In",

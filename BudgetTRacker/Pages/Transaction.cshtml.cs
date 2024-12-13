@@ -38,6 +38,7 @@ namespace BudgetTRacker.Pages
 
         public string SerializedCashTransactions => JsonSerializer.Serialize(CashTransactions);
 
+        public string SuccessMessage { get; set; }
 
         public TransactionModel(ILogger<IndexModel> logger, BankTransactionDataService bankTransactionDataService, CashTransactionDataService cashTransactionDataService, IHttpContextAccessor contextAccessor,AppDbContext appDbContext)
         {
@@ -49,6 +50,8 @@ namespace BudgetTRacker.Pages
         }
         public async Task OnGetAsync()
         {
+            SuccessMessage = TempData["Success"] as string;
+
             var userId = GetUserIdFromCookie();
 
             var linkedAccount = await _appDbContext.LinkedAccount
@@ -87,33 +90,6 @@ namespace BudgetTRacker.Pages
         }
 
 
-        public async Task<IActionResult> OnPostDeleteAsync(List<int> selectedTransactionIds)
-        {
-            if (selectedTransactionIds == null || selectedTransactionIds.Count == 0)
-            {
-                // Handle no transactions selected
-                TempData["Error"] = "No transactions selected for deletion.";
-                return RedirectToPage();
-            }
-
-            var userId = GetUserIdFromCookie();
-
-            // Delete selected Cash Transactions
-            var cashTransactionsToDelete = await _appDbContext.CashTransaction
-                .Where(t => selectedTransactionIds.Contains(t.Id) && t.UserId == userId)
-                .ToListAsync();
-
-            if (cashTransactionsToDelete.Any())
-            {
-                _appDbContext.CashTransaction.RemoveRange(cashTransactionsToDelete);
-            }
-
-
-            await _appDbContext.SaveChangesAsync();
-
-            TempData["Success"] = "Selected transactions deleted successfully.";
-            return RedirectToPage();
-        }
 
 
         public int GetUserIdFromCookie()

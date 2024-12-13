@@ -1,20 +1,21 @@
 ﻿using BudgetTRacker.Entities;
 using BudgetTRacker.Data;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace BudgetTracker.Service
 {
-    public class CategoryDataService
+    public class CategoryLimitDataService
     {
         private readonly AppDbContext _context;
     
-        public CategoryDataService(AppDbContext context)
+        public CategoryLimitDataService(AppDbContext context)
         {
             _context = context;
         }
 
         // Add a new category and category limit
-        public async Task<bool> AddCategoryAsync(CategoryDto categoryDto)
+        public async Task<bool> AddCategoryLimitAsync(CategoryDto categoryDto)
         {
             if (categoryDto == null)
                 throw new ArgumentNullException(nameof(categoryDto));
@@ -121,6 +122,9 @@ namespace BudgetTracker.Service
         public int CategoryId { get; set; }
         public int UserId { get; set; }
         public string CategoryName { get; set; }
+
+        [Required(ErrorMessage = "Limit amount is required.")]
+        [Range(0.01, double.MaxValue, ErrorMessage = "Limit amount must be greater than zero.")]
         public decimal CategoryLimit { get; set; }
         public string Duration { get; set; } // Duration for limit (e.g., "Monthly")
     }
