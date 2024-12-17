@@ -52,8 +52,6 @@ namespace BudgetTRacker.Pages
             var startOfWeek = GetWeekStart(date);
             return startOfWeek.AddDays(6); // End of the week (Sunday)
         }
-
-
         public async Task OnGetAsync()
         {
             var userId = GetUserIdFromCookie();
@@ -69,9 +67,7 @@ namespace BudgetTRacker.Pages
             {
                 TotalIncome += cashEntry.Select(e => e.Amount).Sum() ; // Cash entry as income
                 TotalBalance += cashEntry.Select(e => e.Amount).Sum();
-            }
-
-            
+            } 
 
             // Process cash transactions
             foreach (var cashTransaction in cashTransactions)

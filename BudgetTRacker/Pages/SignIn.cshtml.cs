@@ -23,8 +23,16 @@ namespace BudgetTRacker.Pages
 
         [BindProperty]
         public LoginDto LoginData { get; set; }
+        public string SuccessMessage { get; set; }
+
 
         public string ErrorMessage { get; set; }
+
+        public void OnGet()
+        {
+            // Retrieve the success message from TempData
+            SuccessMessage = TempData["SuccessMessage"] as string;
+        }
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -64,6 +72,7 @@ namespace BudgetTRacker.Pages
                 CookieAuthenticationDefaults.AuthenticationScheme,
                 new ClaimsPrincipal(claimsIdentity),
                 authProperties);
+
 
             return RedirectToPage("/Index");
         }

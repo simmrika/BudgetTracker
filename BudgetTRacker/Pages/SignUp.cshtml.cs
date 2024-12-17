@@ -63,7 +63,8 @@ namespace BudgetTRacker.Pages
                 return Page();
             }
 
-            SuccessMessage = "Registration successful! Please sign in.";
+            TempData["SuccessMessage"] = "Registration successful! Please sign in.";
+
             return RedirectToPage("/SignIn");
         }
     }

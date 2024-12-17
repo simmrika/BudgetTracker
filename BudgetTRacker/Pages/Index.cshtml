@@ -5,12 +5,15 @@
     var currentDate = DateTime.Now.ToString("yyyy-MM-dd");
 }
 
-
+ 
+<h3 style="color: green; font-size: 14px; margin-top: 5px;">Welcome to Rupiya</h3>
 <section class="balance-section">
     <div class="total-balance">
         <h3>Your total balance</h3>
-        <p class="balance-amount">Rs. @ViewData["TotalBalance"]</p>
-        <div class="balance-change">
+        <p class="balance-amount">Rs.4,500.75</p>
+
+@*         <p class="balance-amount">Rs. @ViewData["TotalBalance"]</p>
+ *@        <div class="balance-change">
             <div class="income">
                 <i class="fa-solid fa-arrow-up" style="color: green;"></i>         
                 <span>Rs. @ViewData["TodayIncome"]</span>
@@ -74,20 +77,6 @@
                 }
             </div>
 
-            <div class="card">
-                @if (Model.UserDetails != null)
-                {
-                    <h4>@Model.UserDetails.BankName</h4>
-                    <p>@Model.UserDetails.FirstName @Model.UserDetails.LastName</p>
-                    <p>@currentDate</p>
-                    <p>Account Number @Model.UserDetails.AccountNumber</p>
-                    <p>NPR. @Model.UserDetails.Balance.ToString("F2") <i class="fa fa-eye"></i></p>
-                }
-                else
-                {
-                    <p>No user details available.</p>
-                }
-            </div>
         </div>
         <button class="next-arrow">&#10095;</button>
     </div>

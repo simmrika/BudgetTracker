@@ -36,16 +36,7 @@
 
     // Chart data for different periods
     const chartData = {
-        this_week: [
-            ['Day', 'Income', 'Expenses'],
-            ['Sun', 500, 300],
-            ['Mon', 700, 400],
-            ['Tue', 600, 350],
-            ['Wed', 800, 500],
-            ['Thu', 400, 200],
-            ['Fri', 900, 450],
-            ['Sat', 1000, 600]
-        ],
+
         this_month: @Html.Raw(JsonConvert.SerializeObject(
             new[] { new[] { "Month", "Income", "Expenses" } }
             .Concat(Model.MonthlyIncomeExpenseData.Select(items =>

@@ -195,6 +195,13 @@
         }
         </div>
 
+        @if (!string.IsNullOrEmpty(Model.SuccessMessage))
+        {
+            <div class="alert alert-success" style="color: green; font-size: 14px; margin-top: 5px;">
+                @Model.SuccessMessage
+            </div>
+        }
+
         <!-- Start the form to bind data -->
         <form method="post">
             <!-- Phone Number input -->
